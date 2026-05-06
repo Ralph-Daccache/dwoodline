@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Noto+Serif:wght@300;400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fcf9f8;
+            font-family: 'Inter', sans-serif;
+        }
+        .serif-text {
+            font-family: 'Noto Serif', serif;
+        }
+        .architectural-grid {
+            background-image: radial-gradient(#1A1A1A 0.5px, transparent 0.5px);
+            background-size: 40px 40px;
+            opacity: 0.05;
+        }
+        .drawing-canvas {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#c6c6c8",
+                      "on-error": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#f0eded",
+                      "surface-container-high": "#eae7e7",
+                      "primary-container": "#f5f5f7",
+                      "secondary": "#705b3f",
+                      "on-surface-variant": "#44474a",
+                      "on-tertiary-container": "#8a6a4a",
+                      "surface-container-low": "#f6f3f2",
+                      "secondary-fixed-dim": "#dec2a0",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#dcd9d9",
+                      "on-primary-fixed": "#1a1c1d",
+                      "error": "#ba1a1a",
+                      "inverse-surface": "#313030",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#e2e2e4",
+                      "outline-variant": "#c5c7c9",
+                      "on-secondary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-container": "#6e7072",
+                      "surface-tint": "#5d5e60",
+                      "surface-bright": "#fcf9f8",
+                      "tertiary-fixed": "#ffdcbe",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#e7bf9b",
+                      "on-tertiary-fixed-variant": "#5d4125",
+                      "secondary-container": "#fbdeba",
+                      "surface-variant": "#e5e2e1",
+                      "inverse-primary": "#c6c6c8",
+                      "secondary-fixed": "#fbdeba",
+                      "primary": "#5d5e60",
+                      "tertiary-container": "#fff3eb",
+                      "on-secondary-container": "#776144",
+                      "on-background": "#1c1b1b",
+                      "surface-container-highest": "#e5e2e1",
+                      "inverse-on-surface": "#f3f0ef",
+                      "on-tertiary-fixed": "#2b1701",
+                      "surface": "#fcf9f8",
+                      "tertiary": "#77583b",
+                      "on-secondary-fixed-variant": "#574329",
+                      "on-secondary-fixed": "#271904",
+                      "outline": "#75777a",
+                      "on-primary-fixed-variant": "#454749",
+                      "background": "#fcf9f8",
+                      "on-surface": "#1c1b1b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "12px",
+                      "section-gap": "160px",
+                      "stack-md": "24px",
+                      "unit": "4px",
+                      "gutter": "24px",
+                      "stack-lg": "48px",
+                      "margin-page": "80px"
+              },
+              "fontFamily": {
+                      "body-lg": ["inter"],
+                      "technical-label": ["inter"],
+                      "headline-lg": ["Noto Serif"],
+                      "display-hero": ["Noto Serif"],
+                      "headline-md": ["Noto Serif"],
+                      "body-md": ["inter"],
+                      "caption": ["inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                      "technical-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                      "display-hero": ["80px", {"lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                      "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                      "caption": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-[#F5F5F7]/80 backdrop-blur-md border-b border-[#1A1A1A]/10 flex justify-between items-center px-[80px] py-8">
+<div class="text-2xl font-light tracking-[0.3em] uppercase text-[#1A1A1A] serif-text">dwoodline</div>
+<div class="hidden md:flex items-center space-x-12">
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 hover:text-[#1A1A1A] transition-all duration-500" href="01-hero.html">Home</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 hover:text-[#1A1A1A] transition-all duration-500" href="02-heritage.html">About</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A] border-b border-[#1A1A1A] pb-1 transition-all duration-500" href="03-expertise.html">Services</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 hover:text-[#1A1A1A] transition-all duration-500" href="04-portfolio.html">Projects</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 hover:text-[#1A1A1A] transition-all duration-500" href="05-inquiry.html">Contact</a>
+</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-primary">search</span>
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</div>
+</nav>
+<main class="pt-32">
+<!-- Section 3: Expertise (Services) -->
+<section class="relative px-[80px] py-[160px] overflow-hidden">
+<div class="absolute inset-0 architectural-grid pointer-events-none"></div>
+<div class="grid grid-cols-12 gap-gutter relative z-10">
+<!-- Header Column -->
+<div class="col-span-12 mb-stack-lg">
+<span class="font-technical-label text-technical-label uppercase tracking-widest text-secondary mb-unit block">Expertise — Division 06</span>
+<h2 class="font-headline-lg text-headline-lg serif-text leading-tight max-w-2xl">Interior Architecture Wood Work Shop Drawings</h2>
+</div>
+<!-- Main Feature Card (Shop Drawings) -->
+<div class="col-span-12 lg:col-span-8 group relative overflow-hidden bg-surface-container-low border border-outline-variant/10 p-12 transition-all duration-700 hover:bg-white">
+<!-- Marble Hover Effect Overlay -->
+<div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-1000 pointer-events-none" data-alt="Close-up high-resolution texture of Calacatta marble with elegant grey veining across a pristine white surface. The lighting is soft and diffused, highlighting the natural crystalline structure of the stone. The visual style is premium and architectural, suggesting a high-end interior material palette for a bespoke residence." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAaRByUvUuPYh2TpdpuHmP1gl01vZ-YKX1yPiBfWVwodXdQMn7ZK5N53ihuZg74fN0S_ZruGpJwYyyCKH8fgAoV_wAm-Fr-oKv61dqfccnTo0__1YSfh1i8sBjHgdP2rJky4d25b7mmNbRJSHeLDHoIpUSmwb1f5a9ddfiVH0KQZESYJ6d3N99-4NWyZVsKrTGmrQMwf5g8aKRN-2PBg4u4COAvIlf2YmzCZOHDEtTpdQewfKx1a95UrV49w0GyHvyJ9W8Rp66GfEk'); background-size: cover; background-position: center;">
+</div>
+<div class="flex flex-col h-full justify-between relative z-10">
+<div class="max-w-xl">
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-md">
+                                Precision-engineered technical documentation for complex millwork assemblies. Our shop drawings bridge the gap between architectural vision and manufacturing reality.
+                            </p>
+<div class="flex flex-wrap gap-4 mt-8">
+<span class="bg-secondary px-4 py-1 text-white font-technical-label text-caption">SOLID WALNUT</span>
+<span class="bg-secondary px-4 py-1 text-white font-technical-label text-caption">1:10 SCALE</span>
+<span class="bg-secondary px-4 py-1 text-white font-technical-label text-caption">CAD/BIM</span>
+</div>
+</div>
+<!-- Technical SVG Visualization -->
+<div class="mt-stack-lg border-t border-outline-variant/20 pt-8">
+<svg class="w-full h-48 opacity-60 group-hover:opacity-100 transition-opacity duration-500" fill="none" viewbox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+<rect height="100" stroke="currentColor" stroke-width="0.5" width="700" x="50" y="50"></rect>
+<line stroke="currentColor" stroke-width="0.5" x1="50" x2="750" y1="50" y2="150"></line>
+<line stroke="currentColor" stroke-width="0.5" x1="50" x2="750" y1="150" y2="50"></line>
+<circle cx="400" cy="100" r="40" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></circle>
+<path d="M400 20V180M320 100H480" stroke="currentColor" stroke-width="0.2"></path>
+<text class="font-technical-label text-[10px]" fill="currentColor" x="60" y="40">PLAN VIEW — SEC. A-A</text>
+<text class="font-technical-label text-[10px]" fill="currentColor" x="700" y="170">1955-D-01</text>
+</svg>
+</div>
+</div>
+</div>
+<!-- Secondary Info Panel -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<!-- Specification Card -->
+<div class="bg-primary-container p-8 border border-outline-variant/10 h-full flex flex-col justify-between group hover:bg-white transition-all duration-700">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-6">architecture</span>
+<h3 class="font-headline-md text-headline-md serif-text mb-4">Precision Craft</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Our technical drafting department utilizes mid-century rigor combined with contemporary software to produce error-free shop drawings.</p>
+</div>
+<ul class="mt-8 space-y-4">
+<li class="flex items-center font-technical-label text-caption uppercase tracking-wider text-primary">
+<span class="w-2 h-2 bg-secondary mr-3"></span> Architectural Millwork
+                            </li>
+<li class="flex items-center font-technical-label text-caption uppercase tracking-wider text-primary">
+<span class="w-2 h-2 bg-secondary mr-3"></span> Custom Veneer Mapping
+                            </li>
+<li class="flex items-center font-technical-label text-caption uppercase tracking-wider text-primary">
+<span class="w-2 h-2 bg-secondary mr-3"></span> Hardware Integration
+                            </li>
+</ul>
+</div>
+</div>
+<!-- Timeline Component Integration -->
+<div class="col-span-12 mt-stack-lg border-t border-outline-variant/10 pt-16 grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="relative pl-8">
+<div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant"></div>
+<span class="font-headline-md text-headline-md serif-text block mb-2">1955</span>
+<span class="font-technical-label text-caption uppercase tracking-widest text-on-surface-variant">Founding Principles</span>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant"></div>
+<span class="font-headline-md text-headline-md serif-text block mb-2">1982</span>
+<span class="font-technical-label text-caption uppercase tracking-widest text-on-surface-variant">Digital Transition</span>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant"></div>
+<span class="font-headline-md text-headline-md serif-text block mb-2">2008</span>
+<span class="font-technical-label text-caption uppercase tracking-widest text-on-surface-variant">BIM Integration</span>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant"></div>
+<span class="font-headline-md text-headline-md serif-text block mb-2">Present</span>
+<span class="font-technical-label text-caption uppercase tracking-widest text-on-surface-variant">Architectural Mastery</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Call to Action Section -->
+<section class="bg-primary-container py-[160px] px-[80px]">
+<div class="max-w-4xl mx-auto text-center">
+<h2 class="font-headline-lg text-headline-lg serif-text mb-8">Begin the Technical Phase</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">Submit your architectural intent drawings for a comprehensive technical feasibility review and millwork consultation.</p>
+<div class="flex justify-center space-x-6">
+<a href="05-inquiry.html" class="inline-block bg-[#1A1A1A] text-white px-10 py-5 font-technical-label uppercase tracking-widest hover:bg-secondary transition-colors duration-500">Inquire Now</a>
+<a href="04-portfolio.html" class="inline-block border border-[#1A1A1A] text-[#1A1A1A] px-10 py-5 font-technical-label uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition-all duration-500">Download Portfolio</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#1A1A1A] text-[#F5F5F7] py-20 px-[80px] border-t border-[#F5F5F7]/10 flex flex-col md:flex-row justify-between items-end w-full">
+<div class="flex flex-col space-y-8">
+<div class="text-lg font-light tracking-widest text-[#F5F5F7] serif-text uppercase">dwoodline</div>
+<div class="flex space-x-8">
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="01-hero.html">Home</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="02-heritage.html">About</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="04-portfolio.html">Portfolio</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="05-inquiry.html">Contact</a>
+</div>
+</div>
+<div class="mt-8 md:mt-0 text-right">
+<p class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40">© 1955 dwoodline. Architectural Precision.</p>
+</div>
+</footer>
+</body></html>

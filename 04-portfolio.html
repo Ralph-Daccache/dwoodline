@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Noto+Serif:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c6c6c8",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#f0eded",
+                        "surface-container-high": "#eae7e7",
+                        "primary-container": "#f5f5f7",
+                        "secondary": "#705b3f",
+                        "on-surface-variant": "#44474a",
+                        "on-tertiary-container": "#8a6a4a",
+                        "surface-container-low": "#f6f3f2",
+                        "secondary-fixed-dim": "#dec2a0",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dcd9d9",
+                        "on-primary-fixed": "#1a1c1d",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#313030",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#e2e2e4",
+                        "outline-variant": "#c5c7c9",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#6e7072",
+                        "surface-tint": "#5d5e60",
+                        "surface-bright": "#fcf9f8",
+                        "tertiary-fixed": "#ffdcbe",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#e7bf9b",
+                        "on-tertiary-fixed-variant": "#5d4125",
+                        "secondary-container": "#fbdeba",
+                        "surface-variant": "#e5e2e1",
+                        "inverse-primary": "#c6c6c8",
+                        "secondary-fixed": "#fbdeba",
+                        "primary": "#5d5e60",
+                        "tertiary-container": "#fff3eb",
+                        "on-secondary-container": "#776144",
+                        "on-background": "#1c1b1b",
+                        "surface-container-highest": "#e5e2e1",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-tertiary-fixed": "#2b1701",
+                        "surface": "#fcf9f8",
+                        "tertiary": "#77583b",
+                        "on-secondary-fixed-variant": "#574329",
+                        "on-secondary-fixed": "#271904",
+                        "outline": "#75777a",
+                        "on-primary-fixed-variant": "#454749",
+                        "background": "#fcf9f8",
+                        "on-surface": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "section-gap": "160px",
+                        "stack-md": "24px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "stack-lg": "48px",
+                        "margin-page": "80px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["inter"],
+                        "technical-label": ["inter"],
+                        "headline-lg": ["notoSerif"],
+                        "display-hero": ["notoSerif"],
+                        "headline-md": ["notoSerif"],
+                        "body-md": ["inter"],
+                        "caption": ["inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "technical-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "display-hero": ["80px", {"lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "caption": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+        section.snap-target, footer.snap-target {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        /* Specific height adjustments for sections that need to be full viewport */
+        .full-viewport-section {
+            height: 100vh;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        #project-carousel-residential, #project-carousel-hospitality, #project-carousel-commercial {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .carousel-snap-start {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+        @supports (scroll-behavior: smooth) {
+            #project-carousel-residential, #project-carousel-hospitality, #project-carousel-commercial {
+                scroll-behavior: smooth;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased selection:bg-secondary selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80">
+<div class="flex justify-between items-center px-[80px] py-8 w-full">
+<div class="text-2xl font-light tracking-[0.3em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7]">
+                dwoodline
+            </div>
+<div class="hidden md:flex items-center gap-12">
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="01-hero.html">Home</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="02-heritage.html">About</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="03-expertise.html">Services</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7] border-b border-[#1A1A1A] dark:border-[#F5F5F7] pb-1 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="04-portfolio.html">Projects</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="05-inquiry.html">Contact</a>
+</div>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main>
+<!-- Hero Section -->
+<section class="px-[80px] snap-target">
+<div class="flex flex-col gap-unit">
+<span class="font-technical-label text-technical-label text-secondary uppercase tracking-[0.2em]">Portfolio — 2024</span>
+<h1 class="font-display-hero text-display-hero text-on-background">Architectural Narratives</h1>
+</div>
+</section>
+<!-- RESIDENTIAL SECTION -->
+<section class="snap-target">
+<div class="px-[80px] mb-8">
+<h2 class="text-secondary uppercase tracking-[0.4em] border-b border-secondary/20 pb-4 inline-block font-headline-md text-headline-md">Residential</h2>
+</div>
+<div class="relative w-full group/carousel" data-carousel-id="residential">
+<div class="w-full overflow-x-auto no-scrollbar flex h-[70vh] scroll-smooth cursor-grab" id="project-carousel-residential">
+<!-- Project 1: The Obsidian Penthouse -->
+<article class="flex-none w-screen h-full carousel-snap-start relative group overflow-hidden">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img class="w-full h-full object-cover scale-110 transition-transform duration-[3000ms] ease-out group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo9EdbdFsjsDzDV3L5NVDS5FzxmiAGo11Mzbp6B3wMhH3NuaScmGOylEAU8xKpgaSAsr0SNlE0N1XfNfaK_idLfOt0xupZimkCigAgEsiDaLVSSQrg9vshKNIxoZnF1mgb8ZjNQ-TXgOEsKMZjDAkVDQDeLRJiu35GzX_Uomrfm9qIv49Md1Nq-xR-vCB7itKISNwGno7PV2Z0M1RqmE3Wo_FvRY1I_kB-tn6YPJKWkgQ-E-XcecXxz1qi6PV7QvToOr6pZM9bSKQ"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-on-background/80 to-transparent z-10"></div>
+<div class="absolute bottom-16 left-20 z-20 flex flex-col gap-stack-md text-white max-w-2xl">
+<div class="flex items-center gap-4">
+<span class="font-technical-label text-technical-label px-4 py-1 border border-white/20 bg-white/10 backdrop-blur-sm uppercase">Milan, Italy</span>
+<span class="h-[1px] w-12 bg-white/40"></span>
+<span class="font-technical-label text-technical-label text-white/60 uppercase">Year: 2024</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-white">The Obsidian Penthouse</h2>
+<p class="font-body-md text-body-md text-white/70 max-w-lg">A structural dialogue between darkness and light. We sculpted this private residence using Calacatta marble and hand-charred cedar, creating a retreat that defies the urban noise through material silence.</p>
+<div class="mt-stack-sm flex gap-stack-md">
+<button class="bg-white text-on-background px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-colors duration-500">View Project</button>
+<button class="border border-white/30 text-white px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-white/10 transition-colors duration-500">Technical Specs</button>
+</div>
+</div>
+</article>
+<!-- Project 2: Amanita Sky Suites -->
+<article class="flex-none w-screen h-full carousel-snap-start relative group overflow-hidden">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img class="w-full h-full object-cover scale-110 transition-transform duration-[3000ms] ease-out group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtf4BwXmDqgDsLDpb2PepQ_KfmgXtcF8nJ0E6AdDb5i_b-YTvZUe3jKiH7BOty7XMmOq5mW8W_Ows1NtQMxfHwny5cMCVnMUK6XB2nH1O18wmr6M38bIPEBwjQQY2aHdJKeYqA8VAiExkA4NXvSG5kOZ4tgmswTKzSYZYOnlGSzUq4OlkJnmEBuerI63hRqUxwk08NUsz524rFAZnFHzJfxejobeLnSNFi2TzV63ecZm_lCMtnwxg6owocW9ZM7HKFuyTxu1aO-Jk"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-on-background/80 to-transparent z-10"></div>
+<div class="absolute bottom-margin-page left-margin-page z-20 flex flex-col gap-stack-md text-white max-w-2xl">
+<div class="flex items-center gap-4">
+<span class="font-technical-label text-technical-label px-4 py-1 border border-white/20 bg-white/10 backdrop-blur-sm uppercase">Santorini, Greece</span>
+<span class="h-[1px] w-12 bg-white/40"></span>
+<span class="font-technical-label text-technical-label text-white/60 uppercase">Year: 2023</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-white">Amanita Sky Suites</h2>
+<p class="font-body-md text-body-md text-white/70 max-w-lg">Redefining coastal luxury through the lens of tectonic precision. The suites utilize the cliffside's natural basalt geometry to frame the Aegean Sea within monolithic white architectural volumes.</p>
+<div class="mt-stack-sm flex gap-stack-md">
+<button class="bg-white text-on-background px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-colors duration-500">View Project</button>
+<button class="border border-white/30 text-white px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-white/10 transition-colors duration-500">Technical Specs</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Controls -->
+<div class="absolute top-1/2 left-8 -translate-y-1/2 z-30">
+<button class="carousel-prev w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-on-background transition-all duration-300">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+</div>
+<div class="absolute top-1/2 right-8 -translate-y-1/2 z-30">
+<button class="carousel-next w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-on-background transition-all duration-300">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3 carousel-dots">
+<button class="w-2 h-2 rounded-full bg-white ring-4 ring-white/20 transition-all" data-index="0"></button>
+<button class="w-2 h-2 rounded-full bg-white/40 hover:bg-white/60 transition-all" data-index="1"></button>
+</div>
+</div>
+</section>
+<!-- HOSPITALITY SECTION -->
+<section class="snap-target">
+<div class="px-[80px] mb-8">
+<h2 class="text-secondary uppercase tracking-[0.4em] border-b border-secondary/20 pb-4 inline-block font-headline-md text-headline-md">Hospitality</h2>
+</div>
+<div class="relative w-full group/carousel" data-carousel-id="hospitality">
+<div class="w-full overflow-x-auto no-scrollbar flex h-[70vh] scroll-smooth cursor-grab" id="project-carousel-hospitality">
+<!-- Project 1: The Ritz Suites -->
+<article class="flex-none w-screen h-full carousel-snap-start relative group overflow-hidden">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img class="w-full h-full object-cover scale-110 transition-transform duration-[3000ms] ease-out group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ9eRwwgbAKxpxfJ0NERJe8sohHkN1gbBNMtG3bwkzDL3MaSJHuyuZhYpOaJxdEYu65l8WpBfRqm466oD5gzB4VqMsAHXqwWWeU5WxPMYEsRK-MOWtQ_VVJoHLnd3g2TMMk-aiW7PbOkRhwSXPoQgtq6pkVMfJc4U4qz36FFuARV94CXsdrd7X4YyPJqKRavOJxZK_nmIvo7u-wL4ncujMarntjui04YkD8Rjp1BOWN8701UB2VXBS1JKwc1Vcf-sM4Sg4vDZT6us"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-on-background/80 to-transparent z-10"></div>
+<div class="absolute bottom-16 left-20 z-20 flex flex-col gap-stack-md text-white max-w-2xl">
+<div class="flex items-center gap-4">
+<span class="font-technical-label text-technical-label px-4 py-1 border border-white/20 bg-white/10 backdrop-blur-sm uppercase">Paris, France</span>
+<span class="h-[1px] w-12 bg-white/40"></span>
+<span class="font-technical-label text-technical-label text-white/60 uppercase">Year: 2024</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-white">The Ritz Suites</h2>
+<p class="font-body-md text-body-md text-white/70 max-w-lg">A modern interpretation of Parisian grandeur. Integrating silk-panelled walls with brushed brass accents to redefine the classical luxury experience for the 21st century.</p>
+<div class="mt-stack-sm flex gap-stack-md">
+<button class="bg-white text-on-background px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-colors duration-500">View Project</button>
+<button class="border border-white/30 text-white px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-white/10 transition-colors duration-500">Technical Specs</button>
+</div>
+</div>
+</article>
+<!-- Project 2: Zenith Wellness Club -->
+<article class="flex-none w-screen h-full carousel-snap-start relative group overflow-hidden">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img class="w-full h-full object-cover scale-110 transition-transform duration-[3000ms] ease-out group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV8hcd2lzItm6fkkqKcso0XU6Z-dC_Cl0wwnyHNkBlLsLdiOdQt66FCJEK1Fvs7Z47BbU_c17i7C5UfABSZ9IZKEd8xgHOQKgPtfl7kIwZMIQZYtEZL1oM6MCwFTbb02M2GcPZ-elQa1OyXv6cAs6ckvCcGWzMEkM0t2QtthQN-nDb0WHvQHkt7rutbB2xFahP7Fg_W6qQ9klr1j3PjGRh1W6Q_ffEUoOr303N7SG7e7BKD32GYkDkjl6JD85y7NGbciNE0PMoWTo"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-on-background/80 to-transparent z-10"></div>
+<div class="absolute bottom-margin-page left-margin-page z-20 flex flex-col gap-stack-md text-white max-w-2xl">
+<div class="flex items-center gap-4">
+<span class="font-technical-label text-technical-label px-4 py-1 border border-white/20 bg-white/10 backdrop-blur-sm uppercase">Zurich, Switzerland</span>
+<span class="h-[1px] w-12 bg-white/40"></span>
+<span class="font-technical-label text-technical-label text-white/60 uppercase">Year: 2025</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-white">Zenith Wellness Club</h2>
+<p class="font-body-md text-body-md text-white/70 max-w-lg">Minimalist spa architecture focused on light and silence. We utilized sand-blasted glass and rough-hewn granite to create a sensory journey through natural textures.</p>
+<div class="mt-stack-sm flex gap-stack-md">
+<button class="bg-white text-on-background px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-colors duration-500">View Project</button>
+<button class="border border-white/30 text-white px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-white/10 transition-colors duration-500">Technical Specs</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Controls -->
+<div class="absolute top-1/2 left-8 -translate-y-1/2 z-30">
+<button class="carousel-prev w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-on-background transition-all duration-300">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+</div>
+<div class="absolute top-1/2 right-8 -translate-y-1/2 z-30">
+<button class="carousel-next w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-on-background transition-all duration-300">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3 carousel-dots">
+<button class="w-2 h-2 rounded-full bg-white ring-4 ring-white/20 transition-all" data-index="0"></button>
+<button class="w-2 h-2 rounded-full bg-white/40 hover:bg-white/60 transition-all" data-index="1"></button>
+</div>
+</div>
+</section>
+<!-- COMMERCIAL SECTION -->
+<section class="snap-target">
+<div class="px-[80px] mb-8">
+<h2 class="text-secondary uppercase tracking-[0.4em] border-b border-secondary/20 pb-4 inline-block font-headline-md text-headline-md">Commercial</h2>
+</div>
+<div class="relative w-full group/carousel" data-carousel-id="commercial">
+<div class="w-full overflow-x-auto no-scrollbar flex h-[70vh] scroll-smooth cursor-grab" id="project-carousel-commercial">
+<!-- Project 1: Corporate Headquarters -->
+<article class="flex-none w-screen h-full carousel-snap-start relative group overflow-hidden">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img class="w-full h-full object-cover scale-110 transition-transform duration-[3000ms] ease-out group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASEMcfBX8ZALZP_1J47nIfOVsJ8uuK9OzqeTkoskiszglyBjItVcVZ5dq8pHyc2vD5NUi3X30JAMLWYtCjTCZUD_82yzKsmYc4eeUq4B7_m-_TW-zN2m8w1LIutnXYNPzWUV2Jwkn8_z57AX30bc-jOMOAcJX9GqJ8TW9SUSqVPbdpQSkJvt8ZpLZ_iDqL7Fba2S2vzb8zKnIr5SOb6rUNjbwSYwA38RW2iCxuxI_h8nc6PaDRBcb9_QP245hK4Zgbq5BS2w-5h0k"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-on-background/80 to-transparent z-10"></div>
+<div class="absolute bottom-16 left-20 z-20 flex flex-col gap-stack-md text-white max-w-2xl">
+<div class="flex items-center gap-4">
+<span class="font-technical-label text-technical-label px-4 py-1 border border-white/20 bg-white/10 backdrop-blur-sm uppercase">Berlin, Germany</span>
+<span class="h-[1px] w-12 bg-white/40"></span>
+<span class="font-technical-label text-technical-label text-white/60 uppercase">Year: 2024</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-white">Corporate Headquarters</h2>
+<p class="font-body-md text-body-md text-white/70 max-w-lg">A workspace designed for cognitive clarity. We integrated dynamic lighting systems with raw industrial concrete and precision-milled aluminum to foster innovation through environment.</p>
+<div class="mt-stack-sm flex gap-stack-md">
+<button class="bg-white text-on-background px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-colors duration-500">View Project</button>
+<button class="border border-white/30 text-white px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-white/10 transition-colors duration-500">Technical Specs</button>
+</div>
+</div>
+</article>
+<!-- Project 2: The Linear Office -->
+<article class="flex-none w-screen h-full carousel-snap-start relative group overflow-hidden">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img class="w-full h-full object-cover scale-110 transition-transform duration-[3000ms] ease-out group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy3ojPOJRsri6crpJYfpgA1Bp7cjr5d1T6BkbWn5U6W9YXO7waYT1L8ElGVnZAelAcw0jQCxj1cbbmcNNlU34qH-l_7IaYY81EwwdGrFgTWCQHpGaeW3yH_CZ8nrWPwih3mL3sUZIFkitnsWpWcD2pDKnX00oYnPHAq-S0J8g6B97i0kOJD53t3zzxLV74MqY7Fz69byrxDFBXQh_M2GV6T0C23Of4IvUykmlIrA1Yv1aBPbANKPFm7XyEPJwpuhK1_dXFQdXtKbI"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-on-background/80 to-transparent z-10"></div>
+<div class="absolute bottom-margin-page left-margin-page z-20 flex flex-col gap-stack-md text-white max-w-2xl">
+<div class="flex items-center gap-4">
+<span class="font-technical-label text-technical-label px-4 py-1 border border-white/20 bg-white/10 backdrop-blur-sm uppercase">Tokyo, Japan</span>
+<span class="h-[1px] w-12 bg-white/40"></span>
+<span class="font-technical-label text-technical-label text-white/60 uppercase">Year: 2023</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-white">The Linear Office</h2>
+<p class="font-body-md text-body-md text-white/70 max-w-lg">Focusing on horizontal flow. This creative studio utilizes floor-to-ceiling glass and minimal partition walls to create a continuous, breathable environment for collaboration.</p>
+<div class="mt-stack-sm flex gap-stack-md">
+<button class="bg-white text-on-background px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-colors duration-500">View Project</button>
+<button class="border border-white/30 text-white px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-white/10 transition-colors duration-500">Technical Specs</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Controls -->
+<div class="absolute top-1/2 left-8 -translate-y-1/2 z-30">
+<button class="carousel-prev w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-on-background transition-all duration-300">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+</div>
+<div class="absolute top-1/2 right-8 -translate-y-1/2 z-30">
+<button class="carousel-next w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-on-background transition-all duration-300">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3 carousel-dots">
+<button class="w-2 h-2 rounded-full bg-white ring-4 ring-white/20 transition-all" data-index="0"></button>
+<button class="w-2 h-2 rounded-full bg-white/40 hover:bg-white/60 transition-all" data-index="1"></button>
+</div>
+</div>
+</section>
+<!-- Heritage/Expertise Section (Merged for snapping) -->
+<section class="snap-target py-20">
+<!-- Project Stats/Technical Detail Grid -->
+<div class="px-[80px] mb-20 grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-4 border-l border-on-background/10 pl-8 flex flex-col gap-stack-sm">
+<span class="font-technical-label text-technical-label text-secondary uppercase tracking-widest">Global Reach</span>
+<p class="font-headline-md text-headline-md">14 Countries</p>
+<p class="font-body-md text-on-surface-variant">Delivering architectural precision on a global scale, from European capitals to remote island retreats.</p>
+</div>
+<div class="md:col-span-4 border-l border-on-background/10 pl-8 flex flex-col gap-stack-sm">
+<span class="font-technical-label text-technical-label text-secondary uppercase tracking-widest">Materiality</span>
+<p class="font-headline-md text-headline-md">Ethical Sources</p>
+<p class="font-body-md text-on-surface-variant">We partner exclusively with sustainable walnut and marble quarries that respect the heritage of the land.</p>
+</div>
+<div class="md:col-span-4 border-l border-on-background/10 pl-8 flex flex-col gap-stack-sm">
+<span class="font-technical-label text-technical-label text-secondary uppercase tracking-widest">Execution</span>
+<p class="font-headline-md text-headline-md">0.1mm Tolerance</p>
+<p class="font-body-md text-on-surface-variant">Our engineering team ensures every joint and junction meets the mathematical rigor of our blueprints.</p>
+</div>
+</div>
+<!-- Project Grid (Asymmetric Bento) -->
+<div class="px-[80px] grid grid-cols-1 md:grid-cols-3 gap-gutter h-[600px]">
+<div class="relative overflow-hidden group">
+<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV8hcd2lzItm6fkkqKcso0XU6Z-dC_Cl0wwnyHNkBlLsLdiOdQt66FCJEK1Fvs7Z47BbU_c17i7C5UfABSZ9IZKEd8xgHOQKgPtfl7kIwZMIQZYtEZL1oM6MCwFTbb02M2GcPZ-elQa1OyXv6cAs6ckvCcGWzMEkM0t2QtthQN-nDb0WHvQHkt7rutbB2xFahP7Fg_W6qQ9klr1j3PjGRh1W6Q_ffEUoOr303N7SG7e7BKD32GYkDkjl6JD85y7NGbciNE0PMoWTo"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+<span class="font-technical-label text-white uppercase tracking-widest">Case Study: Verticality</span>
+</div>
+</div>
+<div class="md:col-span-2 grid grid-rows-2 gap-gutter">
+<div class="relative overflow-hidden group">
+<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASEMcfBX8ZALZP_1J47nIfOVsJ8uuK9OzqeTkoskiszglyBjItVcVZ5dq8pHyc2vD5NUi3X30JAMLWYtCjTCZUD_82yzKsmYc4eeUq4B7_m-_TW-zN2m8w1LIutnXYNPzWUV2Jwkn8_z57AX30bc-jOMOAcJX9GqJ8TW9SUSqVPbdpQSkJvt8ZpLZ_iDqL7Fba2S2vzb8zKnIr5SOb6rUNjbwSYwA38RW2iCxuxI_h8nc6PaDRBcb9_QP245hK4Zgbq5BS2w-5h0k"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+<span class="font-technical-label text-white uppercase tracking-widest">Material Fusion: Oak &amp; Marble</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-gutter">
+<div class="relative overflow-hidden group">
+<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy3ojPOJRsri6crpJYfpgA1Bp7cjr5d1T6BkbWn5U6W9YXO7waYT1L8ElGVnZAelAcw0jQCxj1cbbmcNNlU34qH-l_7IaYY81EwwdGrFgTWCQHpGaeW3yH_CZ8nrWPwih3mL3sUZIFkitnsWpWcD2pDKnX00oYnPHAq-S0J8g6B97i0kOJD53t3zzxLV74MqY7Fz69byrxDFBXQh_M2GV6T0C23Of4IvUykmlIrA1Yv1aBPbANKPFm7XyEPJwpuhK1_dXFQdXtKbI"/>
+</div>
+<div class="bg-primary-container p-12 flex flex-col justify-between border border-on-background/5">
+<span class="font-technical-label text-secondary uppercase tracking-widest">Next Phase</span>
+<h3 class="font-headline-md text-headline-md">Expanding the Horizon</h3>
+<p class="font-body-md text-on-surface-variant line-clamp-2">Our upcoming 2025 collection explores the intersection of glass fluidity and carbon fiber structural strength.</p>
+<a class="flex items-center gap-2 font-technical-label uppercase tracking-widest text-on-background" href="#">
+                                Learn more
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full snap-target py-20 px-[80px] bg-[#1A1A1A] dark:bg-[#0D0D0D] border-t border-[#F5F5F7]/10 flex flex-col md:flex-row justify-between items-end">
+<div class="flex flex-col gap-8 w-full md:w-auto">
+<div class="text-lg font-light tracking-widest text-[#F5F5F7] uppercase">dwoodline</div>
+<div class="flex flex-wrap gap-8">
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="01-hero.html">Home</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="02-heritage.html">Heritage</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="03-expertise.html">Services</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="05-inquiry.html">Contact</a>
+</div>
+</div>
+<div class="mt-12 md:mt-0 flex flex-col items-end gap-4">
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-[#F5F5F7]/40 hover:text-[#F5F5F7] cursor-pointer">share</span>
+<span class="material-symbols-outlined text-[#F5F5F7]/40 hover:text-[#F5F5F7] cursor-pointer">mail</span>
+</div>
+<div class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40">
+                © 1955 dwoodline. Architectural Precision.
+            </div>
+</div>
+<!-- Image Gallery Modal -->
+<div id="galleryModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+<div class="bg-white max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+<div class="sticky top-0 bg-white p-8 border-b border-on-background/10 flex justify-between items-center">
+<h2 id="modalTitle" class="font-headline-md text-headline-md">Project Gallery</h2>
+<button onclick="closeGalleryModal()" class="text-2xl text-on-background/60 hover:text-on-background">✕</button>
+</div>
+<div class="p-8">
+<div id="galleryGrid" class="grid grid-cols-2 gap-4 mb-8">
+<!-- Images will be loaded here -->
+</div>
+<div class="border-2 border-dashed border-on-background/20 p-8 text-center">
+<input type="file" id="fileInput" multiple accept="image/*" class="hidden">
+<button onclick="document.getElementById('fileInput').click()" class="bg-secondary text-white px-6 py-3 font-technical-label text-technical-label uppercase tracking-widest hover:bg-on-background transition-colors">
++ Add Images
+</button>
+</div>
+</div>
+</div>
+</div>
+
+</footer>
+<script>
+        // Project data for gallery
+        const projects = {
+            'The Obsidian Penthouse': { images: [] },
+            'Amanita Sky Suites': { images: [] },
+            'The Ritz Suites': { images: [] },
+            'Zenith Wellness Club': { images: [] },
+            'Corporate Headquarters': { images: [] },
+            'The Linear Office': { images: [] }
+        };
+
+        // Load projects from localStorage
+        function loadProjects() {
+            const saved = localStorage.getItem('dwoodlineProjects');
+            if (saved) {
+                Object.assign(projects, JSON.parse(saved));
+            }
+        }
+
+        // Save projects to localStorage
+        function saveProjects() {
+            localStorage.setItem('dwoodlineProjects', JSON.stringify(projects));
+        }
+
+        // Open gallery modal
+        function openGalleryModal(projectName) {
+            document.getElementById('modalTitle').textContent = projectName + ' - Gallery';
+            document.getElementById('galleryModal').classList.remove('hidden');
+            renderGallery(projectName);
+
+            // Setup file input
+            const fileInput = document.getElementById('fileInput');
+            fileInput.onchange = function() {
+                handleImageUpload(projectName);
+            };
+        }
+
+        // Close gallery modal
+        function closeGalleryModal() {
+            document.getElementById('galleryModal').classList.add('hidden');
+        }
+
+        // Render gallery images
+        function renderGallery(projectName) {
+            const grid = document.getElementById('galleryGrid');
+            const project = projects[projectName];
+            grid.innerHTML = '';
+
+            if (!project || project.images.length === 0) {
+                grid.innerHTML = '<p class="col-span-2 text-center text-on-surface-variant py-8">No images yet. Add your first project image!</p>';
+            } else {
+                project.images.forEach((image, index) => {
+                    const img = document.createElement('img');
+                    img.src = image;
+                    img.className = 'w-full h-48 object-cover border border-on-background/10 cursor-pointer hover:border-secondary transition-colors';
+                    img.onclick = () => viewImageFullSize(image);
+                    grid.appendChild(img);
+                });
+            }
+        }
+
+        // Handle image upload
+        function handleImageUpload(projectName) {
+            const fileInput = document.getElementById('fileInput');
+            const files = fileInput.files;
+            const project = projects[projectName];
+
+            for (let file of files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (!project.images) project.images = [];
+                    project.images.push(e.target.result);
+                    saveProjects();
+                    renderGallery(projectName);
+                };
+                reader.readAsDataURL(file);
+            }
+
+            fileInput.value = '';
+        }
+
+        // View image fullsize
+        function viewImageFullSize(src) {
+            const viewer = document.createElement('div');
+            viewer.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
+            viewer.onclick = () => viewer.remove();
+
+            const img = document.createElement('img');
+            img.src = src;
+            img.className = 'max-w-full max-h-full object-contain';
+            img.onclick = (e) => e.stopPropagation();
+
+            viewer.appendChild(img);
+            document.body.appendChild(viewer);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProjects();
+
+            // Attach click handlers to "View Project" buttons
+            document.querySelectorAll('button').forEach(btn => {
+                if (btn.textContent.trim() === 'View Project') {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const article = this.closest('article');
+                        const projectName = article.querySelector('h2').textContent;
+                        openGalleryModal(projectName);
+                    });
+                }
+            });
+
+            const carousels = document.querySelectorAll('.group\\/carousel');
+
+            carousels.forEach(container => {
+                const carouselId = container.getAttribute('data-carousel-id');
+                const slider = container.querySelector(`#project-carousel-${carouselId}`);
+                const prevBtn = container.querySelector('.carousel-prev');
+                const nextBtn = container.querySelector('.carousel-next');
+                const dots = container.querySelectorAll('.carousel-dots button');
+
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+                let velocity = 0;
+                let lastX = 0;
+                let animationId = null;
+
+                const scrollToSlide = (index) => {
+                    const slideWidth = slider.clientWidth;
+                    slider.scrollTo({
+                        left: index * slideWidth,
+                        behavior: 'smooth'
+                    });
+                };
+
+                // Button Listeners
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const index = Math.round(slider.scrollLeft / slider.clientWidth);
+                        scrollToSlide(Math.max(0, index - 1));
+                    });
+                }
+
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const index = Math.round(slider.scrollLeft / slider.clientWidth);
+                        scrollToSlide(Math.min(dots.length - 1, index + 1));
+                    });
+                }
+
+                // Dot Listeners
+                dots.forEach(dot => {
+                    dot.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        scrollToSlide(parseInt(dot.dataset.index));
+                    });
+                });
+
+                // Swipe Logic with Momentum
+                slider.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    slider.style.cursor = 'grabbing';
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+                    lastX = e.pageX;
+                    slider.style.scrollSnapType = 'none';
+                    slider.style.scrollBehavior = 'auto';
+                    cancelAnimationFrame(animationId);
+                });
+
+                const endDrag = () => {
+                    if (!isDown) return;
+                    isDown = false;
+                    slider.style.cursor = 'grab';
+                    
+                    // Determine target based on velocity and position
+                    const slideWidth = slider.clientWidth;
+                    const currentScroll = slider.scrollLeft;
+                    let targetIndex = Math.round(currentScroll / slideWidth);
+                    
+                    // Add momentum bias
+                    if (Math.abs(velocity) > 5) {
+                        targetIndex = velocity > 0 ? Math.floor(currentScroll / slideWidth) : Math.ceil(currentScroll / slideWidth);
+                    }
+
+                    slider.style.scrollSnapType = 'x mandatory';
+                    slider.style.scrollBehavior = 'smooth';
+                    scrollToSlide(Math.min(Math.max(0, targetIndex), dots.length - 1));
+                };
+
+                slider.addEventListener('mouseleave', endDrag);
+                slider.addEventListener('mouseup', endDrag);
+
+                slider.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 1.5; // Slightly boosted for responsiveness
+                    slider.scrollLeft = scrollLeft - walk;
+                    
+                    velocity = e.pageX - lastX;
+                    lastX = e.pageX;
+                });
+
+                // Update Dots with Intersection Observer or Scroll Event
+                const updateDots = () => {
+                    const index = Math.round(slider.scrollLeft / slider.clientWidth);
+                    dots.forEach((dot, i) => {
+                        if (i === index) {
+                            dot.classList.add('bg-white', 'ring-4', 'ring-white/20');
+                            dot.classList.remove('bg-white/40');
+                        } else {
+                            dot.classList.remove('bg-white', 'ring-4', 'ring-white/20');
+                            dot.classList.add('bg-white/40');
+                        }
+                    });
+                };
+
+                slider.addEventListener('scroll', updateDots);
+                window.addEventListener('resize', () => {
+                    const index = Math.round(slider.scrollLeft / slider.clientWidth);
+                    scrollToSlide(index);
+                });
+            });
+        });
+    </script>
+</body></html>

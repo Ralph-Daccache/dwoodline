@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Noto+Serif:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c6c6c8",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#f0eded",
+                        "surface-container-high": "#eae7e7",
+                        "primary-container": "#f5f5f7",
+                        "secondary": "#705b3f",
+                        "on-surface-variant": "#44474a",
+                        "on-tertiary-container": "#8a6a4a",
+                        "surface-container-low": "#f6f3f2",
+                        "secondary-fixed-dim": "#dec2a0",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dcd9d9",
+                        "on-primary-fixed": "#1a1c1d",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#313030",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#e2e2e4",
+                        "outline-variant": "#c5c7c9",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#6e7072",
+                        "surface-tint": "#5d5e60",
+                        "surface-bright": "#fcf9f8",
+                        "tertiary-fixed": "#ffdcbe",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#e7bf9b",
+                        "on-tertiary-fixed-variant": "#5d4125",
+                        "secondary-container": "#fbdeba",
+                        "surface-variant": "#e5e2e1",
+                        "inverse-primary": "#c6c6c8",
+                        "secondary-fixed": "#fbdeba",
+                        "primary": "#5d5e60",
+                        "tertiary-container": "#fff3eb",
+                        "on-secondary-container": "#776144",
+                        "on-background": "#1c1b1b",
+                        "surface-container-highest": "#e5e2e1",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-tertiary-fixed": "#2b1701",
+                        "surface": "#fcf9f8",
+                        "tertiary": "#77583b",
+                        "on-secondary-fixed-variant": "#574329",
+                        "on-secondary-fixed": "#271904",
+                        "outline": "#75777a",
+                        "on-primary-fixed-variant": "#454749",
+                        "background": "#fcf9f8",
+                        "on-surface": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "section-gap": "160px",
+                        "stack-md": "24px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "stack-lg": "48px",
+                        "margin-page": "80px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["inter"],
+                        "technical-label": ["inter"],
+                        "headline-lg": ["Noto Serif"],
+                        "display-hero": ["Noto Serif"],
+                        "headline-md": ["Noto Serif"],
+                        "body-md": ["inter"],
+                        "caption": ["inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "technical-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "display-hero": ["80px", {"lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "caption": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            scroll-padding-top: 0;
+        }
+
+        body {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        .snap-target {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            scroll-margin-top: 0;
+            position: relative;
+            opacity: 0;
+        }
+
+        .snap-target.visible {
+            animation: fadeInSmooth 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes fadeInSmooth {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth content animations */
+        .snap-target > * {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .snap-target.visible > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger animations for child elements */
+        .snap-target.visible > *:nth-child(1) { transition-delay: 0.1s; }
+        .snap-target.visible > *:nth-child(2) { transition-delay: 0.2s; }
+        .snap-target.visible > *:nth-child(3) { transition-delay: 0.3s; }
+
+        .hero-zoom {
+            background-size: 110% 110%;
+            transition: background-size 10s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-zoom:hover {
+            background-size: 100% 100%;
+        }
+
+        footer {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            scroll-margin-top: 80px;
+        }
+
+        /* Scroll Indicator Animation */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 40;
+        }
+
+        .scroll-line {
+            animation: scrollLine 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes scrollLine {
+            0% {
+                height: 0;
+                opacity: 0.3;
+            }
+            40% {
+                height: 100%;
+                opacity: 1;
+            }
+            100% {
+                height: 0;
+                opacity: 0.3;
+            }
+        }
+
+        /* Section progress indicator */
+        .section-progress {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 16px;
+        }
+
+        .progress-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: currentColor;
+            opacity: 0.3;
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: scale(1);
+        }
+
+        .progress-dot.active {
+            opacity: 1;
+            transform: scale(1.4);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-[80px] py-8 w-full">
+<div class="text-2xl font-light tracking-[0.3em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7]">
+            dwoodline
+        </div>
+<div class="hidden md:flex items-center gap-stack-lg">
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7] border-b border-[#1A1A1A] dark:border-[#F5F5F7] pb-1 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="01-hero.html">Home</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="02-heritage.html">About</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="03-expertise.html">Services</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="04-portfolio.html">Projects</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="05-inquiry.html">Contact</a>
+</div>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="w-full">
+<!-- Hero Section -->
+<section class="snap-target relative w-full flex items-center justify-center overflow-hidden py-20">
+<!-- Video Background -->
+<video class="absolute inset-0 z-0 w-full h-full object-cover" autoplay muted loop playsinline>
+<source src="https://videos.pexels.com/video-files/3571904/3571904-uhd_2560_1440_30fps.mp4" type="video/mp4">
+<source src="https://videos.pexels.com/video-files/3571904/3571904-uhd_2560_1440_30fps.webm" type="video/webm">
+Your browser does not support the video tag.
+</video>
+<!-- Overlay for depth -->
+<div class="absolute inset-0 bg-white/10 backdrop-contrast-75"></div>
+<!-- Content Overlay -->
+<div class="relative z-10 text-center px-margin-page py-40 max-w-4xl mx-auto">
+<div class="space-y-stack-md">
+<h1 class="font-display-hero text-display-hero text-on-surface tracking-[-0.04em] mix-blend-multiply">
+                        dwoodline
+                    </h1>
+<p class="font-technical-label text-technical-label uppercase tracking-[0.4em] text-on-surface-variant">
+                        Architectural Woodwork Since 1955
+                    </p>
+</div>
+<!-- CTA Area -->
+<div class="mt-stack-lg flex flex-col md:flex-row items-center justify-center gap-gutter">
+<a href="04-portfolio.html" class="inline-block bg-[#1A1A1A] text-white px-stack-lg py-4 font-technical-label uppercase tracking-widest hover:bg-[#705b3f] transition-colors duration-500 rounded-none">
+                        View Portfolio
+                    </a>
+<a href="03-expertise.html" class="inline-block border border-[#1A1A1A] text-[#1A1A1A] px-stack-lg py-4 font-technical-label uppercase tracking-widest hover:bg-[#F5F5F7] transition-colors duration-500 rounded-none">
+                        Our Process
+                    </a>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="scroll-indicator flex flex-col items-center gap-4 text-on-surface-variant">
+<div class="w-[2px] h-16 bg-on-surface-variant/40 relative overflow-hidden rounded-full">
+<div class="scroll-line absolute top-0 left-0 w-full bg-on-surface-variant rounded-full"></div>
+</div>
+<span class="font-technical-label text-technical-label uppercase tracking-widest text-on-surface-variant font-light text-[11px]">Scroll</span>
+<div class="section-progress">
+<div class="progress-dot active"></div>
+<div class="progress-dot"></div>
+<div class="progress-dot"></div>
+</div>
+</div>
+</section>
+<!-- Feature Section: The Grid of Materiality -->
+<section class="snap-target px-margin-page bg-surface flex flex-col items-start justify-start pt-32 pb-4">
+<div class="w-full max-w-6xl">
+<div class="mb-stack-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-stack-sm">Structural Minimalism meets Heritage.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Our practice is rooted in the mathematical intent of architectural blueprints. We utilize Calacatta marble and premium walnut to create spaces that define authority through quiet precision.</p>
+</div>
+<div class="grid grid-cols-12 gap-gutter items-stretch mb-stack-lg">
+<div class="col-span-12 md:col-span-7 aspect-[16/9] bg-surface-container overflow-hidden group">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" data-alt="A wide-angle shot of a minimalist bespoke kitchen featuring floor-to-ceiling walnut cabinetry and a massive Calacatta marble island. The lighting is natural, streaming in from large unseen windows to create soft shadows. The design is rigorous and architectural, with perfectly aligned vertical lines and a complete absence of decorative clutter. The space feels expensive and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9odQsBgZudrfZXPYsu9JhpTZNGzUVwjudFCK1BbpMjNEJ7CgPV1e7qcKkxFlAFSANtoepzO7i1q4TcCEp83x2cJFIahBae3Hgugk3BzjKh67cXzMHb8uJVLPjEDU3cdBJlIXcxEpqZPCAqgRJnwKJmLQ9lql9xm7Pc-UwccHxREBkcWjKySAy7V0ZEQDE42jxHARuUE0-DmJSx0jBFGxRtYwcw45UYgXN6uI3ZNY5diEIFLgUmmbcG53T1fg4uEDPuPwJwl3pdJI"/>
+</div>
+<div class="col-span-12 md:col-span-5 flex flex-col gap-stack-md">
+<!-- Founded Info -->
+<div class="text-right border-l border-outline-variant/30 pl-stack-md">
+<span class="font-headline-md text-headline-md block">1955</span>
+<span class="font-technical-label text-technical-label uppercase tracking-tighter text-on-surface-variant">Founded in Michigan</span>
+</div>
+<!-- Project Card -->
+<div class="flex flex-col justify-between p-stack-md border border-outline-variant/10 bg-surface-container-low h-full">
+<div>
+<span class="font-technical-label text-technical-label bg-secondary text-white px-3 py-1 mb-stack-sm inline-block">Solid Walnut</span>
+<h3 class="font-headline-md text-body-lg font-bold mt-stack-sm">The Heritage Library</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-stack-sm text-sm">
+Structural black aluminum inserts supporting cantilevered oak shelving.
+</p>
+</div>
+<div class="pt-stack-md border-t border-outline-variant/20 mt-auto">
+<a class="font-technical-label text-technical-label uppercase tracking-widest flex items-center gap-unit group text-xs" href="#">
+Explore Project
+<span class="material-symbols-outlined text-[14px] group-hover:translate-x-2 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Specification Section -->
+<section class="snap-target bg-[#1A1A1A] text-[#F5F5F7] px-margin-page flex items-start justify-start pt-40 pb-20">
+<div class="w-full max-w-6xl">
+<div class="flex flex-col md:flex-row justify-between items-start gap-stack-lg">
+<div class="max-w-xl">
+<span class="font-technical-label text-technical-label text-secondary-fixed-dim uppercase tracking-[0.2em]">Material Integrity</span>
+<h2 class="font-display-hero text-headline-lg mt-stack-sm leading-tight">Calculated Elegance.</h2>
+</div>
+<div class="grid grid-cols-2 gap-x-gutter gap-y-stack-lg w-full md:w-auto">
+<div>
+<p class="font-technical-label text-[10px] text-[#F5F5F7]/40 uppercase mb-unit">Precision</p>
+<p class="font-body-md text-body-md">0.01mm Tolerance</p>
+</div>
+<div>
+<p class="font-technical-label text-[10px] text-[#F5F5F7]/40 uppercase mb-unit">Sourcing</p>
+<p class="font-body-md text-body-md">Certified Walnut</p>
+</div>
+<div>
+<p class="font-technical-label text-[10px] text-[#F5F5F7]/40 uppercase mb-unit">Finish</p>
+<p class="font-body-md text-body-md">Matte Aluminum</p>
+</div>
+<div>
+<p class="font-technical-label text-[10px] text-[#F5F5F7]/40 uppercase mb-unit">Heritage</p>
+<p class="font-body-md text-body-md">Since 1955</p>
+</div>
+</div>
+</div>
+<div class="mt-section-gap grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="border border-[#F5F5F7]/10 p-stack-lg group hover:bg-[#F5F5F7]/5 transition-colors duration-500">
+<span class="material-symbols-outlined text-4xl mb-stack-md" data-icon="architecture">architecture</span>
+<h4 class="font-headline-md text-body-lg font-bold mb-stack-sm">Drafting</h4>
+<p class="font-body-md text-body-md text-[#F5F5F7]/60">Every project begins with a 1:1 scale blueprint analysis to ensure structural viability.</p>
+</div>
+<div class="border border-[#F5F5F7]/10 p-stack-lg group hover:bg-[#F5F5F7]/5 transition-colors duration-500">
+<span class="material-symbols-outlined text-4xl mb-stack-md" data-icon="precision_manufacturing">precision_manufacturing</span>
+<h4 class="font-headline-md text-body-lg font-bold mb-stack-sm">Milling</h4>
+<p class="font-body-md text-body-md text-[#F5F5F7]/60">State-of-the-art CNC precision meets the steady hand of a master carpenter.</p>
+</div>
+<div class="border border-[#F5F5F7]/10 p-stack-lg group hover:bg-[#F5F5F7]/5 transition-colors duration-500">
+<span class="material-symbols-outlined text-4xl mb-stack-md" data-icon="verified_user">verified_user</span>
+<h4 class="font-headline-md text-body-lg font-bold mb-stack-sm">Longevity</h4>
+<p class="font-body-md text-body-md text-[#F5F5F7]/60">Our joinery is designed to outlast the structure it inhabits, guaranteed for decades.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-20 px-[80px] bg-[#1A1A1A] dark:bg-[#0D0D0D] flex flex-col md:flex-row justify-between items-end border-t border-[#F5F5F7]/10">
+<div class="flex flex-col gap-stack-md items-start w-full md:w-auto">
+<div class="text-lg font-light tracking-widest text-[#F5F5F7]">dwoodline</div>
+<p class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40">
+                © 1955 dwoodline. Architectural Precision.
+            </p>
+</div>
+<div class="flex flex-wrap gap-gutter mt-stack-lg md:mt-0">
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="02-heritage.html">Heritage</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="03-expertise.html">Expertise</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="04-portfolio.html">Portfolio</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="05-inquiry.html">Contact</a>
+</div>
+</footer>
+<script>
+    // Smooth fade animations with Intersection Observer
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    // Observe all snap-target sections
+    document.querySelectorAll('.snap-target').forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+    // Update progress dots on scroll
+    function updateProgressDots() {
+        const sections = document.querySelectorAll('.snap-target');
+        const dots = document.querySelectorAll('.progress-dot');
+
+        let currentSection = 0;
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+        sections.forEach((section, index) => {
+            const sectionTop = section.offsetTop;
+            const sectionBottom = sectionTop + section.offsetHeight;
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                currentSection = index;
+            }
+        });
+
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSection);
+        });
+    }
+
+    // Smooth scroll handler with debouncing
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            updateProgressDots();
+        }, 10);
+    }, { passive: true });
+
+    // Initial update
+    updateProgressDots();
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+</body></html>
