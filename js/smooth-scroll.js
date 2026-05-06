@@ -1,15 +1,16 @@
-// Minotti-style Luxury Scrolling Experience with Lenis + GSAP
+// Ultra-Smooth Luxury Scrolling - Minotti Style
+// No snap behavior - pure flowing elegance
 
-// Initialize Lenis for smooth scrolling
 const lenis = new Lenis({
-    lerp: 0.15, // Slower, heavier, more luxurious feel (increased from 0.08)
-    wheelMultiplier: 0.8, // Reduce scroll responsiveness
+    lerp: 0.25, // Much higher = ultra smooth, flowing (like silk)
+    wheelMultiplier: 0.6, // Very reduced responsiveness
     smoothWheel: true,
     smoothTouch: false,
-    duration: 1.5, // Increase scroll duration
+    duration: 1.8, // Increased duration
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing
 });
 
-// Connect Lenis to ScrollTrigger
+// Connect to ScrollTrigger
 lenis.on('scroll', ScrollTrigger.update);
 
 gsap.ticker.add((time) => {
@@ -18,9 +19,8 @@ gsap.ticker.add((time) => {
 
 gsap.ticker.lagSmoothing(0);
 
-// ==================== Image Parallax with Zoom Reveal ====================
+// ==================== Image Parallax ====================
 gsap.utils.toArray('img[data-parallax]').forEach((image) => {
-    // Initial zoom-out reveal
     gsap.fromTo(image,
         {
             scale: 1.08,
@@ -29,8 +29,8 @@ gsap.utils.toArray('img[data-parallax]').forEach((image) => {
         {
             scale: 1,
             opacity: 1,
-            duration: 2, // Slower reveal (increased from 1.5)
-            ease: 'power2.out',
+            duration: 2.2,
+            ease: 'power1.inOut',
             scrollTrigger: {
                 trigger: image,
                 start: 'top bottom',
@@ -39,22 +39,22 @@ gsap.utils.toArray('img[data-parallax]').forEach((image) => {
         }
     );
 
-    // Parallax effect - image moves slower than page scroll
     ScrollTrigger.create({
         trigger: image,
         start: 'top center',
         end: 'bottom center',
         onUpdate: (self) => {
             gsap.to(image, {
-                y: self.getVelocity() * -0.15,
-                duration: 0.7,
+                y: self.getVelocity() * -0.12,
+                duration: 1,
+                ease: 'power1.inOut',
                 overwrite: 'auto',
             });
         },
     });
 });
 
-// ==================== Text Fade + Slide Up Animations ====================
+// ==================== Text Fade + Slide Up ====================
 gsap.utils.toArray('[data-fade-in]').forEach((element) => {
     gsap.fromTo(element,
         {
@@ -64,8 +64,8 @@ gsap.utils.toArray('[data-fade-in]').forEach((element) => {
         {
             opacity: 1,
             y: 0,
-            duration: 1.3, // Slower (increased from 1)
-            ease: 'power2.out',
+            duration: 1.6,
+            ease: 'power1.inOut',
             scrollTrigger: {
                 trigger: element,
                 start: 'top 80%',
@@ -75,7 +75,7 @@ gsap.utils.toArray('[data-fade-in]').forEach((element) => {
     );
 });
 
-// ==================== Staggered Element Reveals ====================
+// ==================== Staggered Reveals ====================
 gsap.utils.toArray('[data-stagger-group]').forEach((group) => {
     const children = group.querySelectorAll('[data-stagger-item]');
 
@@ -87,9 +87,9 @@ gsap.utils.toArray('[data-stagger-group]').forEach((group) => {
         {
             opacity: 1,
             y: 0,
-            duration: 1, // Slower reveal
-            stagger: 0.2, // Increased delay between items
-            ease: 'power2.out',
+            duration: 1.2,
+            stagger: 0.25,
+            ease: 'power1.inOut',
             scrollTrigger: {
                 trigger: group,
                 start: 'top 75%',
@@ -98,7 +98,7 @@ gsap.utils.toArray('[data-stagger-group]').forEach((group) => {
     );
 });
 
-// ==================== Heading Animations ====================
+// ==================== Headings ====================
 gsap.utils.toArray('h1, h2, h3').forEach((heading) => {
     if (!heading.closest('[data-no-animate]')) {
         gsap.fromTo(heading,
@@ -109,8 +109,8 @@ gsap.utils.toArray('h1, h2, h3').forEach((heading) => {
             {
                 opacity: 1,
                 y: 0,
-                duration: 1.4, // Slower (increased from 1.2)
-                ease: 'power3.out',
+                duration: 1.6,
+                ease: 'power1.inOut',
                 scrollTrigger: {
                     trigger: heading,
                     start: 'top 85%',
@@ -120,7 +120,7 @@ gsap.utils.toArray('h1, h2, h3').forEach((heading) => {
     }
 });
 
-// ==================== Image Container Animations ====================
+// ==================== Image Reveals ====================
 gsap.utils.toArray('[data-image-reveal]').forEach((container) => {
     const img = container.querySelector('img');
 
@@ -133,8 +133,8 @@ gsap.utils.toArray('[data-image-reveal]').forEach((container) => {
             {
                 scale: 1,
                 opacity: 1,
-                duration: 1.8, // Slower (increased from 1.5)
-                ease: 'power2.out',
+                duration: 2,
+                ease: 'power1.inOut',
                 scrollTrigger: {
                     trigger: container,
                     start: 'top 70%',
@@ -144,23 +144,23 @@ gsap.utils.toArray('[data-image-reveal]').forEach((container) => {
     }
 });
 
-// ==================== Button Hover Effects ====================
+// ==================== Button Hover ====================
 gsap.utils.toArray('a[href], button').forEach((button) => {
     button.addEventListener('mouseenter', () => {
         gsap.to(button, {
-            scale: 1.03, // Subtle scale
-            duration: 0.4, // Slower hover
-            ease: 'power2.out',
+            scale: 1.02,
+            duration: 0.5,
+            ease: 'power1.inOut',
         });
     });
 
     button.addEventListener('mouseleave', () => {
         gsap.to(button, {
             scale: 1,
-            duration: 0.4,
-            ease: 'power2.out',
+            duration: 0.5,
+            ease: 'power1.inOut',
         });
     });
 });
 
-console.log('✨ Ultra-smooth Minotti-style luxury scrolling initialized');
+console.log('✨ Pure flowing luxury scrolling initialized - like silk');
