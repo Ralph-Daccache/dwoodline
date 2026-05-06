@@ -7,6 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Lenis Smooth Scroll Library -->
+<script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@latest"></script>
+<!-- GSAP Animation Library with ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -298,7 +303,7 @@ Your browser does not support the video tag.
 </div>
 <div class="grid grid-cols-12 gap-gutter items-stretch mb-stack-lg">
 <div class="col-span-12 md:col-span-7 aspect-[16/9] bg-surface-container overflow-hidden group">
-<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" data-alt="A wide-angle shot of a minimalist bespoke kitchen featuring floor-to-ceiling walnut cabinetry and a massive Calacatta marble island. The lighting is natural, streaming in from large unseen windows to create soft shadows. The design is rigorous and architectural, with perfectly aligned vertical lines and a complete absence of decorative clutter. The space feels expensive and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9odQsBgZudrfZXPYsu9JhpTZNGzUVwjudFCK1BbpMjNEJ7CgPV1e7qcKkxFlAFSANtoepzO7i1q4TcCEp83x2cJFIahBae3Hgugk3BzjKh67cXzMHb8uJVLPjEDU3cdBJlIXcxEpqZPCAqgRJnwKJmLQ9lql9xm7Pc-UwccHxREBkcWjKySAy7V0ZEQDE42jxHARuUE0-DmJSx0jBFGxRtYwcw45UYgXN6uI3ZNY5diEIFLgUmmbcG53T1fg4uEDPuPwJwl3pdJI"/>
+<img data-parallax class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" data-alt="A wide-angle shot of a minimalist bespoke kitchen featuring floor-to-ceiling walnut cabinetry and a massive Calacatta marble island. The lighting is natural, streaming in from large unseen windows to create soft shadows. The design is rigorous and architectural, with perfectly aligned vertical lines and a complete absence of decorative clutter. The space feels expensive and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9odQsBgZudrfZXPYsu9JhpTZNGzUVwjudFCK1BbpMjNEJ7CgPV1e7qcKkxFlAFSANtoepzO7i1q4TcCEp83x2cJFIahBae3Hgugk3BzjKh67cXzMHb8uJVLPjEDU3cdBJlIXcxEpqZPCAqgRJnwKJmLQ9lql9xm7Pc-UwccHxREBkcWjKySAy7V0ZEQDE42jxHARuUE0-DmJSx0jBFGxRtYwcw45UYgXN6uI3ZNY5diEIFLgUmmbcG53T1fg4uEDPuPwJwl3pdJI"/>
 </div>
 <div class="col-span-12 md:col-span-5 flex flex-col gap-stack-md">
 <!-- Founded Info -->
@@ -451,4 +456,5 @@ Explore Project
         });
     });
 </script>
+<script src="js/smooth-scroll.js"></script>
 </body></html>
