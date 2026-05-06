@@ -1,11 +1,11 @@
-// Ultra-Calm Luxury Scrolling - Maximum Smoothness
+// Smooth Snap Scrolling - Calm Section Transitions
 
 const lenis = new Lenis({
-    lerp: 0.35, // Maximum smoothness - very slow, deliberate
-    wheelMultiplier: 0.4, // Extremely reduced - barely responsive
+    lerp: 0.32, // Smooth momentum for snap transitions
+    wheelMultiplier: 0.5, // Controlled snap speed
     smoothWheel: true,
     smoothTouch: false,
-    duration: 2.2, // Very leisurely
+    duration: 2, // Smooth snap duration
 });
 
 // Connect to ScrollTrigger
@@ -27,7 +27,7 @@ gsap.utils.toArray('img[data-parallax]').forEach((image) => {
         {
             scale: 1,
             opacity: 1,
-            duration: 2.8,
+            duration: 2.4,
             ease: 'sine.inOut',
             scrollTrigger: {
                 trigger: image,
@@ -43,8 +43,8 @@ gsap.utils.toArray('img[data-parallax]').forEach((image) => {
         end: 'bottom center',
         onUpdate: (self) => {
             gsap.to(image, {
-                y: self.getVelocity() * -0.08,
-                duration: 1.2,
+                y: self.getVelocity() * -0.1,
+                duration: 1,
                 ease: 'sine.inOut',
                 overwrite: 'auto',
             });
@@ -62,7 +62,7 @@ gsap.utils.toArray('[data-fade-in]').forEach((element) => {
         {
             opacity: 1,
             y: 0,
-            duration: 2,
+            duration: 1.8,
             ease: 'sine.inOut',
             scrollTrigger: {
                 trigger: element,
@@ -85,8 +85,8 @@ gsap.utils.toArray('[data-stagger-group]').forEach((group) => {
         {
             opacity: 1,
             y: 0,
-            duration: 1.4,
-            stagger: 0.3,
+            duration: 1.3,
+            stagger: 0.2,
             ease: 'sine.inOut',
             scrollTrigger: {
                 trigger: group,
@@ -102,12 +102,12 @@ gsap.utils.toArray('h1, h2, h3').forEach((heading) => {
         gsap.fromTo(heading,
             {
                 opacity: 0,
-                y: 30,
+                y: 25,
             },
             {
                 opacity: 1,
                 y: 0,
-                duration: 2.2,
+                duration: 1.8,
                 ease: 'sine.inOut',
                 scrollTrigger: {
                     trigger: heading,
@@ -131,7 +131,7 @@ gsap.utils.toArray('[data-image-reveal]').forEach((container) => {
             {
                 scale: 1,
                 opacity: 1,
-                duration: 2.6,
+                duration: 2.2,
                 ease: 'sine.inOut',
                 scrollTrigger: {
                     trigger: container,
@@ -146,8 +146,8 @@ gsap.utils.toArray('[data-image-reveal]').forEach((container) => {
 gsap.utils.toArray('a[href], button').forEach((button) => {
     button.addEventListener('mouseenter', () => {
         gsap.to(button, {
-            scale: 1.01,
-            duration: 0.6,
+            scale: 1.02,
+            duration: 0.5,
             ease: 'sine.inOut',
         });
     });
@@ -155,10 +155,10 @@ gsap.utils.toArray('a[href], button').forEach((button) => {
     button.addEventListener('mouseleave', () => {
         gsap.to(button, {
             scale: 1,
-            duration: 0.6,
+            duration: 0.5,
             ease: 'sine.inOut',
         });
     });
 });
 
-console.log('✨ Calm, serene luxury scrolling - pure elegance');
+console.log('✨ Smooth snap scrolling - calm section transitions');
