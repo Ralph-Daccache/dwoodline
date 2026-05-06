@@ -1,13 +1,11 @@
-// Ultra-Smooth Luxury Scrolling - Minotti Style
-// No snap behavior - pure flowing elegance
+// Ultra-Calm Luxury Scrolling - Maximum Smoothness
 
 const lenis = new Lenis({
-    lerp: 0.25, // Much higher = ultra smooth, flowing (like silk)
-    wheelMultiplier: 0.6, // Very reduced responsiveness
+    lerp: 0.35, // Maximum smoothness - very slow, deliberate
+    wheelMultiplier: 0.4, // Extremely reduced - barely responsive
     smoothWheel: true,
     smoothTouch: false,
-    duration: 1.8, // Increased duration
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing
+    duration: 2.2, // Very leisurely
 });
 
 // Connect to ScrollTrigger
@@ -23,14 +21,14 @@ gsap.ticker.lagSmoothing(0);
 gsap.utils.toArray('img[data-parallax]').forEach((image) => {
     gsap.fromTo(image,
         {
-            scale: 1.08,
-            opacity: 0.85,
+            scale: 1.05,
+            opacity: 0.9,
         },
         {
             scale: 1,
             opacity: 1,
-            duration: 2.2,
-            ease: 'power1.inOut',
+            duration: 2.8,
+            ease: 'sine.inOut',
             scrollTrigger: {
                 trigger: image,
                 start: 'top bottom',
@@ -45,9 +43,9 @@ gsap.utils.toArray('img[data-parallax]').forEach((image) => {
         end: 'bottom center',
         onUpdate: (self) => {
             gsap.to(image, {
-                y: self.getVelocity() * -0.12,
-                duration: 1,
-                ease: 'power1.inOut',
+                y: self.getVelocity() * -0.08,
+                duration: 1.2,
+                ease: 'sine.inOut',
                 overwrite: 'auto',
             });
         },
@@ -59,13 +57,13 @@ gsap.utils.toArray('[data-fade-in]').forEach((element) => {
     gsap.fromTo(element,
         {
             opacity: 0,
-            y: 40,
+            y: 20,
         },
         {
             opacity: 1,
             y: 0,
-            duration: 1.6,
-            ease: 'power1.inOut',
+            duration: 2,
+            ease: 'sine.inOut',
             scrollTrigger: {
                 trigger: element,
                 start: 'top 80%',
@@ -82,14 +80,14 @@ gsap.utils.toArray('[data-stagger-group]').forEach((group) => {
     gsap.fromTo(children,
         {
             opacity: 0,
-            y: 50,
+            y: 25,
         },
         {
             opacity: 1,
             y: 0,
-            duration: 1.2,
-            stagger: 0.25,
-            ease: 'power1.inOut',
+            duration: 1.4,
+            stagger: 0.3,
+            ease: 'sine.inOut',
             scrollTrigger: {
                 trigger: group,
                 start: 'top 75%',
@@ -104,13 +102,13 @@ gsap.utils.toArray('h1, h2, h3').forEach((heading) => {
         gsap.fromTo(heading,
             {
                 opacity: 0,
-                y: 60,
+                y: 30,
             },
             {
                 opacity: 1,
                 y: 0,
-                duration: 1.6,
-                ease: 'power1.inOut',
+                duration: 2.2,
+                ease: 'sine.inOut',
                 scrollTrigger: {
                     trigger: heading,
                     start: 'top 85%',
@@ -127,14 +125,14 @@ gsap.utils.toArray('[data-image-reveal]').forEach((container) => {
     if (img) {
         gsap.fromTo(img,
             {
-                scale: 1.12,
+                scale: 1.08,
                 opacity: 0,
             },
             {
                 scale: 1,
                 opacity: 1,
-                duration: 2,
-                ease: 'power1.inOut',
+                duration: 2.6,
+                ease: 'sine.inOut',
                 scrollTrigger: {
                     trigger: container,
                     start: 'top 70%',
@@ -148,19 +146,19 @@ gsap.utils.toArray('[data-image-reveal]').forEach((container) => {
 gsap.utils.toArray('a[href], button').forEach((button) => {
     button.addEventListener('mouseenter', () => {
         gsap.to(button, {
-            scale: 1.02,
-            duration: 0.5,
-            ease: 'power1.inOut',
+            scale: 1.01,
+            duration: 0.6,
+            ease: 'sine.inOut',
         });
     });
 
     button.addEventListener('mouseleave', () => {
         gsap.to(button, {
             scale: 1,
-            duration: 0.5,
-            ease: 'power1.inOut',
+            duration: 0.6,
+            ease: 'sine.inOut',
         });
     });
 });
 
-console.log('✨ Pure flowing luxury scrolling initialized - like silk');
+console.log('✨ Calm, serene luxury scrolling - pure elegance');
