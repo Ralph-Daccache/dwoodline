@@ -1,36 +1,89 @@
-<!DOCTYPE html>
-
-<html class="scroll-smooth" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Noto+Serif:wght@300;400&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        html {
-            scroll-snap-type: y mandatory;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
-        }
-        body {
-            background-color: #fcf9f8;
-            font-family: 'Inter', sans-serif;
-        }
-        .serif-text {
-            font-family: 'Noto Serif', serif;
-        }
-        .architectural-grid {
-            background-image: radial-gradient(#1A1A1A 0.5px, transparent 0.5px);
-            background-size: 40px 40px;
-            opacity: 0.05;
-        }
-        .drawing-canvas {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-        }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Noto+Serif:wght@300;400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24
+    }
+body {
+    background-color: #fcf9f8;
+    font-family: "Inter", sans-serif;
+    overflow-x: hidden
+    }
+.serif-text {
+    font-family: "Noto Serif", serif
+    }
+/* Scroll Snap Setup */
+.snap-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth
+    }
+.snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100vh;
+    position: relative;
+    overflow: hidden
+    }
+.architectural-grid {
+    background-image: radial-gradient(#1A1A1A 0.5px, transparent 0.5px);
+    background-size: 60px 60px;
+    opacity: 0.02
+    }
+.reveal {
+    opacity: 0;
+    transform: translatey(30px);
+    transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform, opacity
+    }
+.reveal.visible {
+    opacity: 1;
+    transform: translatey(0)
+    }
+.drawing-path {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    transition: stroke-dashoffset 3s cubic-bezier(0.23, 1, 0.32, 1)
+    }
+.visible .drawing-path {
+    stroke-dashoffset: 0
+    }
+.parallax-bg {
+    will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)
+    }
+/* Progress Indicator */
+.progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #1A1A1A;
+    opacity: 0.2;
+    transition: all 0.4s ease
+    }
+.progress-dot.active {
+    opacity: 1;
+    height: 24px;
+    border-radius: 4px
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDOgdOrxgrNAPxkSLTwk4QOxifWfmmu38KkVb7FWOz0LedvCrgixLEuPKA0sTcKROwPdNbVVZzt3UC7yjH_ttJP3s6wm_Vm0C7hXjp0qqjuXEAhtMCrn3MOYuV_6HIGon04mdYmDLucbQcS95b2AWAClkRffUHoqDaG442DxNOKgJPVR2q4XwSyqQoHG9r9BhBn83VLYW1nDbpk5Q-OWKD-zwriqddHPtnLVviFCuhhTq11XchW8aNpEsuQRBkfPf3w-jycwwKStwk);
+    opacity: 0.05;
+    mix-blend-mode: multiply
+    }
+.reveal-delay-1 {
+    transition-delay: 0.2s
+    }
+.reveal-delay-2 {
+    transition-delay: 0.4s
+    }
+.reveal-delay-3 {
+    transition-delay: 0.6s
+    }</style>
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -123,135 +176,200 @@
         }
     </script>
 </head>
-<body class="bg-background text-on-background">
-<!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full z-50 bg-[#F5F5F7]/80 backdrop-blur-md border-b border-[#1A1A1A]/10 flex justify-between items-center px-[80px] py-8">
-<div class="text-2xl font-light tracking-[0.3em] uppercase text-[#1A1A1A] serif-text">dwoodline</div>
+<body class="bg-background text-on-background m-0 p-0">
+<!-- Fixed Navigation -->
+<nav class="fixed top-0 w-full z-50 backdrop-blur-lg border-b border-outline-variant/10 flex justify-between items-center px-[80px] py-8 transition-all duration-700 bg-background/70">
+<div class="text-2xl font-light tracking-[0.3em] uppercase text-on-background serif-text">dwoodline</div>
 <div class="hidden md:flex items-center space-x-12">
-<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 hover:text-[#1A1A1A] transition-all duration-500" href="index.html">Home</a>
-<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 hover:text-[#1A1A1A] transition-all duration-500" href="02-heritage.html">About</a>
-<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A] border-b border-[#1A1A1A] pb-1 transition-all duration-500" href="03-expertise.html">Services</a>
-<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 hover:text-[#1A1A1A] transition-all duration-500" href="04-portfolio.html">Projects</a>
-<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 hover:text-[#1A1A1A] transition-all duration-500" href="05-inquiry.html">Contact</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-on-surface-variant/50 hover:text-on-background transition-all" href="#">Home</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-on-surface-variant/50 hover:text-on-background transition-all" href="#">About</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-on-background border-b border-on-background pb-1" href="#">Expertise</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-on-surface-variant/50 hover:text-on-background transition-all" href="#">Projects</a>
 </div>
 <div class="flex items-center space-x-4">
-<span class="material-symbols-outlined text-primary">search</span>
-<span class="material-symbols-outlined text-primary">account_circle</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:text-secondary transition-colors">search</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:text-secondary transition-colors">account_circle</span>
 </div>
 </nav>
-<main class="pt-32">
-<!-- Section 3: Expertise (Services) -->
-<section class="relative px-[80px] py-[160px] overflow-hidden">
-<div class="absolute inset-0 architectural-grid pointer-events-none"></div>
-<div class="grid grid-cols-12 gap-gutter relative z-10">
-<!-- Header Column -->
-<div class="col-span-12 mb-stack-lg">
-<span class="font-technical-label text-technical-label uppercase tracking-widest text-secondary mb-unit block">Expertise — Division 06</span>
-<h2 class="font-headline-lg text-headline-lg serif-text leading-tight max-w-2xl">Interior Architecture Wood Work Shop Drawings</h2>
+<!-- Progress Navigation Overlay -->
+<div class="fixed right-10 top-1/2 -translate-y-1/2 z-50 flex flex-col space-y-4 items-center">
+<div class="progress-dot" data-target="ch-1"></div>
+<div class="progress-dot active" data-target="ch-2"></div>
+<div class="progress-dot" data-target="ch-3"></div>
+<div class="progress-dot" data-target="cta-end"></div>
 </div>
-<!-- Main Feature Card (Shop Drawings) -->
-<div class="col-span-12 lg:col-span-8 group relative overflow-hidden bg-surface-container-low border border-outline-variant/10 p-12 transition-all duration-700 hover:bg-white">
-<!-- Marble Hover Effect Overlay -->
-<div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-1000 pointer-events-none" data-alt="Close-up high-resolution texture of Calacatta marble with elegant grey veining across a pristine white surface. The lighting is soft and diffused, highlighting the natural crystalline structure of the stone. The visual style is premium and architectural, suggesting a high-end interior material palette for a bespoke residence." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAaRByUvUuPYh2TpdpuHmP1gl01vZ-YKX1yPiBfWVwodXdQMn7ZK5N53ihuZg74fN0S_ZruGpJwYyyCKH8fgAoV_wAm-Fr-oKv61dqfccnTo0__1YSfh1i8sBjHgdP2rJky4d25b7mmNbRJSHeLDHoIpUSmwb1f5a9ddfiVH0KQZESYJ6d3N99-4NWyZVsKrTGmrQMwf5g8aKRN-2PBg4u4COAvIlf2YmzCZOHDEtTpdQewfKx1a95UrV49w0GyHvyJ9W8Rp66GfEk'); background-size: cover; background-position: center;">
+<main class="snap-container h-screen w-full">
+<!-- Chapter 1: Architectural Millwork -->
+<section class="snap-section flex items-center justify-center bg-surface-container-lowest visible" id="ch-1">
+<div class="absolute inset-0 architectural-grid opacity-10"></div>
+<div class="max-w-6xl mx-auto px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-24 items-center z-10">
+<div class="reveal visible">
+<span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block">Chapter 01 — Division 06</span>
+<h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-8">Architectural Millwork Shop Drawings</h2>
+<p class="font-body-lg text-on-surface-variant max-w-md mb-12">Precision drafting utilizing mid-century rigor and contemporary BIM software. We translate architectural intent into production-ready technical data.</p>
+<div class="flex space-x-8">
+<div class="text-left">
+<span class="block font-headline-md text-2xl serif-text">1:10</span>
+<span class="font-technical-label text-[9px] uppercase tracking-widest opacity-40">Detail Scale</span>
 </div>
-<div class="flex flex-col h-full justify-between relative z-10">
-<div class="max-w-xl">
-<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-md">
-                                Precision-engineered technical documentation for complex millwork assemblies. Our shop drawings bridge the gap between architectural vision and manufacturing reality.
-                            </p>
-<div class="flex flex-wrap gap-4 mt-8">
-<span class="bg-secondary px-4 py-1 text-white font-technical-label text-caption">SOLID WALNUT</span>
-<span class="bg-secondary px-4 py-1 text-white font-technical-label text-caption">1:10 SCALE</span>
-<span class="bg-secondary px-4 py-1 text-white font-technical-label text-caption">CAD/BIM</span>
+<div class="text-left">
+<span class="block font-headline-md text-2xl serif-text">CAD/BIM</span>
+<span class="font-technical-label text-[9px] uppercase tracking-widest opacity-40">Drafting Standard</span>
 </div>
 </div>
-<!-- Technical SVG Visualization -->
-<div class="mt-stack-lg border-t border-outline-variant/20 pt-8">
-<svg class="w-full h-48 opacity-60 group-hover:opacity-100 transition-opacity duration-500" fill="none" viewbox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
-<rect height="100" stroke="currentColor" stroke-width="0.5" width="700" x="50" y="50"></rect>
-<line stroke="currentColor" stroke-width="0.5" x1="50" x2="750" y1="50" y2="150"></line>
-<line stroke="currentColor" stroke-width="0.5" x1="50" x2="750" y1="150" y2="50"></line>
-<circle cx="400" cy="100" r="40" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></circle>
-<path d="M400 20V180M320 100H480" stroke="currentColor" stroke-width="0.2"></path>
-<text class="font-technical-label text-[10px]" fill="currentColor" x="60" y="40">PLAN VIEW — SEC. A-A</text>
-<text class="font-technical-label text-[10px]" fill="currentColor" x="700" y="170">1955-D-01</text>
+</div>
+<div class="reveal reveal-delay-2 relative flex justify-center visible">
+<svg class="w-full max-w-lg opacity-80" fill="none" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+<rect class="drawing-path" height="300" stroke="#1A1A1A" stroke-width="0.5" width="400" x="50" y="100"></rect>
+<path class="drawing-path" d="M50 150H450M50 350H450M250 100V400" stroke="#1A1A1A" stroke-width="0.3"></path>
+<circle class="drawing-path" cx="250" cy="250" r="80" stroke="#1A1A1A" stroke-dasharray="8 8" stroke-width="0.5"></circle>
+<path class="drawing-path" d="M100 250L400 250M250 100L250 400" stroke="#1A1A1A" stroke-width="0.2"></path>
+<text class="font-technical-label text-[8px] fill-on-surface opacity-30 tracking-widest uppercase" x="60" y="90">Section A-A: Cabinetry Junction</text>
+<text class="font-technical-label text-[8px] fill-on-surface opacity-30 tracking-widest uppercase" x="400" y="420">DW-104</text>
 </svg>
 </div>
 </div>
+</section>
+<!-- Chapter 2: Custom Veneer Mapping -->
+<section class="snap-section flex items-center justify-center bg-surface relative overflow-hidden" id="ch-2"><div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url(&quot;https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&amp;fit=crop&amp;q=80&quot;); background-size: cover; background-position: center center;"></div>
+
+
+<div class="max-w-6xl mx-auto px-[80px] w-full z-10">
+<div class="max-w-2xl reveal bg-surface/40 backdrop-blur-md border border-white/20 p-16 shadow-2xl rounded-sm">
+<span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block">Chapter 02 — Materiality</span>
+<h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-8">Custom Veneer Mapping &amp; Sequence Control</h2>
+<p class="font-body-lg text-on-surface-variant mb-12">Grain matching is not an afterthought. Our digital mapping process ensures seamless heritage-quality interiors through rigorous sequence control.</p>
+<div class="grid grid-cols-2 gap-12 py-12 border-t border-on-surface-variant/10">
+<div class="space-y-4">
+<span class="material-symbols-outlined text-secondary">layers</span>
+<h4 class="font-headline-md text-xl serif-text">Book-match Precision</h4>
+<p class="text-caption text-on-surface-variant">Symmetrical grain alignment across full-height panels.</p>
 </div>
-<!-- Secondary Info Panel -->
-<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
-<!-- Specification Card -->
-<div class="bg-primary-container p-8 border border-outline-variant/10 h-full flex flex-col justify-between group hover:bg-white transition-all duration-700">
-<div>
-<span class="material-symbols-outlined text-secondary text-4xl mb-6">architecture</span>
-<h3 class="font-headline-md text-headline-md serif-text mb-4">Precision Craft</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Our technical drafting department utilizes mid-century rigor combined with contemporary software to produce error-free shop drawings.</p>
+<div class="space-y-4">
+<span class="material-symbols-outlined text-secondary">texture</span>
+<h4 class="font-headline-md text-xl serif-text">Species Curation</h4>
+<p class="text-caption text-on-surface-variant">Technical selection of walnut, oak, and exotic burrs.</p>
 </div>
-<ul class="mt-8 space-y-4">
-<li class="flex items-center font-technical-label text-caption uppercase tracking-wider text-primary">
-<span class="w-2 h-2 bg-secondary mr-3"></span> Architectural Millwork
-                            </li>
-<li class="flex items-center font-technical-label text-caption uppercase tracking-wider text-primary">
-<span class="w-2 h-2 bg-secondary mr-3"></span> Custom Veneer Mapping
-                            </li>
-<li class="flex items-center font-technical-label text-caption uppercase tracking-wider text-primary">
-<span class="w-2 h-2 bg-secondary mr-3"></span> Hardware Integration
-                            </li>
-</ul>
-</div>
-</div>
-<!-- Timeline Component Integration -->
-<div class="col-span-12 mt-stack-lg border-t border-outline-variant/10 pt-16 grid grid-cols-1 md:grid-cols-4 gap-8">
-<div class="relative pl-8">
-<div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant"></div>
-<span class="font-headline-md text-headline-md serif-text block mb-2">1955</span>
-<span class="font-technical-label text-caption uppercase tracking-widest text-on-surface-variant">Founding Principles</span>
-</div>
-<div class="relative pl-8">
-<div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant"></div>
-<span class="font-headline-md text-headline-md serif-text block mb-2">1982</span>
-<span class="font-technical-label text-caption uppercase tracking-widest text-on-surface-variant">Digital Transition</span>
-</div>
-<div class="relative pl-8">
-<div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant"></div>
-<span class="font-headline-md text-headline-md serif-text block mb-2">2008</span>
-<span class="font-technical-label text-caption uppercase tracking-widest text-on-surface-variant">BIM Integration</span>
-</div>
-<div class="relative pl-8">
-<div class="absolute left-0 top-0 bottom-0 w-[1px] bg-outline-variant"></div>
-<span class="font-headline-md text-headline-md serif-text block mb-2">Present</span>
-<span class="font-technical-label text-caption uppercase tracking-widest text-on-surface-variant">Architectural Mastery</span>
 </div>
 </div>
 </div>
 </section>
-<!-- Call to Action Section -->
-<section class="bg-primary-container py-[160px] px-[80px]">
-<div class="max-w-4xl mx-auto text-center">
+<!-- Chapter 3: Hardware Integration -->
+<section class="snap-section flex items-center justify-center bg-[#1C1B1B] text-surface-bright visible" id="ch-3">
+<div class="absolute inset-0 architectural-grid opacity-20 pointer-events-none invert"></div>
+<div class="max-w-6xl mx-auto px-[80px] flex flex-col items-center text-center z-10">
+<div class="reveal visible">
+<span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed mb-4 block">Chapter 03 — Technicality</span>
+<h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-12">Hardware Integration &amp;<br>Black Aluminum Coordination</h2>
+<p class="font-body-lg text-surface-container-highest max-w-3xl mb-20 opacity-80">Where wood meets metal. We coordinate complex architectural hardware, specialized lighting profiles, and mechanical systems into the millwork fabric.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-16 w-full reveal reveal-delay-2 visible">
+<div class="p-10 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+<span class="material-symbols-outlined text-tertiary-fixed text-3xl mb-6">precision_manufacturing</span>
+<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-4">CNC Accuracy</h5>
+<p class="text-caption opacity-60">Sub-millimeter routing for concealed hardware systems.</p>
+</div>
+<div class="p-10 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+<span class="material-symbols-outlined text-tertiary-fixed text-3xl mb-6">bolt</span>
+<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-4">LEED Standards</h5>
+<p class="text-caption opacity-60">Integrated low-voltage lighting and sustainable sourcing.</p>
+</div>
+<div class="p-10 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+<span class="material-symbols-outlined text-tertiary-fixed text-3xl mb-6">handyman</span>
+<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-4">Installation Rigor</h5>
+<p class="text-caption opacity-60">Engineered joinery designed for efficient field assembly.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Climax Section -->
+<section class="snap-section flex flex-col bg-surface-container-low relative" id="cta-end">
+<div class="flex-grow flex items-center justify-center">
+<div class="max-w-4xl mx-auto text-center px-[80px] reveal">
 <h2 class="font-headline-lg text-headline-lg serif-text mb-8">Begin the Technical Phase</h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">Submit your architectural intent drawings for a comprehensive technical feasibility review and millwork consultation.</p>
-<div class="flex justify-center space-x-6">
-<a href="05-inquiry.html" class="inline-block bg-[#1A1A1A] text-white px-10 py-5 font-technical-label uppercase tracking-widest hover:bg-secondary transition-colors duration-500">Inquire Now</a>
-<a href="04-portfolio.html" class="inline-block border border-[#1A1A1A] text-[#1A1A1A] px-10 py-5 font-technical-label uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition-all duration-500">Download Portfolio</a>
+<p class="font-body-lg text-on-surface-variant mb-16 max-w-2xl mx-auto">Submit your architectural intent drawings for a comprehensive technical feasibility review and millwork consultation.</p>
+<div class="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-8">
+<button class="bg-[#1A1A1A] text-white px-12 py-6 font-technical-label uppercase tracking-[0.2em] text-[10px] transition-all duration-700 hover:tracking-[0.3em] hover:bg-black">Inquire Now</button>
+<button class="border border-[#1A1A1A] text-[#1A1A1A] px-12 py-6 font-technical-label uppercase tracking-[0.2em] text-[10px] hover:bg-[#1A1A1A] hover:text-white transition-all duration-700">Download Portfolio</button>
 </div>
 </div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-[#1A1A1A] text-[#F5F5F7] py-20 px-[80px] border-t border-[#F5F5F7]/10 flex flex-col md:flex-row justify-between items-end w-full">
-<div class="flex flex-col space-y-8">
-<div class="text-lg font-light tracking-widest text-[#F5F5F7] serif-text uppercase">dwoodline</div>
-<div class="flex space-x-8">
-<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="index.html">Home</a>
-<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="02-heritage.html">About</a>
-<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="04-portfolio.html">Portfolio</a>
-<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="05-inquiry.html">Contact</a>
+</div>
+<!-- Pinned Footer -->
+<footer class="bg-[#1A1A1A] text-surface-bright py-16 px-[80px] border-t border-surface-bright/10 flex flex-col md:flex-row justify-between items-end w-full">
+<div class="flex flex-col space-y-8 w-full md:w-auto">
+<div class="text-xl font-light tracking-[0.4em] text-surface-bright serif-text uppercase">dwoodline</div>
+<div class="flex flex-wrap gap-8">
+<a class="font-['Inter'] text-[10px] tracking-[0.2em] uppercase text-surface-bright/40 hover:text-tertiary-fixed transition-colors" href="#">Legal</a>
+<a class="font-['Inter'] text-[10px] tracking-[0.2em] uppercase text-surface-bright/40 hover:text-tertiary-fixed transition-colors" href="#">Privacy</a>
+<a class="font-['Inter'] text-[10px] tracking-[0.2em] uppercase text-surface-bright/40 hover:text-tertiary-fixed transition-colors" href="#">Press</a>
 </div>
 </div>
 <div class="mt-8 md:mt-0 text-right">
-<p class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40">© 1955 dwoodline. Architectural Precision.</p>
+<p class="font-['Inter'] text-[10px] tracking-[0.2em] uppercase text-surface-bright/40">© 1955 dwoodline. Architectural Precision.</p>
 </div>
 </footer>
-<script src="js/smooth-scroll.js"></script>
+</section>
+</main>
+<script>
+    // Intersection Observer for Animation
+    const observerOptions = {
+        threshold: 0.4,
+        root: document.querySelector('.snap-container')
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+                entry.target.classList.add('visible');
+                
+                // Update Progress Indicator
+                const targetId = entry.target.id;
+                document.querySelectorAll('.progress-dot').forEach(dot => {
+                    dot.classList.toggle('active', dot.dataset.target === targetId);
+                });
+
+                // Update Nav Background (Glassmorphism transition)
+                const nav = document.querySelector('nav');
+                if (targetId === 'ch-3') {
+                    nav.classList.add('bg-black/30', 'border-white/10');
+                    nav.classList.remove('bg-background/70');
+                    nav.querySelectorAll('a, div, span').forEach(el => el.classList.add('text-white'));
+                } else {
+                    nav.classList.remove('bg-black/30', 'border-white/10');
+                    nav.classList.add('bg-background/70');
+                    nav.querySelectorAll('a, div, span').forEach(el => el.classList.remove('text-white'));
+                }
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.snap-section').forEach(section => observer.observe(section));
+
+    // Parallax Effect for Chapter 2
+    const snapContainer = document.querySelector('.snap-container');
+    const veneerBg = document.getElementById('veneer-bg');
+    
+    snapContainer.addEventListener('scroll', () => {
+        const scrolled = snapContainer.scrollTop;
+        const vHeight = window.innerHeight;
+        
+        // Target Chapter 2 parallax
+        const ch2Offset = vHeight; 
+        if (scrolled >= vHeight && scrolled <= vHeight * 2) {
+            const movement = (scrolled - vHeight) * 0.15;
+            veneerBg.style.transform = `translateY(${movement}px) scale(1.1)`;
+        }
+    });
+
+    // Navigation Click Handling
+    document.querySelectorAll('.progress-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            const target = document.getElementById(dot.dataset.target);
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+
+
 </body></html>
