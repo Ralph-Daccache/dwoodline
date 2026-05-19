@@ -201,12 +201,18 @@ tailwind.config = {
     height: 24px;
     border-radius: 4px;
   }
+
+  @media (max-width: 767px) {
+    html { scroll-snap-type: none; }
+    .snap-section { height: auto; min-height: 100vh; overflow: visible; }
+    .detail-circle { opacity: 1 !important; transform: none !important; }
+  }
 </style>
 </head>
 <body class="bg-background text-on-background">
 
 <!-- Unified Navigation — Services active -->
-<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-[80px] py-8">
+<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-6 md:px-[80px] py-8">
 <div class="text-2xl font-light tracking-[0.3em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7]">dwoodline</div>
 <div class="hidden md:flex items-center gap-stack-lg">
 <a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="01-hero.html">Home</a>
@@ -220,8 +226,18 @@ tailwind.config = {
 </div>
 </nav>
 
+<!-- Mobile Menu Overlay -->
+<div id="mobileMenu" class="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-10 bg-[#F5F5F7] dark:bg-[#1A1A1A] md:hidden" style="transform:translateY(-100%);transition:transform 0.5s ease-in-out;">
+<button id="mobileMenuClose" class="absolute top-8 right-6"><span class="material-symbols-outlined text-[#1A1A1A] dark:text-[#F5F5F7]" style="font-size:28px;font-variation-settings:'wght' 200;">close</span></button>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50" href="01-hero.html">Home</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50" href="02-heritage.html">About</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7] border-b border-[#1A1A1A] dark:border-[#F5F5F7] pb-1" href="03-expertise.html">Services</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50" href="04-portfolio.html">Projects</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50" href="05-inquiry.html">Contact</a>
+</div>
+
 <!-- Side Progress Indicator -->
-<div class="fixed right-10 top-1/2 -translate-y-1/2 z-50 flex flex-col space-y-4 items-center">
+<div class="hidden md:flex fixed right-10 top-1/2 -translate-y-1/2 z-50 flex-col space-y-4 items-center">
 <div class="progress-dot" data-target="ch-1"></div>
 <div class="progress-dot" data-target="ch-2"></div>
 <div class="progress-dot" data-target="ch-3"></div>
@@ -234,7 +250,7 @@ tailwind.config = {
 <section class="snap-section flex items-center justify-center bg-surface-container-lowest" id="ch-1">
 <div class="absolute inset-0 architectural-grid"></div>
 <div class="light-beam"></div>
-<div class="max-w-6xl mx-auto px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-24 items-center z-10">
+<div class="max-w-6xl mx-auto px-6 md:px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-24 items-center z-10">
 <div class="reveal">
 <span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block reveal-stagger-1">Chapter 01 — Division 06</span>
 <h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-8 reveal-stagger-2">Architectural Millwork Shop Drawings</h2>
@@ -285,7 +301,7 @@ tailwind.config = {
 <img alt="Veneer texture" class="w-full h-full object-cover opacity-30 mix-blend-multiply transition-transform duration-[4s] ease-out parallax-bg" src="https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=1400&q=70"/>
 </div>
 <div class="absolute inset-0 z-1 pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg viewBox%3D%220 0 200 200%22 xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter id%3D%22noise%22%3E%3CfeTurbulence type%3D%22fractalNoise%22 baseFrequency%3D%220.65%22 numOctaves%3D%223%22 stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect width%3D%22100%25%22 height%3D%22100%25%22 filter%3D%22url(%23noise)%22 opacity%3D%221%22/%3E%3C/svg%3E'); opacity:0.04; mix-blend-mode:multiply;"></div>
-<div class="max-w-6xl mx-auto px-[80px] w-full z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="max-w-6xl mx-auto px-6 md:px-[80px] w-full z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 <div class="max-w-2xl reveal bg-surface/80 backdrop-blur-md border border-white/40 p-8 lg:p-10 shadow-2xl rounded-sm">
 <span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-3 block reveal-stagger-1">Chapter 02 — Materiality</span>
 <h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-5 reveal-stagger-2">Custom Veneer Mapping &amp; Sequence Control</h2>
@@ -315,7 +331,7 @@ tailwind.config = {
 <section class="snap-section flex items-center justify-center bg-[#1C1B1B] text-surface-bright" id="ch-3">
 <div class="absolute inset-0 architectural-grid opacity-20 pointer-events-none invert"></div>
 <div class="light-beam opacity-20"></div>
-<div class="max-w-6xl mx-auto px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
+<div class="max-w-6xl mx-auto px-6 md:px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
 <div class="reveal">
 <span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed mb-3 block reveal-stagger-1">Chapter 03 — Technicality</span>
 <h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-6 reveal-stagger-2">Hardware Integration &amp;<br/>Black Aluminum Coordination</h2>
@@ -363,7 +379,7 @@ tailwind.config = {
 <!-- Chapter 4: CTA -->
 <section class="snap-section flex flex-col bg-surface-container-low relative" id="cta-end">
 <div class="flex-grow flex items-center justify-center">
-<div class="max-w-4xl mx-auto text-center px-[80px] reveal">
+<div class="max-w-4xl mx-auto text-center px-6 md:px-[80px] reveal">
 <h2 class="font-headline-lg text-headline-lg serif-text mb-8">Begin the Technical Phase</h2>
 <p class="font-body-lg text-on-surface-variant mb-16 max-w-2xl mx-auto">Submit your architectural intent drawings for a comprehensive technical feasibility review and millwork consultation.</p>
 <div class="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-8">
@@ -378,7 +394,7 @@ tailwind.config = {
 
 <!-- Unified Footer -->
 <footer class="w-full bg-[#1A1A1A] dark:bg-[#0D0D0D] border-t border-[#F5F5F7]/10">
-<div class="px-[80px] pt-16 pb-12 flex flex-col lg:flex-row gap-16 justify-between">
+<div class="px-6 md:px-[80px] pt-16 pb-12 flex flex-col lg:flex-row gap-16 justify-between">
 <div class="flex flex-col gap-6 min-w-[180px]">
 <div class="text-lg font-light tracking-widest text-[#F5F5F7] uppercase">dwoodline</div>
 <div class="flex flex-col gap-1">
@@ -416,7 +432,7 @@ tailwind.config = {
 </div>
 </div>
 </div>
-<div class="px-[80px] py-5 border-t border-[#F5F5F7]/5 flex flex-col md:flex-row justify-between items-center gap-2">
+<div class="px-6 md:px-[80px] py-5 border-t border-[#F5F5F7]/5 flex flex-col md:flex-row justify-between items-center gap-2">
 <p class="font-['Inter'] text-[9px] tracking-[0.2em] uppercase text-[#F5F5F7]/25">© 1955 dwoodline. Architectural Precision. All rights reserved.</p>
 <p class="font-['Inter'] text-[9px] tracking-[0.2em] uppercase text-[#F5F5F7]/20">Lebanon</p>
 </div>
@@ -609,6 +625,15 @@ if (window.innerWidth >= 768) {
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('keydown', handleKey);
 }
+
+// Mobile menu
+(function() {
+    var btn = document.querySelector('.md\\:hidden');
+    var menu = document.getElementById('mobileMenu');
+    var closeBtn = document.getElementById('mobileMenuClose');
+    if (btn && menu) btn.addEventListener('click', function() { menu.style.transform = 'translateY(0)'; });
+    if (closeBtn && menu) closeBtn.addEventListener('click', function() { menu.style.transform = 'translateY(-100%)'; });
+})();
 
 </script>
 </body>

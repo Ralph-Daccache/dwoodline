@@ -196,7 +196,7 @@ Full Stitch design integrated (Project 1905448331726766389, Screen c30a057fb8fc4
 
 | Commit | Description |
 |--------|-------------|
-| (pending) | Integrate Stitch design into 03-expertise.html with unified nav/footer |
+| dc33915 | Integrate Stitch design into 03-expertise.html with unified nav/footer |
 | 603980c | Redesign footer: 3-column layout with brand block and copyright bar |
 | ca3dcad | Unify nav and footer across all 5 pages |
 | e2784d1 | Remove upload button, add placeholder images to gallery |
@@ -241,8 +241,7 @@ Full Stitch design integrated (Project 1905448331726766389, Screen c30a057fb8fc4
    - Next approach to try: `<main class="pt-[80px]">` + `<section class="snap-target h-[calc(100vh-80px)] flex flex-col justify-between py-8">`
    - `justify-between` would push title to top and carousel to bottom — cleaner approach
 2. **Real photos** — User will connect Hostinger hosting later and replace picsum/Unsplash placeholders
-3. **Mobile menu** — hamburger icon exists on all pages but no dropdown functionality implemented yet
-4. **03-expertise.html** — Stitch integration complete and deployed
+3. **Mobile optimization COMPLETE** — all 5 pages fully optimized (see Mobile Optimization section below)
 
 ---
 
@@ -262,4 +261,34 @@ git log origin/main --oneline -3
 
 ---
 
-**Last Updated**: May 19, 2026 — Session 3: Stitch integration for 03-expertise.html complete
+---
+
+## Mobile Optimization — Session 4 (May 19, 2026)
+
+### Changes Applied to ALL 5 pages (root + dwoodline-project/ copies):
+
+1. **Responsive nav padding**: `px-[80px]` → `px-6 md:px-[80px]` on all nav elements
+2. **Responsive footer padding**: `px-[80px]` → `px-6 md:px-[80px]` on footer content + copyright bar
+3. **Working mobile hamburger menu**: Full-screen overlay slides down from top on tap, close button dismisses it. Each page has correct active link highlighted.
+4. **Mobile menu HTML**: `<div id="mobileMenu">` inserted after `</nav>` on each page. Uses `style="transform:translateY(-100%);transition:transform 0.5s ease-in-out;"` — no extra CSS needed.
+5. **Mobile menu JS**: `document.querySelector('.md\\:hidden')` selects the hamburger container.
+
+### Page-specific mobile fixes:
+- **01-hero.html**: Hero content `px-margin-page` → `px-6 md:px-[80px]`; `scroll-snap-type:none` on mobile; `.text-display-hero` scaled to 42px on mobile
+- **02-heritage.html**: Main `pt-[160px]` → `pt-[100px] md:pt-[160px]`; `px-margin-page` → `px-6 md:px-[80px]`; scroll-snap disabled on mobile
+- **03-expertise.html**: All 4 section content divs responsive padding; progress dots `flex` → `hidden md:flex`; `.detail-circle` auto-revealed on mobile (opacity:1, transform:none); snap sections `height:auto` on mobile
+- **04-portfolio.html**: Hero section + 3 carousel title divs responsive padding; carousel `h-[70vh]` unchanged (works fine on mobile)
+- **05-inquiry.html**: Main section + technical spec section responsive padding; scroll-snap disabled on mobile
+
+### Commit History
+| Commit | Description |
+|--------|-------------|
+| (session 4) | Mobile optimization: responsive padding, mobile menu, scroll overrides across all 5 pages |
+| dc33915 | Integrate Stitch design into 03-expertise.html with unified nav/footer |
+| 603980c | Redesign footer: 3-column layout with brand block and copyright bar |
+| e2784d1 | Remove upload button, add placeholder images to gallery |
+| 47bf1cc | Revert section centering - use simple padding instead of height/flex approach |
+
+---
+
+**Last Updated**: May 19, 2026 — Session 4: Mobile optimization complete across all 5 pages

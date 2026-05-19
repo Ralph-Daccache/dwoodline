@@ -112,11 +112,15 @@
         }
         /* Custom scroll behavior for high-end feel */
         html { scroll-behavior: smooth; }
+
+        @media (max-width: 767px) {
+            html { scroll-snap-type: none; }
+        }
     </style>
 </head>
 <body class="bg-background text-on-background antialiased">
 <!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-[80px] py-8 w-full">
+<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-6 md:px-[80px] py-8 w-full">
 <div class="text-2xl font-light tracking-[0.3em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7]">dwoodline</div>
 <div class="hidden md:flex items-center gap-stack-lg">
 <a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="01-hero.html">Home</a>
@@ -129,6 +133,15 @@
 <span class="material-symbols-outlined">menu</span>
 </button>
 </nav>
+<!-- Mobile Menu Overlay -->
+<div id="mobileMenu" class="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-10 bg-[#F5F5F7] dark:bg-[#1A1A1A] md:hidden" style="transform:translateY(-100%);transition:transform 0.5s ease-in-out;">
+<button id="mobileMenuClose" class="absolute top-8 right-6"><span class="material-symbols-outlined text-[#1A1A1A] dark:text-[#F5F5F7]" style="font-size:28px;font-variation-settings:'wght' 200;">close</span></button>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50" href="01-hero.html">Home</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50" href="02-heritage.html">About</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50" href="03-expertise.html">Services</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50" href="04-portfolio.html">Projects</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7] border-b border-[#1A1A1A] dark:border-[#F5F5F7] pb-1" href="05-inquiry.html">Contact</a>
+</div>
 <main>
 <!-- Inquiry Section (Dramatic Transition) -->
 <section class="min-h-screen bg-[#1A1A1A] text-[#F5F5F7] flex flex-col justify-center relative overflow-hidden">
@@ -136,7 +149,7 @@
 <div class="absolute inset-0 opacity-10 grayscale pointer-events-none">
 <img data-parallax class="w-full h-full object-cover" data-alt="A close-up high-resolution photograph of dark black aluminum architectural panels with a subtle brushed texture. The lighting is moody and low-key, highlighting the crisp edges and structural integrity of the material. Deep shadows and cool highlights emphasize the minimalist and industrial aesthetic, perfectly aligned with a luxury design studio's brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN8tsGWMRYnl-csyNbBkr_0w-JQ-i4WvoIS1in2dCA3sVfqC6OYp3kZzmyyokLzt36L-hptXAJQPEC0pD8SxE8M5ZWA9nesn4qcvXgy9wtjLXsq3DF8mgFDw9o644IkBgPV17kKYaACuj3nF2lpsPuClftV-ZwUudDK2cCMVjDSEgQkYSkKPQ0DFPS-Q3Z6vRI6WOfr9cTsXW-DTmZa8LnCIZ7brX2jTKiw2hu86M1EWkknZ_yTcu5X_v5iTG-gJSfloCgMD_oB3w"/>
 </div>
-<div class="relative z-10 px-[80px] grid grid-cols-1 md:grid-cols-12 gap-gutter items-start">
+<div class="relative z-10 px-6 md:px-[80px] grid grid-cols-1 md:grid-cols-12 gap-gutter items-start">
 <!-- Headline Narrative -->
 <div class="md:col-span-5 pt-stack-lg">
 <span class="font-technical-label text-technical-label uppercase tracking-[0.3em] text-[#F5F5F7]/40 block mb-stack-md">Section 05 // Inquiry</span>
@@ -176,7 +189,7 @@
 </div>
 </section>
 <!-- Technical Specification Detail (Visual Break) -->
-<section class="bg-[#0D0D0D] py-stack-lg px-[80px]">
+<section class="bg-[#0D0D0D] py-stack-lg px-6 md:px-[80px]">
 <div class="border-t border-[#F5F5F7]/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-gutter">
 <div class="flex gap-8 overflow-x-auto pb-4 md:pb-0 w-full md:w-auto no-scrollbar">
 <div class="flex flex-col">
@@ -207,7 +220,7 @@
 </main>
 <!-- Footer Component -->
 <footer class="w-full bg-[#1A1A1A] dark:bg-[#0D0D0D] border-t border-[#F5F5F7]/10">
-<div class="px-[80px] pt-16 pb-12 flex flex-col lg:flex-row gap-16 justify-between">
+<div class="px-6 md:px-[80px] pt-16 pb-12 flex flex-col lg:flex-row gap-16 justify-between">
 <div class="flex flex-col gap-6 min-w-[180px]">
 <div class="text-lg font-light tracking-widest text-[#F5F5F7] uppercase">dwoodline</div>
 <div class="flex flex-col gap-1">
@@ -245,7 +258,7 @@
 </div>
 </div>
 </div>
-<div class="px-[80px] py-5 border-t border-[#F5F5F7]/5 flex flex-col md:flex-row justify-between items-center gap-2">
+<div class="px-6 md:px-[80px] py-5 border-t border-[#F5F5F7]/5 flex flex-col md:flex-row justify-between items-center gap-2">
 <p class="font-['Inter'] text-[9px] tracking-[0.2em] uppercase text-[#F5F5F7]/25">© 1955 dwoodline. Architectural Precision. All rights reserved.</p>
 <p class="font-['Inter'] text-[9px] tracking-[0.2em] uppercase text-[#F5F5F7]/20">Lebanon</p>
 </div>
@@ -265,6 +278,15 @@
             alert('Please fill in all fields before submitting.');
         }
     }
+
+    // Mobile menu
+    (function() {
+        var btn = document.querySelector('.md\\:hidden');
+        var menu = document.getElementById('mobileMenu');
+        var closeBtn = document.getElementById('mobileMenuClose');
+        if (btn && menu) btn.addEventListener('click', function() { menu.style.transform = 'translateY(0)'; });
+        if (closeBtn && menu) closeBtn.addEventListener('click', function() { menu.style.transform = 'translateY(-100%)'; });
+    })();
 </script>
 <script src="js/smooth-scroll.js"></script>
 </body></html>
