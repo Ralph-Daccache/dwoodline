@@ -385,59 +385,34 @@
 
 <!-- Image Gallery Modal -->
 <div id="galleryModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-<div class="bg-white max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+<div class="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto">
 <div class="sticky top-0 bg-white p-8 border-b border-on-background/10 flex justify-between items-center">
 <h2 id="modalTitle" class="font-headline-md text-headline-md">Project Gallery</h2>
 <button onclick="closeGalleryModal()" class="text-2xl text-on-background/60 hover:text-on-background">✕</button>
 </div>
 <div class="p-8">
-<div id="galleryGrid" class="grid grid-cols-2 gap-4 mb-8">
+<div id="galleryGrid" class="grid grid-cols-3 gap-4">
 <!-- Images will be loaded here -->
-</div>
-<div class="border-2 border-dashed border-on-background/20 p-8 text-center">
-<input type="file" id="fileInput" multiple accept="image/*" class="hidden">
-<button onclick="document.getElementById('fileInput').click()" class="bg-secondary text-white px-6 py-3 font-technical-label text-technical-label uppercase tracking-widest hover:bg-on-background transition-colors">
-+ Add Images
-</button>
 </div>
 </div>
 </div>
 </div>
 <script>
-        // Project data for gallery
+        // Project data with placeholder images
         const projects = {
-            'The Obsidian Penthouse': { images: [] },
-            'Amanita Sky Suites': { images: [] },
-            'The Ritz Suites': { images: [] },
-            'Zenith Wellness Club': { images: [] },
-            'Corporate Headquarters': { images: [] },
-            'The Linear Office': { images: [] }
+            'The Obsidian Penthouse': { images: ['https://picsum.photos/seed/op1/800/600','https://picsum.photos/seed/op2/800/600','https://picsum.photos/seed/op3/800/600','https://picsum.photos/seed/op4/800/600','https://picsum.photos/seed/op5/800/600','https://picsum.photos/seed/op6/800/600'] },
+            'Amanita Sky Suites': { images: ['https://picsum.photos/seed/as1/800/600','https://picsum.photos/seed/as2/800/600','https://picsum.photos/seed/as3/800/600','https://picsum.photos/seed/as4/800/600','https://picsum.photos/seed/as5/800/600','https://picsum.photos/seed/as6/800/600'] },
+            'The Ritz Suites': { images: ['https://picsum.photos/seed/rs1/800/600','https://picsum.photos/seed/rs2/800/600','https://picsum.photos/seed/rs3/800/600','https://picsum.photos/seed/rs4/800/600','https://picsum.photos/seed/rs5/800/600','https://picsum.photos/seed/rs6/800/600'] },
+            'Zenith Wellness Club': { images: ['https://picsum.photos/seed/zw1/800/600','https://picsum.photos/seed/zw2/800/600','https://picsum.photos/seed/zw3/800/600','https://picsum.photos/seed/zw4/800/600','https://picsum.photos/seed/zw5/800/600','https://picsum.photos/seed/zw6/800/600'] },
+            'Corporate Headquarters': { images: ['https://picsum.photos/seed/ch1/800/600','https://picsum.photos/seed/ch2/800/600','https://picsum.photos/seed/ch3/800/600','https://picsum.photos/seed/ch4/800/600','https://picsum.photos/seed/ch5/800/600','https://picsum.photos/seed/ch6/800/600'] },
+            'The Linear Office': { images: ['https://picsum.photos/seed/lo1/800/600','https://picsum.photos/seed/lo2/800/600','https://picsum.photos/seed/lo3/800/600','https://picsum.photos/seed/lo4/800/600','https://picsum.photos/seed/lo5/800/600','https://picsum.photos/seed/lo6/800/600'] }
         };
-
-        // Load projects from localStorage
-        function loadProjects() {
-            const saved = localStorage.getItem('dwoodlineProjects');
-            if (saved) {
-                Object.assign(projects, JSON.parse(saved));
-            }
-        }
-
-        // Save projects to localStorage
-        function saveProjects() {
-            localStorage.setItem('dwoodlineProjects', JSON.stringify(projects));
-        }
 
         // Open gallery modal
         function openGalleryModal(projectName) {
-            document.getElementById('modalTitle').textContent = projectName + ' - Gallery';
+            document.getElementById('modalTitle').textContent = projectName;
             document.getElementById('galleryModal').classList.remove('hidden');
             renderGallery(projectName);
-
-            // Setup file input
-            const fileInput = document.getElementById('fileInput');
-            fileInput.onchange = function() {
-                handleImageUpload(projectName);
-            };
         }
 
         // Close gallery modal
@@ -450,38 +425,15 @@
             const grid = document.getElementById('galleryGrid');
             const project = projects[projectName];
             grid.innerHTML = '';
-
-            if (!project || project.images.length === 0) {
-                grid.innerHTML = '<p class="col-span-2 text-center text-on-surface-variant py-8">No images yet. Add your first project image!</p>';
-            } else {
-                project.images.forEach((image, index) => {
+            if (project && project.images.length > 0) {
+                project.images.forEach((image) => {
                     const img = document.createElement('img');
                     img.src = image;
-                    img.className = 'w-full h-48 object-cover border border-on-background/10 cursor-pointer hover:border-secondary transition-colors';
+                    img.className = 'w-full h-48 object-cover cursor-pointer hover:opacity-80 transition-opacity';
                     img.onclick = () => viewImageFullSize(image);
                     grid.appendChild(img);
                 });
             }
-        }
-
-        // Handle image upload
-        function handleImageUpload(projectName) {
-            const fileInput = document.getElementById('fileInput');
-            const files = fileInput.files;
-            const project = projects[projectName];
-
-            for (let file of files) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    if (!project.images) project.images = [];
-                    project.images.push(e.target.result);
-                    saveProjects();
-                    renderGallery(projectName);
-                };
-                reader.readAsDataURL(file);
-            }
-
-            fileInput.value = '';
         }
 
         // View image fullsize
@@ -500,8 +452,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadProjects();
-
             // Attach click handlers to "View Project" buttons
             document.querySelectorAll('button').forEach(btn => {
                 if (btn.textContent.trim() === 'View Project') {
