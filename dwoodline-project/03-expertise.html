@@ -1,204 +1,176 @@
-<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Serif:wght@300;400;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Noto+Serif:wght@300;400&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<style>.material-symbols-outlined {
-    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24
-    }
-body {
-    background-color: #fcf9f8;
-    font-family: "Inter", sans-serif;
-    overflow-x: hidden
-    }
-.serif-text {
-    font-family: "Noto Serif", serif
-    }
-/* Scroll Snap Setup */
-.snap-container {
-    height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth
-    }
-.snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    height: 100vh;
-    position: relative;
-    overflow: hidden
-    }
-.architectural-grid {
-    background-image: radial-gradient(#1A1A1A 0.5px, transparent 0.5px);
-    background-size: 60px 60px;
-    opacity: 0.02
-    }
-.reveal {
-    opacity: 0;
-    transform: translatey(30px);
-    transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-    will-change: transform, opacity
-    }
-.reveal.visible {
-    opacity: 1;
-    transform: translatey(0)
-    }
-.drawing-path {
-    stroke-dasharray: 2000;
-    stroke-dashoffset: 2000;
-    transition: stroke-dashoffset 3s cubic-bezier(0.23, 1, 0.32, 1)
-    }
-.visible .drawing-path {
-    stroke-dashoffset: 0
-    }
-.parallax-bg {
-    will-change: transform;
-    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)
-    }
-/* Progress Indicator */
-.progress-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #1A1A1A;
-    opacity: 0.2;
-    transition: all 0.4s ease
-    }
-.progress-dot.active {
-    opacity: 1;
-    height: 24px;
-    border-radius: 4px
-    }
-.grain-overlay {
-    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDOgdOrxgrNAPxkSLTwk4QOxifWfmmu38KkVb7FWOz0LedvCrgixLEuPKA0sTcKROwPdNbVVZzt3UC7yjH_ttJP3s6wm_Vm0C7hXjp0qqjuXEAhtMCrn3MOYuV_6HIGon04mdYmDLucbQcS95b2AWAClkRffUHoqDaG442DxNOKgJPVR2q4XwSyqQoHG9r9BhBn83VLYW1nDbpk5Q-OWKD-zwriqddHPtnLVviFCuhhTq11XchW8aNpEsuQRBkfPf3w-jycwwKStwk);
-    opacity: 0.05;
-    mix-blend-mode: multiply
-    }
-.reveal-delay-1 {
-    transition-delay: 0.2s
-    }
-.reveal-delay-2 {
-    transition-delay: 0.4s
-    }
-.reveal-delay-3 {
-    transition-delay: 0.6s
-    }</style>
 <script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "primary-fixed-dim": "#c6c6c8",
-                      "on-error": "#ffffff",
-                      "on-error-container": "#93000a",
-                      "surface-container": "#f0eded",
-                      "surface-container-high": "#eae7e7",
-                      "primary-container": "#f5f5f7",
-                      "secondary": "#705b3f",
-                      "on-surface-variant": "#44474a",
-                      "on-tertiary-container": "#8a6a4a",
-                      "surface-container-low": "#f6f3f2",
-                      "secondary-fixed-dim": "#dec2a0",
-                      "error-container": "#ffdad6",
-                      "surface-dim": "#dcd9d9",
-                      "on-primary-fixed": "#1a1c1d",
-                      "error": "#ba1a1a",
-                      "inverse-surface": "#313030",
-                      "on-primary": "#ffffff",
-                      "primary-fixed": "#e2e2e4",
-                      "outline-variant": "#c5c7c9",
-                      "on-secondary": "#ffffff",
-                      "surface-container-lowest": "#ffffff",
-                      "on-primary-container": "#6e7072",
-                      "surface-tint": "#5d5e60",
-                      "surface-bright": "#fcf9f8",
-                      "tertiary-fixed": "#ffdcbe",
-                      "on-tertiary": "#ffffff",
-                      "tertiary-fixed-dim": "#e7bf9b",
-                      "on-tertiary-fixed-variant": "#5d4125",
-                      "secondary-container": "#fbdeba",
-                      "surface-variant": "#e5e2e1",
-                      "inverse-primary": "#c6c6c8",
-                      "secondary-fixed": "#fbdeba",
-                      "primary": "#5d5e60",
-                      "tertiary-container": "#fff3eb",
-                      "on-secondary-container": "#776144",
-                      "on-background": "#1c1b1b",
-                      "surface-container-highest": "#e5e2e1",
-                      "inverse-on-surface": "#f3f0ef",
-                      "on-tertiary-fixed": "#2b1701",
-                      "surface": "#fcf9f8",
-                      "tertiary": "#77583b",
-                      "on-secondary-fixed-variant": "#574329",
-                      "on-secondary-fixed": "#271904",
-                      "outline": "#75777a",
-                      "on-primary-fixed-variant": "#454749",
-                      "background": "#fcf9f8",
-                      "on-surface": "#1c1b1b"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "stack-sm": "12px",
-                      "section-gap": "160px",
-                      "stack-md": "24px",
-                      "unit": "4px",
-                      "gutter": "24px",
-                      "stack-lg": "48px",
-                      "margin-page": "80px"
-              },
-              "fontFamily": {
-                      "body-lg": ["inter"],
-                      "technical-label": ["inter"],
-                      "headline-lg": ["Noto Serif"],
-                      "display-hero": ["Noto Serif"],
-                      "headline-md": ["Noto Serif"],
-                      "body-md": ["inter"],
-                      "caption": ["inter"]
-              },
-              "fontSize": {
-                      "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400"}],
-                      "technical-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
-                      "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
-                      "display-hero": ["80px", {"lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
-                      "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "400"}],
-                      "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
-                      "caption": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
-              }
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            "colors": {
+                "primary-fixed-dim": "#c6c6c8",
+                "on-error": "#ffffff",
+                "on-error-container": "#93000a",
+                "surface-container": "#f0eded",
+                "surface-container-high": "#eae7e7",
+                "primary-container": "#f5f5f7",
+                "secondary": "#705b3f",
+                "on-surface-variant": "#44474a",
+                "on-tertiary-container": "#8a6a4a",
+                "surface-container-low": "#f6f3f2",
+                "secondary-fixed-dim": "#dec2a0",
+                "error-container": "#ffdad6",
+                "surface-dim": "#dcd9d9",
+                "on-primary-fixed": "#1a1c1d",
+                "error": "#ba1a1a",
+                "inverse-surface": "#313030",
+                "on-primary": "#ffffff",
+                "primary-fixed": "#e2e2e4",
+                "outline-variant": "#c5c7c9",
+                "on-secondary": "#ffffff",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-container": "#6e7072",
+                "surface-tint": "#5d5e60",
+                "surface-bright": "#fcf9f8",
+                "tertiary-fixed": "#ffdcbe",
+                "on-tertiary": "#ffffff",
+                "tertiary-fixed-dim": "#e7bf9b",
+                "on-tertiary-fixed-variant": "#5d4125",
+                "secondary-container": "#fbdeba",
+                "surface-variant": "#e5e2e1",
+                "inverse-primary": "#c6c6c8",
+                "secondary-fixed": "#fbdeba",
+                "primary": "#5d5e60",
+                "tertiary-container": "#fff3eb",
+                "on-secondary-container": "#776144",
+                "on-background": "#1c1b1b",
+                "surface-container-highest": "#e5e2e1",
+                "inverse-on-surface": "#f3f0ef",
+                "on-tertiary-fixed": "#2b1701",
+                "surface": "#fcf9f8",
+                "tertiary": "#77583b",
+                "on-secondary-fixed-variant": "#574329",
+                "on-secondary-fixed": "#271904",
+                "outline": "#75777a",
+                "on-primary-fixed-variant": "#454749",
+                "background": "#fcf9f8",
+                "on-surface": "#1c1b1b"
             },
-          },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-sm": "12px",
+                "section-gap": "160px",
+                "stack-md": "24px",
+                "unit": "4px",
+                "gutter": "24px",
+                "stack-lg": "48px",
+                "margin-page": "80px"
+            },
+            "fontFamily": {
+                "body-lg": ["Inter"],
+                "technical-label": ["Inter"],
+                "headline-lg": ["Noto Serif"],
+                "display-hero": ["Noto Serif"],
+                "headline-md": ["Noto Serif"],
+                "body-md": ["Inter"],
+                "caption": ["Inter"]
+            },
+            "fontSize": {
+                "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                "technical-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                "display-hero": ["80px", {"lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "400"}],
+                "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                "caption": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+        },
+    },
+}
+</script>
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    @media (max-width: 767px) {
+        html {
+            scroll-snap-type: y mandatory;
         }
-    </script>
+        .snap-section {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #fcf9f8;
+        overflow-x: hidden;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .serif-text {
+        font-family: 'Noto Serif', serif;
+    }
+
+    .technical-border {
+        border: 1px solid rgba(26, 26, 26, 0.1);
+    }
+
+    .bg-marble {
+        background-color: #F5F5F7;
+    }
+
+    .bg-oak {
+        background-color: #fbdeba;
+    }
+
+    .snap-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .architectural-grid {
+        background-image: radial-gradient(#1A1A1A 0.5px, transparent 0.5px);
+        background-size: 40px 40px;
+        opacity: 0.05;
+    }
+</style>
 </head>
-<body class="bg-background text-on-background m-0 p-0">
-<!-- Fixed Navigation -->
-<nav class="fixed top-0 w-full z-50 backdrop-blur-lg border-b border-outline-variant/10 flex justify-between items-center px-[80px] py-8 transition-all duration-700 bg-background/70">
-<div class="text-2xl font-light tracking-[0.3em] uppercase text-on-background serif-text">dwoodline</div>
-<div class="hidden md:flex items-center space-x-12">
-<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-on-surface-variant/50 hover:text-on-background transition-all" href="#">Home</a>
-<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-on-surface-variant/50 hover:text-on-background transition-all" href="#">About</a>
-<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-on-background border-b border-on-background pb-1" href="#">Expertise</a>
-<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-on-surface-variant/50 hover:text-on-background transition-all" href="#">Projects</a>
+<body class="bg-background text-on-background antialiased">
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-[80px] py-8 w-full">
+<div class="text-2xl font-light tracking-[0.3em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7]">dwoodline</div>
+<div class="hidden md:flex items-center gap-stack-lg">
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="01-hero.html">Home</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="02-heritage.html">About</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7] border-b border-[#1A1A1A] dark:border-[#F5F5F7] pb-1 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="03-expertise.html">Services</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="04-portfolio.html">Projects</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="05-inquiry.html">Contact</a>
 </div>
-<div class="flex items-center space-x-4">
-<span class="material-symbols-outlined text-primary cursor-pointer hover:text-secondary transition-colors">search</span>
-<span class="material-symbols-outlined text-primary cursor-pointer hover:text-secondary transition-colors">account_circle</span>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
 </div>
 </nav>
-<!-- Progress Navigation Overlay -->
-<div class="fixed right-10 top-1/2 -translate-y-1/2 z-50 flex flex-col space-y-4 items-center">
-<div class="progress-dot" data-target="ch-1"></div>
-<div class="progress-dot active" data-target="ch-2"></div>
-<div class="progress-dot" data-target="ch-3"></div>
-<div class="progress-dot" data-target="cta-end"></div>
-</div>
-<main class="snap-container h-screen w-full">
+
+<!-- Main Content Canvas -->
+<main class="pt-[160px]">
 <!-- Chapter 1: Architectural Millwork -->
 <section class="snap-section flex items-center justify-center bg-surface-container-lowest visible" id="ch-1">
 <div class="absolute inset-0 architectural-grid opacity-10"></div>
@@ -308,67 +280,108 @@ body {
 <p class="font-['Inter'] text-[10px] tracking-[0.2em] uppercase text-surface-bright/40">© 1955 dwoodline. Architectural Precision.</p>
 </div>
 </footer>
-</section>
 </main>
+
+<!-- D.Kitchen Scroll Snap Script -->
 <script>
-    // Intersection Observer for Animation
-    const observerOptions = {
-        threshold: 0.4,
-        root: document.querySelector('.snap-container')
-    };
+if (window.innerWidth >= 768) {
+    const sections = Array.from(document.querySelectorAll('.snap-section'));
+    const ANIMATION_MS = 900;
+    const WHEEL_COOLDOWN_MS = 150;
+    const TOUCH_THRESHOLD = 50;
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-                entry.target.classList.add('visible');
-                
-                // Update Progress Indicator
-                const targetId = entry.target.id;
-                document.querySelectorAll('.progress-dot').forEach(dot => {
-                    dot.classList.toggle('active', dot.dataset.target === targetId);
-                });
+    let isAnimating = false;
+    let lastWheelTime = 0;
+    let touchStartY = 0;
+    let touchStartX = 0;
 
-                // Update Nav Background (Glassmorphism transition)
-                const nav = document.querySelector('nav');
-                if (targetId === 'ch-3') {
-                    nav.classList.add('bg-black/30', 'border-white/10');
-                    nav.classList.remove('bg-background/70');
-                    nav.querySelectorAll('a, div, span').forEach(el => el.classList.add('text-white'));
-                } else {
-                    nav.classList.remove('bg-black/30', 'border-white/10');
-                    nav.classList.add('bg-background/70');
-                    nav.querySelectorAll('a, div, span').forEach(el => el.classList.remove('text-white'));
-                }
-            }
+    function getCurrentSectionIndex() {
+        const viewportCenter = window.scrollY + window.innerHeight / 2;
+        let closest = 0;
+        let minDist = Infinity;
+        sections.forEach((s, i) => {
+            const rect = s.getBoundingClientRect();
+            const center = window.scrollY + rect.top + rect.height / 2;
+            const d = Math.abs(viewportCenter - center);
+            if (d < minDist) { minDist = d; closest = i; }
         });
-    }, observerOptions);
+        return closest;
+    }
 
-    document.querySelectorAll('.snap-section').forEach(section => observer.observe(section));
+    function snapTo(index) {
+        if (index < 0 || index >= sections.length) return;
+        isAnimating = true;
+        sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => { isAnimating = false; }, ANIMATION_MS);
+    }
 
-    // Parallax Effect for Chapter 2
-    const snapContainer = document.querySelector('.snap-container');
-    const veneerBg = document.getElementById('veneer-bg');
-    
-    snapContainer.addEventListener('scroll', () => {
-        const scrolled = snapContainer.scrollTop;
-        const vHeight = window.innerHeight;
-        
-        // Target Chapter 2 parallax
-        const ch2Offset = vHeight; 
-        if (scrolled >= vHeight && scrolled <= vHeight * 2) {
-            const movement = (scrolled - vHeight) * 0.15;
-            veneerBg.style.transform = `translateY(${movement}px) scale(1.1)`;
+    function handleWheel(e) {
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        if (isAnimating) { e.preventDefault(); return; }
+
+        const now = Date.now();
+        if (now - lastWheelTime < WHEEL_COOLDOWN_MS) { e.preventDefault(); return; }
+        lastWheelTime = now;
+
+        const dir = e.deltaY > 0 ? 1 : -1;
+        const cur = getCurrentSectionIndex();
+        const next = cur + dir;
+
+        if (next >= 0 && next < sections.length) {
+            e.preventDefault();
+            snapTo(next);
         }
-    });
+    }
 
-    // Navigation Click Handling
-    document.querySelectorAll('.progress-dot').forEach(dot => {
-        dot.addEventListener('click', () => {
-            const target = document.getElementById(dot.dataset.target);
-            target.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
+    function handleTouchStart(e) {
+        if (e.touches && e.touches.length > 0) {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+        }
+    }
+
+    function handleTouchMove(e) {
+        if (!e.touches || e.touches.length === 0) return;
+        const dy = touchStartY - e.touches[0].clientY;
+        const dx = touchStartX - e.touches[0].clientX;
+
+        if (Math.abs(dx) > Math.abs(dy)) return;
+        e.preventDefault();
+
+        if (isAnimating || Math.abs(dy) < TOUCH_THRESHOLD) return;
+
+        const dir = dy > 0 ? 1 : -1;
+        const cur = getCurrentSectionIndex();
+        const next = cur + dir;
+
+        if (next >= 0 && next < sections.length) {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+            snapTo(next);
+        }
+    }
+
+    function handleKey(e) {
+        if (isAnimating) return;
+        const cur = getCurrentSectionIndex();
+        let next = null;
+
+        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') next = cur + 1;
+        else if (e.key === 'ArrowUp' || e.key === 'PageUp') next = cur - 1;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = sections.length - 1;
+
+        if (next !== null && next >= 0 && next < sections.length) {
+            e.preventDefault();
+            snapTo(next);
+        }
+    }
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('keydown', handleKey);
+}
 </script>
 
 
