@@ -99,7 +99,7 @@ tailwind.config = {
 </script>
 <style>
   html {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
     scroll-behavior: smooth;
   }
   body {
@@ -462,6 +462,7 @@ window.addEventListener('scroll', () => {
 
 // Section 1 circle reveal state
 var ch1Step = 0;
+var atFooter = false;
 function revealCircle(i) {
     var circles = document.querySelectorAll('.detail-circle');
     if (circles[i]) circles[i].classList.add('revealed');
@@ -511,6 +512,14 @@ if (window.innerWidth >= 768) {
         lastWheelTime = now;
         const dir = e.deltaY > 0 ? 1 : -1;
         const cur = getCurrentSectionIndex();
+        if (atFooter && dir === -1) {
+            e.preventDefault(); atFooter = false; snapTo(sections.length - 1); return;
+        }
+        if (cur === sections.length - 1 && dir === 1 && !atFooter) {
+            e.preventDefault(); atFooter = true;
+            document.querySelector('footer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            isAnimating = true; setTimeout(function() { isAnimating = false; }, ANIMATION_MS); return;
+        }
         if (cur === 0 && dir === 1 && ch1Step < 4) {
             e.preventDefault();
             revealCircle(ch1Step++);
@@ -539,6 +548,16 @@ if (window.innerWidth >= 768) {
         if (isAnimating || Math.abs(dy) < TOUCH_THRESHOLD) return;
         const dir = dy > 0 ? 1 : -1;
         const cur = getCurrentSectionIndex();
+        if (atFooter && dir === -1) {
+            atFooter = false; snapTo(sections.length - 1);
+            touchStartY = e.touches[0].clientY; touchStartX = e.touches[0].clientX; return;
+        }
+        if (cur === sections.length - 1 && dir === 1 && !atFooter) {
+            atFooter = true;
+            document.querySelector('footer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            isAnimating = true; setTimeout(function() { isAnimating = false; }, ANIMATION_MS);
+            touchStartY = e.touches[0].clientY; touchStartX = e.touches[0].clientX; return;
+        }
         if (cur === 0 && dir === 1 && ch1Step < 4) {
             revealCircle(ch1Step++);
             isAnimating = true;
@@ -561,6 +580,14 @@ if (window.innerWidth >= 768) {
         const cur = getCurrentSectionIndex();
         const isDown = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ';
         const isUp = e.key === 'ArrowUp' || e.key === 'PageUp';
+        if (atFooter && isUp) {
+            e.preventDefault(); atFooter = false; snapTo(sections.length - 1); return;
+        }
+        if (cur === sections.length - 1 && isDown && !atFooter) {
+            e.preventDefault(); atFooter = true;
+            document.querySelector('footer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            isAnimating = true; setTimeout(function() { isAnimating = false; }, ANIMATION_MS); return;
+        }
         if (cur === 0 && isDown && ch1Step < 4) {
             e.preventDefault();
             revealCircle(ch1Step++);
