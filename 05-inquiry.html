@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Noto+Serif:wght@300;400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c6c6c8",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#f0eded",
+                        "surface-container-high": "#eae7e7",
+                        "primary-container": "#f5f5f7",
+                        "secondary": "#705b3f",
+                        "on-surface-variant": "#44474a",
+                        "on-tertiary-container": "#8a6a4a",
+                        "surface-container-low": "#f6f3f2",
+                        "secondary-fixed-dim": "#dec2a0",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dcd9d9",
+                        "on-primary-fixed": "#1a1c1d",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#313030",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#e2e2e4",
+                        "outline-variant": "#c5c7c9",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#6e7072",
+                        "surface-tint": "#5d5e60",
+                        "surface-bright": "#fcf9f8",
+                        "tertiary-fixed": "#ffdcbe",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#e7bf9b",
+                        "on-tertiary-fixed-variant": "#5d4125",
+                        "secondary-container": "#fbdeba",
+                        "surface-variant": "#e5e2e1",
+                        "inverse-primary": "#c6c6c8",
+                        "secondary-fixed": "#fbdeba",
+                        "primary": "#5d5e60",
+                        "tertiary-container": "#fff3eb",
+                        "on-secondary-container": "#776144",
+                        "on-background": "#1c1b1b",
+                        "surface-container-highest": "#e5e2e1",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-tertiary-fixed": "#2b1701",
+                        "surface": "#fcf9f8",
+                        "tertiary": "#77583b",
+                        "on-secondary-fixed-variant": "#574329",
+                        "on-secondary-fixed": "#271904",
+                        "outline": "#75777a",
+                        "on-primary-fixed-variant": "#454749",
+                        "background": "#fcf9f8",
+                        "on-surface": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "section-gap": "160px",
+                        "stack-md": "24px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "stack-lg": "48px",
+                        "margin-page": "80px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "technical-label": ["Inter"],
+                        "headline-lg": ["Noto Serif"],
+                        "display-hero": ["Noto Serif"],
+                        "headline-md": ["Noto Serif"],
+                        "body-md": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "technical-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "display-hero": ["80px", {"lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "caption": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .form-input-focus:focus {
+            outline: none;
+            border-bottom-color: #dec2a0; /* Secondary-fixed-dim / Light Oak color */
+            box-shadow: 0 1px 0 0 #dec2a0;
+        }
+        /* Custom scroll behavior for high-end feel */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-[80px] py-8 w-full">
+<div class="text-2xl font-light tracking-[0.3em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7]">dwoodline</div>
+<div class="hidden md:flex gap-x-12 items-center">
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="01-hero.html">Home</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="02-heritage.html">About</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="03-expertise.html">Services</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="04-portfolio.html">Projects</a>
+<a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7] border-b border-[#1A1A1A] dark:border-[#F5F5F7] pb-1 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="05-inquiry.html">Contact</a>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</nav>
+<main>
+<!-- Inquiry Section (Dramatic Transition) -->
+<section class="min-h-screen bg-[#1A1A1A] text-[#F5F5F7] flex flex-col justify-center relative overflow-hidden">
+<!-- Background Image Backdrop for Materiality -->
+<div class="absolute inset-0 opacity-10 grayscale pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="A close-up high-resolution photograph of dark black aluminum architectural panels with a subtle brushed texture. The lighting is moody and low-key, highlighting the crisp edges and structural integrity of the material. Deep shadows and cool highlights emphasize the minimalist and industrial aesthetic, perfectly aligned with a luxury design studio's brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN8tsGWMRYnl-csyNbBkr_0w-JQ-i4WvoIS1in2dCA3sVfqC6OYp3kZzmyyokLzt36L-hptXAJQPEC0pD8SxE8M5ZWA9nesn4qcvXgy9wtjLXsq3DF8mgFDw9o644IkBgPV17kKYaACuj3nF2lpsPuClftV-ZwUudDK2cCMVjDSEgQkYSkKPQ0DFPS-Q3Z6vRI6WOfr9cTsXW-DTmZa8LnCIZ7brX2jTKiw2hu86M1EWkknZ_yTcu5X_v5iTG-gJSfloCgMD_oB3w"/>
+</div>
+<div class="relative z-10 px-[80px] grid grid-cols-1 md:grid-cols-12 gap-gutter items-start">
+<!-- Headline Narrative -->
+<div class="md:col-span-5 pt-stack-lg">
+<span class="font-technical-label text-technical-label uppercase tracking-[0.3em] text-[#F5F5F7]/40 block mb-stack-md">Section 05 // Inquiry</span>
+<h2 class="font-display-hero text-headline-lg md:text-display-hero leading-none mb-stack-lg">Begin a <br/>New Legacy.</h2>
+<p class="font-body-lg text-body-lg text-[#F5F5F7]/60 max-w-md">
+                        We invite architects and private clients to discuss bespoke commissions. Our studio operates with the same precision we apply to our wood and aluminum structures.
+                    </p>
+<div class="mt-section-gap hidden md:block">
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-12 h-[1px] bg-[#F5F5F7]/20 group-hover:w-20 transition-all duration-500"></div>
+<span class="font-technical-label text-technical-label uppercase tracking-widest text-[#F5F5F7]/40">Studio Schedule: 09:00 - 18:00</span>
+</div>
+</div>
+</div>
+<!-- Minimalist Form -->
+<div class="md:col-span-6 md:col-start-7 bg-[#1A1A1A] p-stack-lg border border-[#F5F5F7]/10">
+<form class="space-y-12">
+<div class="group">
+<label class="font-technical-label text-technical-label uppercase tracking-widest text-[#F5F5F7]/40 block mb-2">Principal Name</label>
+<input class="w-full bg-transparent border-0 border-b border-[#F5F5F7]/20 py-4 font-body-md text-[#F5F5F7] placeholder:text-[#F5F5F7]/10 transition-all duration-300 form-input-focus" placeholder="Your Name" type="text"/>
+</div>
+<div class="group">
+<label class="font-technical-label text-technical-label uppercase tracking-widest text-[#F5F5F7]/40 block mb-2">Electronic Mail</label>
+<input class="w-full bg-transparent border-0 border-b border-[#F5F5F7]/20 py-4 font-body-md text-[#F5F5F7] placeholder:text-[#F5F5F7]/10 transition-all duration-300 form-input-focus" placeholder="email@address.com" type="email"/>
+</div>
+<div class="group">
+<label class="font-technical-label text-technical-label uppercase tracking-widest text-[#F5F5F7]/40 block mb-2">Project Brief</label>
+<textarea class="w-full bg-transparent border-0 border-b border-[#F5F5F7]/20 py-4 font-body-md text-[#F5F5F7] placeholder:text-[#F5F5F7]/10 transition-all duration-300 form-input-focus resize-none" placeholder="Describe the architectural intent..." rows="4"></textarea>
+</div>
+<div class="pt-8">
+<button class="w-full md:w-auto px-16 py-6 bg-[#F5F5F7] text-[#1A1A1A] font-technical-label text-technical-label uppercase tracking-[0.2em] transition-all duration-500 hover:bg-[#dec2a0] hover:text-[#1A1A1A]" type="submit" onclick="handleInquirySubmit(event)">
+                                Dispatch Inquiry
+                            </button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- Technical Specification Detail (Visual Break) -->
+<section class="bg-[#0D0D0D] py-stack-lg px-[80px]">
+<div class="border-t border-[#F5F5F7]/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="flex gap-8 overflow-x-auto pb-4 md:pb-0 w-full md:w-auto no-scrollbar">
+<div class="flex flex-col">
+<span class="font-technical-label text-[10px] text-[#F5F5F7]/30 uppercase">Material Reference</span>
+<span class="font-body-md text-[#F5F5F7] mt-1 whitespace-nowrap">Black Anodized Aluminum</span>
+</div>
+<div class="w-[1px] h-10 bg-[#F5F5F7]/10 hidden md:block"></div>
+<div class="flex flex-col">
+<span class="font-technical-label text-[10px] text-[#F5F5F7]/30 uppercase">Studio Origin</span>
+<span class="font-body-md text-[#F5F5F7] mt-1 whitespace-nowrap">Milan, Italy / 1955</span>
+</div>
+<div class="w-[1px] h-10 bg-[#F5F5F7]/10 hidden md:block"></div>
+<div class="flex flex-col">
+<span class="font-technical-label text-[10px] text-[#F5F5F7]/30 uppercase">Precision Rating</span>
+<span class="font-body-md text-[#F5F5F7] mt-1 whitespace-nowrap">0.02mm Tolerance</span>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="w-12 h-12 flex items-center justify-center border border-[#F5F5F7]/10 text-[#F5F5F7] hover:bg-[#F5F5F7] hover:text-[#1A1A1A] transition-colors duration-300">
+<span class="material-symbols-outlined text-sm">north_east</span>
+</span>
+<span class="w-12 h-12 flex items-center justify-center border border-[#F5F5F7]/10 text-[#F5F5F7] hover:bg-[#F5F5F7] hover:text-[#1A1A1A] transition-colors duration-300">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Component -->
+<footer class="w-full py-20 px-[80px] bg-[#1A1A1A] dark:bg-[#0D0D0D] border-t border-[#F5F5F7]/10 flex flex-col md:flex-row justify-between items-end">
+<div class="flex flex-col gap-6 w-full md:w-auto mb-10 md:mb-0">
+<div class="text-lg font-light tracking-widest text-[#F5F5F7]">dwoodline</div>
+<div class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 leading-relaxed max-w-[280px]">
+                Providing architectural precision and bespoke craftsmanship since 1955. Every project is a testament to structural integrity.
+            </div>
+</div>
+<div class="flex flex-col md:flex-row gap-10 md:gap-20 items-end md:items-center w-full md:w-auto">
+<div class="flex gap-x-8">
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="01-hero.html">Home</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="02-heritage.html">Heritage</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="03-expertise.html">Services</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300" href="04-portfolio.html">Portfolio</a>
+</div>
+<div class="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40">
+                © 1955 dwoodline. Architectural Precision.
+            </div>
+</div>
+</footer>
+<script>
+    function handleInquirySubmit(event) {
+        event.preventDefault();
+        const form = event.target.closest('form');
+        const name = form.querySelector('input[type="text"]').value;
+        const email = form.querySelector('input[type="email"]').value;
+        const message = form.querySelector('textarea').value;
+
+        if (name && email && message) {
+            alert(`Thank you, ${name}! Your inquiry has been received. We will contact you at ${email} soon.`);
+            form.reset();
+        } else {
+            alert('Please fill in all fields before submitting.');
+        }
+    }
+</script>
+</body></html>
