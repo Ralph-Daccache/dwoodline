@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="scroll-smooth" lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -8,154 +8,199 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
 tailwind.config = {
-    darkMode: "class",
-    theme: {
-        extend: {
-            "colors": {
-                "primary-fixed-dim": "#c6c6c8",
-                "on-error": "#ffffff",
-                "on-error-container": "#93000a",
-                "surface-container": "#f0eded",
-                "surface-container-high": "#eae7e7",
-                "primary-container": "#f5f5f7",
-                "secondary": "#705b3f",
-                "on-surface-variant": "#44474a",
-                "on-tertiary-container": "#8a6a4a",
-                "surface-container-low": "#f6f3f2",
-                "secondary-fixed-dim": "#dec2a0",
-                "error-container": "#ffdad6",
-                "surface-dim": "#dcd9d9",
-                "on-primary-fixed": "#1a1c1d",
-                "error": "#ba1a1a",
-                "inverse-surface": "#313030",
-                "on-primary": "#ffffff",
-                "primary-fixed": "#e2e2e4",
-                "outline-variant": "#c5c7c9",
-                "on-secondary": "#ffffff",
-                "surface-container-lowest": "#ffffff",
-                "on-primary-container": "#6e7072",
-                "surface-tint": "#5d5e60",
-                "surface-bright": "#fcf9f8",
-                "tertiary-fixed": "#ffdcbe",
-                "on-tertiary": "#ffffff",
-                "tertiary-fixed-dim": "#e7bf9b",
-                "on-tertiary-fixed-variant": "#5d4125",
-                "secondary-container": "#fbdeba",
-                "surface-variant": "#e5e2e1",
-                "inverse-primary": "#c6c6c8",
-                "secondary-fixed": "#fbdeba",
-                "primary": "#5d5e60",
-                "tertiary-container": "#fff3eb",
-                "on-secondary-container": "#776144",
-                "on-background": "#1c1b1b",
-                "surface-container-highest": "#e5e2e1",
-                "inverse-on-surface": "#f3f0ef",
-                "on-tertiary-fixed": "#2b1701",
-                "surface": "#fcf9f8",
-                "tertiary": "#77583b",
-                "on-secondary-fixed-variant": "#574329",
-                "on-secondary-fixed": "#271904",
-                "outline": "#75777a",
-                "on-primary-fixed-variant": "#454749",
-                "background": "#fcf9f8",
-                "on-surface": "#1c1b1b"
-            },
-            "borderRadius": {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "0.75rem",
-                "full": "9999px"
-            },
-            "spacing": {
-                "stack-sm": "12px",
-                "section-gap": "160px",
-                "stack-md": "24px",
-                "unit": "4px",
-                "gutter": "24px",
-                "stack-lg": "48px",
-                "margin-page": "80px"
-            },
-            "fontFamily": {
-                "body-lg": ["Inter"],
-                "technical-label": ["Inter"],
-                "headline-lg": ["Noto Serif"],
-                "display-hero": ["Noto Serif"],
-                "headline-md": ["Noto Serif"],
-                "body-md": ["Inter"],
-                "caption": ["Inter"]
-            },
-            "fontSize": {
-                "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400"}],
-                "technical-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
-                "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
-                "display-hero": ["80px", {"lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
-                "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "400"}],
-                "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
-                "caption": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
-            }
-        },
-    },
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "primary-fixed-dim": "#c6c6c8",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "surface-container": "#f0eded",
+        "surface-container-high": "#eae7e7",
+        "primary-container": "#f5f5f7",
+        "secondary": "#705b3f",
+        "on-surface-variant": "#44474a",
+        "on-tertiary-container": "#8a6a4a",
+        "surface-container-low": "#f6f3f2",
+        "secondary-fixed-dim": "#dec2a0",
+        "error-container": "#ffdad6",
+        "surface-dim": "#dcd9d9",
+        "on-primary-fixed": "#1a1c1d",
+        "error": "#ba1a1a",
+        "inverse-surface": "#313030",
+        "on-primary": "#ffffff",
+        "primary-fixed": "#e2e2e4",
+        "outline-variant": "#c5c7c9",
+        "on-secondary": "#ffffff",
+        "surface-container-lowest": "#ffffff",
+        "on-primary-container": "#6e7072",
+        "surface-tint": "#5d5e60",
+        "surface-bright": "#fcf9f8",
+        "tertiary-fixed": "#ffdcbe",
+        "on-tertiary": "#ffffff",
+        "tertiary-fixed-dim": "#e7bf9b",
+        "on-tertiary-fixed-variant": "#5d4125",
+        "secondary-container": "#fbdeba",
+        "surface-variant": "#e5e2e1",
+        "inverse-primary": "#c6c6c8",
+        "secondary-fixed": "#fbdeba",
+        "primary": "#5d5e60",
+        "tertiary-container": "#fff3eb",
+        "on-secondary-container": "#776144",
+        "on-background": "#1c1b1b",
+        "surface-container-highest": "#e5e2e1",
+        "inverse-on-surface": "#f3f0ef",
+        "on-tertiary-fixed": "#2b1701",
+        "surface": "#fcf9f8",
+        "tertiary": "#77583b",
+        "on-secondary-fixed-variant": "#574329",
+        "on-secondary-fixed": "#271904",
+        "outline": "#75777a",
+        "on-primary-fixed-variant": "#454749",
+        "background": "#fcf9f8",
+        "on-surface": "#1c1b1b"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "stack-sm": "12px",
+        "section-gap": "160px",
+        "stack-md": "24px",
+        "unit": "4px",
+        "gutter": "24px",
+        "stack-lg": "48px",
+        "margin-page": "80px"
+      },
+      "fontFamily": {
+        "body-lg": ["Inter"],
+        "technical-label": ["Inter"],
+        "headline-lg": ["Noto Serif"],
+        "display-hero": ["Noto Serif"],
+        "headline-md": ["Noto Serif"],
+        "body-md": ["Inter"],
+        "caption": ["Inter"]
+      },
+      "fontSize": {
+        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+        "technical-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "display-hero": ["80px", {"lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+        "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+        "caption": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+      }
+    }
+  }
 }
 </script>
 <style>
-    html {
-        scroll-behavior: smooth;
-    }
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: "Inter", sans-serif;
+    background-color: #fcf9f8;
+    overflow-x: hidden;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  }
+  .serif-text { font-family: "Noto Serif", serif; }
 
-    @media (max-width: 767px) {
-        html {
-            scroll-snap-type: y mandatory;
-        }
-        .snap-section {
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-        }
-    }
+  /* Scroll Snap */
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
 
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: #fcf9f8;
-        overflow-x: hidden;
-    }
+  /* Architectural grid dot pattern */
+  .architectural-grid {
+    background-image: radial-gradient(#1A1A1A 0.5px, transparent 0.5px);
+    background-size: 60px 60px;
+    opacity: 0.02;
+  }
 
-    .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-    }
+  /* Narrative Animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.4s cubic-bezier(0.645, 0.045, 0.355, 1),
+                transform 1.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    will-change: transform, opacity;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-stagger-1 { transition-delay: 0.2s; }
+  .reveal-stagger-2 { transition-delay: 0.4s; }
+  .reveal-stagger-3 { transition-delay: 0.6s; }
 
-    .serif-text {
-        font-family: 'Noto Serif', serif;
-    }
+  /* SVG Live Drafting */
+  .drawing-path {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    transition: stroke-dashoffset 3.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+  .visible .drawing-path { stroke-dashoffset: 0; }
 
-    .technical-border {
-        border: 1px solid rgba(26, 26, 26, 0.1);
-    }
+  /* Material Reveal Mask */
+  .veneer-mask {
+    mask-image: linear-gradient(to right, black 0%, black 0%, transparent 0%);
+    mask-size: 100% 100%;
+    transition: mask-image 2.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+  .visible .veneer-mask {
+    mask-image: linear-gradient(to right, black 0%, black 100%, transparent 100%);
+  }
 
-    .bg-marble {
-        background-color: #F5F5F7;
-    }
+  /* Exploded View Hardware */
+  .hardware-component {
+    transition: transform 1.8s cubic-bezier(0.645, 0.045, 0.355, 1),
+                opacity 1.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+    opacity: 0;
+  }
+  .hardware-left  { transform: translateX(-100px); }
+  .hardware-right { transform: translateX(100px); }
+  .visible .hardware-component { transform: translateX(0); opacity: 1; }
 
-    .bg-oak {
-        background-color: #fbdeba;
-    }
+  /* Atmospheric light beam */
+  .light-beam {
+    position: absolute;
+    top: -50%; left: -20%;
+    width: 150%; height: 200%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 50%);
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 1;
+  }
 
-    .snap-section {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .architectural-grid {
-        background-image: radial-gradient(#1A1A1A 0.5px, transparent 0.5px);
-        background-size: 40px 40px;
-        opacity: 0.05;
-    }
+  /* Side progress indicator */
+  .progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #1A1A1A;
+    opacity: 0.2;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+  .progress-dot.active {
+    opacity: 1;
+    height: 24px;
+    border-radius: 4px;
+  }
 </style>
 </head>
-<body class="bg-background text-on-background antialiased">
+<body class="bg-background text-on-background">
 
-<!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-[80px] py-8 w-full">
+<!-- Unified Navigation — Services active -->
+<nav class="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-[80px] py-8">
 <div class="text-2xl font-light tracking-[0.3em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7]">dwoodline</div>
 <div class="hidden md:flex items-center gap-stack-lg">
 <a class="font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7] transition-all duration-500" href="01-hero.html">Home</a>
@@ -169,17 +214,26 @@ tailwind.config = {
 </div>
 </nav>
 
-<!-- Main Content Canvas -->
-<main class="pt-[160px]">
-<!-- Chapter 1: Architectural Millwork -->
-<section class="snap-section flex items-center justify-center bg-surface-container-lowest visible" id="ch-1">
-<div class="absolute inset-0 architectural-grid opacity-10"></div>
+<!-- Side Progress Indicator -->
+<div class="fixed right-10 top-1/2 -translate-y-1/2 z-50 flex flex-col space-y-4 items-center">
+<div class="progress-dot" data-target="ch-1"></div>
+<div class="progress-dot" data-target="ch-2"></div>
+<div class="progress-dot" data-target="ch-3"></div>
+<div class="progress-dot" data-target="cta-end"></div>
+</div>
+
+<main class="w-full">
+
+<!-- Chapter 1: Architectural Millwork (Live Drafting) -->
+<section class="snap-section flex items-center justify-center bg-surface-container-lowest" id="ch-1">
+<div class="absolute inset-0 architectural-grid"></div>
+<div class="light-beam"></div>
 <div class="max-w-6xl mx-auto px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-24 items-center z-10">
-<div class="reveal visible">
-<span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block">Chapter 01 — Division 06</span>
-<h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-8">Architectural Millwork Shop Drawings</h2>
-<p class="font-body-lg text-on-surface-variant max-w-md mb-12">Precision drafting utilizing mid-century rigor and contemporary BIM software. We translate architectural intent into production-ready technical data.</p>
-<div class="flex space-x-8">
+<div class="reveal">
+<span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block reveal-stagger-1">Chapter 01 — Division 06</span>
+<h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-8 reveal-stagger-2">Architectural Millwork Shop Drawings</h2>
+<p class="font-body-lg text-on-surface-variant max-w-md mb-12 reveal-stagger-3">Precision drafting utilizing mid-century rigor and contemporary BIM software. We translate architectural intent into production-ready technical data.</p>
+<div class="flex space-x-8 reveal-stagger-3">
 <div class="text-left">
 <span class="block font-headline-md text-2xl serif-text">1:10</span>
 <span class="font-technical-label text-[9px] uppercase tracking-widest opacity-40">Detail Scale</span>
@@ -190,7 +244,7 @@ tailwind.config = {
 </div>
 </div>
 </div>
-<div class="reveal reveal-delay-2 relative flex justify-center visible">
+<div class="reveal reveal-stagger-2 relative flex justify-center">
 <svg class="w-full max-w-lg opacity-80" fill="none" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
 <rect class="drawing-path" height="300" stroke="#1A1A1A" stroke-width="0.5" width="400" x="50" y="100"></rect>
 <path class="drawing-path" d="M50 150H450M50 350H450M250 100V400" stroke="#1A1A1A" stroke-width="0.3"></path>
@@ -202,16 +256,19 @@ tailwind.config = {
 </div>
 </div>
 </section>
-<!-- Chapter 2: Custom Veneer Mapping -->
-<section class="snap-section flex items-center justify-center bg-surface relative overflow-hidden" id="ch-2"><div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url(&quot;https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&amp;fit=crop&amp;q=80&quot;); background-size: cover; background-position: center center;"></div>
 
-
-<div class="max-w-6xl mx-auto px-[80px] w-full z-10">
-<div class="max-w-2xl reveal bg-surface/40 backdrop-blur-md border border-white/20 p-16 shadow-2xl rounded-sm">
-<span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block">Chapter 02 — Materiality</span>
-<h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-8">Custom Veneer Mapping &amp; Sequence Control</h2>
-<p class="font-body-lg text-on-surface-variant mb-12">Grain matching is not an afterthought. Our digital mapping process ensures seamless heritage-quality interiors through rigorous sequence control.</p>
-<div class="grid grid-cols-2 gap-12 py-12 border-t border-on-surface-variant/10">
+<!-- Chapter 2: Custom Veneer Mapping (Material Reveal) -->
+<section class="snap-section flex items-center justify-center bg-surface relative overflow-hidden" id="ch-2">
+<div class="absolute inset-0 z-0 bg-surface">
+<img alt="Veneer texture" class="w-full h-full object-cover opacity-30 mix-blend-multiply transition-transform duration-[4s] ease-out parallax-bg" src="https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=1400&q=70"/>
+</div>
+<div class="absolute inset-0 z-1 pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg viewBox%3D%220 0 200 200%22 xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter id%3D%22noise%22%3E%3CfeTurbulence type%3D%22fractalNoise%22 baseFrequency%3D%220.65%22 numOctaves%3D%223%22 stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect width%3D%22100%25%22 height%3D%22100%25%22 filter%3D%22url(%23noise)%22 opacity%3D%221%22/%3E%3C/svg%3E'); opacity:0.04; mix-blend-mode:multiply;"></div>
+<div class="max-w-6xl mx-auto px-[80px] w-full z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="max-w-2xl reveal bg-surface/80 backdrop-blur-md border border-white/40 p-12 lg:p-16 shadow-2xl rounded-sm">
+<span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block reveal-stagger-1">Chapter 02 — Materiality</span>
+<h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-8 reveal-stagger-2">Custom Veneer Mapping &amp; Sequence Control</h2>
+<p class="font-body-lg text-on-surface-variant mb-12 reveal-stagger-3">Grain matching is not an afterthought. Our digital mapping process ensures seamless heritage-quality interiors through rigorous sequence control.</p>
+<div class="grid grid-cols-2 gap-12 py-12 border-t border-on-surface-variant/10 reveal-stagger-3">
 <div class="space-y-4">
 <span class="material-symbols-outlined text-secondary">layers</span>
 <h4 class="font-headline-md text-xl serif-text">Book-match Precision</h4>
@@ -224,50 +281,80 @@ tailwind.config = {
 </div>
 </div>
 </div>
+<div class="reveal reveal-stagger-2 relative h-[500px] overflow-hidden rounded-sm border border-outline-variant/20 shadow-xl">
+<div class="absolute inset-0 bg-[#e5e2e1] z-2 veneer-mask transition-all duration-[2s]"></div>
+<img alt="Walnut veneer detail" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?auto=format&fit=crop&w=800&q=80"/>
+<div class="absolute bottom-6 right-6 bg-white/90 backdrop-blur px-4 py-2 text-[10px] uppercase tracking-widest font-technical-label">Texture Mapping V1.4</div>
+</div>
 </div>
 </section>
-<!-- Chapter 3: Hardware Integration -->
-<section class="snap-section flex items-center justify-center bg-[#1C1B1B] text-surface-bright visible" id="ch-3">
+
+<!-- Chapter 3: Hardware Integration (Exploded View) -->
+<section class="snap-section flex items-center justify-center bg-[#1C1B1B] text-surface-bright" id="ch-3">
 <div class="absolute inset-0 architectural-grid opacity-20 pointer-events-none invert"></div>
-<div class="max-w-6xl mx-auto px-[80px] flex flex-col items-center text-center z-10">
-<div class="reveal visible">
-<span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed mb-4 block">Chapter 03 — Technicality</span>
-<h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-12">Hardware Integration &amp;<br>Black Aluminum Coordination</h2>
-<p class="font-body-lg text-surface-container-highest max-w-3xl mb-20 opacity-80">Where wood meets metal. We coordinate complex architectural hardware, specialized lighting profiles, and mechanical systems into the millwork fabric.</p>
+<div class="light-beam opacity-20"></div>
+<div class="max-w-6xl mx-auto px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-24 items-center z-10">
+<div class="reveal">
+<span class="font-technical-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed mb-4 block reveal-stagger-1">Chapter 03 — Technicality</span>
+<h2 class="font-headline-lg text-headline-lg serif-text leading-tight mb-12 reveal-stagger-2">Hardware Integration &amp;<br/>Black Aluminum Coordination</h2>
+<p class="font-body-lg text-surface-container-highest max-w-3xl mb-12 reveal-stagger-3 opacity-80">Where wood meets metal. We coordinate complex architectural hardware, specialized lighting profiles, and mechanical systems into the millwork fabric.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-stagger-3">
+<div class="p-8 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+<span class="material-symbols-outlined text-tertiary-fixed text-2xl mb-4">precision_manufacturing</span>
+<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-2">CNC Accuracy</h5>
+<p class="text-caption opacity-60">Sub-millimeter routing for concealed hardware.</p>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-16 w-full reveal reveal-delay-2 visible">
-<div class="p-10 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
-<span class="material-symbols-outlined text-tertiary-fixed text-3xl mb-6">precision_manufacturing</span>
-<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-4">CNC Accuracy</h5>
-<p class="text-caption opacity-60">Sub-millimeter routing for concealed hardware systems.</p>
+<div class="p-8 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+<span class="material-symbols-outlined text-tertiary-fixed text-2xl mb-4">bolt</span>
+<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-2">LEED Standards</h5>
+<p class="text-caption opacity-60">Integrated low-voltage lighting profiles.</p>
 </div>
-<div class="p-10 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
-<span class="material-symbols-outlined text-tertiary-fixed text-3xl mb-6">bolt</span>
-<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-4">LEED Standards</h5>
-<p class="text-caption opacity-60">Integrated low-voltage lighting and sustainable sourcing.</p>
-</div>
-<div class="p-10 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
-<span class="material-symbols-outlined text-tertiary-fixed text-3xl mb-6">handyman</span>
-<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-4">Installation Rigor</h5>
+<div class="p-8 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+<span class="material-symbols-outlined text-tertiary-fixed text-2xl mb-4">handyman</span>
+<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-2">Installation Rigor</h5>
 <p class="text-caption opacity-60">Engineered joinery designed for efficient field assembly.</p>
 </div>
+<div class="p-8 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+<span class="material-symbols-outlined text-tertiary-fixed text-2xl mb-4">verified_user</span>
+<h5 class="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-2">Longevity</h5>
+<p class="text-caption opacity-60">Joinery designed to outlast the structure it inhabits.</p>
+</div>
+</div>
+</div>
+<!-- Exploded View Animation -->
+<div class="relative reveal flex items-center justify-center h-[500px]">
+<div class="absolute w-64 h-80 bg-[#313030] border border-white/5 shadow-2xl rounded-sm z-10"></div>
+<div class="absolute hardware-component hardware-left z-20" style="left:-10%;">
+<div class="w-48 h-1 bg-black/80 shadow-lg mb-2"></div>
+<div class="w-32 h-1 bg-black/80 shadow-lg"></div>
+<span class="text-[8px] uppercase tracking-tighter opacity-40 absolute -top-4">Al-Plate 04</span>
+</div>
+<div class="absolute hardware-component hardware-right z-20" style="right:-10%;">
+<div class="w-12 h-12 border-2 border-tertiary-fixed rounded-full opacity-40"></div>
+<span class="text-[8px] uppercase tracking-tighter opacity-40 absolute -bottom-4">Pivot-Hinge X-1</span>
+</div>
+<img alt="Architectural hardware detail" class="w-full h-full object-cover grayscale opacity-20 absolute inset-0" src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80"/>
 </div>
 </div>
 </section>
-<!-- Climax Section -->
+
+<!-- Chapter 4: CTA -->
 <section class="snap-section flex flex-col bg-surface-container-low relative" id="cta-end">
 <div class="flex-grow flex items-center justify-center">
 <div class="max-w-4xl mx-auto text-center px-[80px] reveal">
 <h2 class="font-headline-lg text-headline-lg serif-text mb-8">Begin the Technical Phase</h2>
 <p class="font-body-lg text-on-surface-variant mb-16 max-w-2xl mx-auto">Submit your architectural intent drawings for a comprehensive technical feasibility review and millwork consultation.</p>
 <div class="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-8">
-<button class="bg-[#1A1A1A] text-white px-12 py-6 font-technical-label uppercase tracking-[0.2em] text-[10px] transition-all duration-700 hover:tracking-[0.3em] hover:bg-black">Inquire Now</button>
-<button class="border border-[#1A1A1A] text-[#1A1A1A] px-12 py-6 font-technical-label uppercase tracking-[0.2em] text-[10px] hover:bg-[#1A1A1A] hover:text-white transition-all duration-700">Download Portfolio</button>
+<a href="05-inquiry.html" class="bg-[#1A1A1A] text-white px-12 py-6 font-technical-label uppercase tracking-[0.2em] text-[10px] transition-all duration-700 hover:tracking-[0.3em] hover:bg-black">Inquire Now</a>
+<a href="04-portfolio.html" class="border border-[#1A1A1A] text-[#1A1A1A] px-12 py-6 font-technical-label uppercase tracking-[0.2em] text-[10px] hover:bg-[#1A1A1A] hover:text-white transition-all duration-700">View Portfolio</a>
 </div>
 </div>
 </div>
 </section>
+
 </main>
+
+<!-- Unified Footer -->
 <footer class="w-full bg-[#1A1A1A] dark:bg-[#0D0D0D] border-t border-[#F5F5F7]/10">
 <div class="px-[80px] pt-16 pb-12 flex flex-col lg:flex-row gap-16 justify-between">
 <div class="flex flex-col gap-6 min-w-[180px]">
@@ -313,14 +400,50 @@ tailwind.config = {
 </div>
 </footer>
 
-<!-- D.Kitchen Scroll Snap Script -->
 <script>
+// Intersection Observer — reveals sections and updates progress dots
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            entry.target.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+            const targetId = entry.target.id;
+            document.querySelectorAll('.progress-dot').forEach(dot => {
+                dot.classList.toggle('active', dot.dataset.target === targetId);
+            });
+        }
+    });
+}, { threshold: 0.35, root: null });
+
+document.querySelectorAll('.snap-section').forEach(section => observer.observe(section));
+
+// Progress dot click — scroll to section
+document.querySelectorAll('.progress-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+        const target = document.getElementById(dot.dataset.target);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+// Subtle parallax on chapter 2 background
+window.addEventListener('scroll', () => {
+    const parallaxImgs = document.querySelectorAll('.parallax-bg');
+    parallaxImgs.forEach(img => {
+        const rect = img.parentElement.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (rect.top < vh && rect.bottom > 0) {
+            const offset = (rect.top / vh) * 50;
+            img.style.transform = `translateY(${offset}px) scale(1.1)`;
+        }
+    });
+}, { passive: true });
+
+// D.Kitchen smooth wheel/touch/keyboard scroll — desktop only
 if (window.innerWidth >= 768) {
     const sections = Array.from(document.querySelectorAll('.snap-section'));
     const ANIMATION_MS = 900;
     const WHEEL_COOLDOWN_MS = 150;
     const TOUCH_THRESHOLD = 50;
-
     let isAnimating = false;
     let lastWheelTime = 0;
     let touchStartY = 0;
@@ -328,8 +451,7 @@ if (window.innerWidth >= 768) {
 
     function getCurrentSectionIndex() {
         const viewportCenter = window.scrollY + window.innerHeight / 2;
-        let closest = 0;
-        let minDist = Infinity;
+        let closest = 0, minDist = Infinity;
         sections.forEach((s, i) => {
             const rect = s.getBoundingClientRect();
             const center = window.scrollY + rect.top + rect.height / 2;
@@ -349,19 +471,13 @@ if (window.innerWidth >= 768) {
     function handleWheel(e) {
         if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
         if (isAnimating) { e.preventDefault(); return; }
-
         const now = Date.now();
         if (now - lastWheelTime < WHEEL_COOLDOWN_MS) { e.preventDefault(); return; }
         lastWheelTime = now;
-
         const dir = e.deltaY > 0 ? 1 : -1;
         const cur = getCurrentSectionIndex();
         const next = cur + dir;
-
-        if (next >= 0 && next < sections.length) {
-            e.preventDefault();
-            snapTo(next);
-        }
+        if (next >= 0 && next < sections.length) { e.preventDefault(); snapTo(next); }
     }
 
     function handleTouchStart(e) {
@@ -375,16 +491,12 @@ if (window.innerWidth >= 768) {
         if (!e.touches || e.touches.length === 0) return;
         const dy = touchStartY - e.touches[0].clientY;
         const dx = touchStartX - e.touches[0].clientX;
-
         if (Math.abs(dx) > Math.abs(dy)) return;
         e.preventDefault();
-
         if (isAnimating || Math.abs(dy) < TOUCH_THRESHOLD) return;
-
         const dir = dy > 0 ? 1 : -1;
         const cur = getCurrentSectionIndex();
         const next = cur + dir;
-
         if (next >= 0 && next < sections.length) {
             touchStartY = e.touches[0].clientY;
             touchStartX = e.touches[0].clientX;
@@ -396,16 +508,11 @@ if (window.innerWidth >= 768) {
         if (isAnimating) return;
         const cur = getCurrentSectionIndex();
         let next = null;
-
         if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') next = cur + 1;
         else if (e.key === 'ArrowUp' || e.key === 'PageUp') next = cur - 1;
         else if (e.key === 'Home') next = 0;
         else if (e.key === 'End') next = sections.length - 1;
-
-        if (next !== null && next >= 0 && next < sections.length) {
-            e.preventDefault();
-            snapTo(next);
-        }
+        if (next !== null && next >= 0 && next < sections.length) { e.preventDefault(); snapTo(next); }
     }
 
     window.addEventListener('wheel', handleWheel, { passive: false });
@@ -414,6 +521,5 @@ if (window.innerWidth >= 768) {
     window.addEventListener('keydown', handleKey);
 }
 </script>
-
-
-</body></html>
+</body>
+</html>
