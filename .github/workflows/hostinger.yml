@@ -1,0 +1,59 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dwoodline-react/**'
+      - '.github/workflows/hostinger.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: hostinger-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dwoodline-react
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: dwoodline-react/package-lock.json
+
+      # package-lock.json is the tracked lockfile; pnpm-lock.yaml is local-only
+      # and never reaches CI, so npm is unambiguously correct here.
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # `build` already runs `tsc --noEmit` first, so a type error fails the deploy.
+      - name: Build
+        run: npm run build
+
+      # The SPA fallback rules live in public/.htaccess and Vite copies them to
+      # dist/. Without that file every deep link 404s, so fail loudly if it is gone.
+      - name: Verify .htaccess shipped
+        run: test -f dist/.htaccess || { echo "::error::dist/.htaccess missing - SPA deep links would 404"; exit 1; }
+
+      - name: Deploy to Hostinger over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: dwoodline-react/dist/
+          server-dir: public_html/
