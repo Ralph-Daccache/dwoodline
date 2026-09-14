@@ -56,4 +56,4 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: dwoodline-react/dist/
-          server-dir: public_html/
+          server-dir: ./
