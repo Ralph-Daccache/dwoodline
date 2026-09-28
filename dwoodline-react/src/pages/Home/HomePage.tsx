@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/config/routes';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
-import { useHtmlScrollSnap } from '@/hooks/useHtmlScrollSnap';
 import { useHomeScroll } from '@/hooks/useHomeScroll';
+import { useSectionScroll } from '@/hooks/useSectionScroll';
 
 export function HomePage() {
-  useHtmlScrollSnap('mandatory');
   useHomeScroll();
+  // Desktop wheel/touch/keyboard section snap — same behavior as the Projects page.
+  // (No CSS scroll-snap: the hijack drives snapping on desktop; mobile scrolls freely.)
+  useSectionScroll();
 
   return (
     <main className="w-full">
