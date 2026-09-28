@@ -1,17 +1,20 @@
-import { useHtmlScrollSnap } from '@/hooks/useHtmlScrollSnap';
+import { useRef } from 'react';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
 import { InquiryForm } from '@/components/InquiryForm/InquiryForm';
+import { useLuxeScroll } from '@/hooks/useLuxeScroll';
 
 export function InquiryPage() {
-  useHtmlScrollSnap('mandatory');
+  const scopeRef = useRef<HTMLElement>(null);
+  useLuxeScroll(scopeRef);
 
   return (
-    <main>
+    <main ref={scopeRef}>
       {/* Inquiry Section (Dramatic Transition) */}
       <section className="min-h-screen bg-[#1A1A1A] text-[#F5F5F7] flex flex-col justify-center relative overflow-hidden">
         {/* Background Image Backdrop for Materiality */}
         <div className="absolute inset-0 opacity-10 grayscale pointer-events-none">
           <img
+            data-parallax
             className="w-full h-full object-cover"
             alt="A close-up high-resolution photograph of dark black aluminum architectural panels with a subtle brushed texture. The lighting is moody and low-key, highlighting the crisp edges and structural integrity of the material. Deep shadows and cool highlights emphasize the minimalist and industrial aesthetic, perfectly aligned with a luxury design studio's brand identity."
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN8tsGWMRYnl-csyNbBkr_0w-JQ-i4WvoIS1in2dCA3sVfqC6OYp3kZzmyyokLzt36L-hptXAJQPEC0pD8SxE8M5ZWA9nesn4qcvXgy9wtjLXsq3DF8mgFDw9o644IkBgPV17kKYaACuj3nF2lpsPuClftV-ZwUudDK2cCMVjDSEgQkYSkKPQ0DFPS-Q3Z6vRI6WOfr9cTsXW-DTmZa8LnCIZ7brX2jTKiw2hu86M1EWkknZ_yTcu5X_v5iTG-gJSfloCgMD_oB3w"

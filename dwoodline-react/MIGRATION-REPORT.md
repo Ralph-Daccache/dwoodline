@@ -5,14 +5,14 @@ The existing design was treated as final and ported pixel-for-pixel; no restylin
 
 ## Routes created (React Router)
 
-| Route        | Page component   | Legacy file        | Nav label |
-| ------------ | ---------------- | ------------------ | --------- |
-| `/`          | `HomePage`       | `01-hero.html`     | Home      |
-| `/heritage`  | `HeritagePage`   | `02-heritage.html` | About     |
-| `/expertise` | `ExpertisePage`  | `03-expertise.html`| Services  |
-| `/portfolio` | `PortfolioPage`  | `04-portfolio.html`| Projects  |
-| `/inquiry`   | `InquiryPage`    | `05-inquiry.html`  | Contact   |
-| `*`          | → redirect `/`   | —                  | —         |
+| Route        | Page component  | Legacy file         | Nav label |
+| ------------ | --------------- | ------------------- | --------- |
+| `/`          | `HomePage`      | `01-hero.html`      | Home      |
+| `/heritage`  | `HeritagePage`  | `02-heritage.html`  | About     |
+| `/expertise` | `ExpertisePage` | `03-expertise.html` | Services  |
+| `/portfolio` | `PortfolioPage` | `04-portfolio.html` | Projects  |
+| `/inquiry`   | `InquiryPage`   | `05-inquiry.html`   | Contact   |
+| `*`          | → redirect `/`  | —                   | —         |
 
 `basename` is `import.meta.env.BASE_URL`, so a GitHub Pages sub-path deploy works by
 setting `VITE_BASE_PATH` (see `.env.example`).
@@ -43,14 +43,14 @@ setting `VITE_BASE_PATH` (see `.env.example`).
 
 ## Behavior (JS → hooks)
 
-| Hook                  | Replaces                                                            |
-| --------------------- | ------------------------------------------------------------------ |
-| `useMobileMenu`       | Per-page hamburger overlay IIFE                                     |
-| `useHtmlScrollSnap`   | Per-page `<html>` `scroll-snap-type` (+ mobile media-query classes) |
-| `useHomeScroll`       | Home IntersectionObserver reveal + hero progress dots              |
-| `useExpertiseScroll`  | Expertise reveal, dots, parallax, circle state machine, wheel/touch/key nav, virtual-footer |
-| `useSectionScroll`    | Portfolio desktop wheel/touch/key section snap                     |
-| `useCarousel`         | Portfolio carousel drag/momentum, prev/next, dots                  |
+| Hook                 | Replaces                                                                                    |
+| -------------------- | ------------------------------------------------------------------------------------------- |
+| `useMobileMenu`      | Per-page hamburger overlay IIFE                                                             |
+| `useHtmlScrollSnap`  | Per-page `<html>` `scroll-snap-type` (+ mobile media-query classes)                         |
+| `useHomeScroll`      | Home IntersectionObserver reveal + hero progress dots                                       |
+| `useExpertiseScroll` | Expertise reveal, dots, parallax, circle state machine, wheel/touch/key nav, virtual-footer |
+| `useSectionScroll`   | Portfolio desktop wheel/touch/key section snap                                              |
+| `useCarousel`        | Portfolio carousel drag/momentum, prev/next, dots                                           |
 
 Components: `MaterialIcon`, `SocialLinks`, `Carousel`, `GalleryModal`, `InquiryForm`.
 Layout shell: `Nav`, `MobileMenu`, `Footer`, `SiteLayout` (owns nav/menu/footer, `data-page`,

@@ -1,13 +1,15 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/config/routes';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
-import { useHtmlScrollSnap } from '@/hooks/useHtmlScrollSnap';
+import { useLuxeScroll } from '@/hooks/useLuxeScroll';
 
 export function HeritagePage() {
-  useHtmlScrollSnap('mandatory');
+  const scopeRef = useRef<HTMLElement>(null);
+  useLuxeScroll(scopeRef);
 
   return (
-    <main className="pt-[100px] md:pt-[160px] pb-section-gap px-6 md:px-[80px]">
+    <main ref={scopeRef} className="pt-[100px] md:pt-[160px] pb-section-gap px-6 md:px-[80px]">
       {/* Heritage Section */}
       <section className="relative min-h-[819px] flex items-center justify-center overflow-hidden">
         {/* Background Large Typography */}
