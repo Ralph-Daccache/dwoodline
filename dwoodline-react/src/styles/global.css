@@ -155,34 +155,61 @@ html.snap-portfolio {
   opacity: 1;
   transform: scale(1.4);
 }
-/* Subtle grain over the dark technical section (adds depth). */
-[data-page='home'] .grain-overlay {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.06;
-  mix-blend-mode: overlay;
+/* Section 3 — subtle dark wood-grain background (blends; keeps text crisp). */
+[data-page='home'] .wood-bg {
+  background-color: #1a1a1a;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(112, 91, 63, 0.06) 0px,
+      rgba(112, 91, 63, 0.06) 2px,
+      transparent 2px,
+      transparent 7px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.22) 0px,
+      rgba(0, 0, 0, 0.22) 1px,
+      transparent 1px,
+      transparent 96px
+    ),
+    linear-gradient(180deg, #221a13 0%, #151311 100%);
 }
-/* Literal veneer rolls — spindle cylinder + unrolling wood sheet. */
-[data-page='home'] .veneer-roll {
-  border-radius: 4px;
+/* Veneer roll — a wood dowel, rounded via vertical shading (light oak centre). */
+[data-page='home'] .veneer-dowel {
+  border-radius: 3px;
   background: linear-gradient(
-    90deg,
-    #2c1d10 0%,
-    #6b4e31 26%,
-    #b98d5e 50%,
-    #6b4e31 74%,
-    #2c1d10 100%
+    180deg,
+    #4a3520 0%,
+    #8a6a4a 24%,
+    #dec2a0 50%,
+    #8a6a4a 76%,
+    #4a3520 100%
   );
   box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    0 5px 14px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
+/* Veneer sheet — CSS wood grain revealed as the roll unfurls downward. */
 [data-page='home'] .veneer-sheet {
+  background-color: #5c4128;
   background-image:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.18)),
-    url('https://images.unsplash.com/photo-1598928636135-d146006ff4be?auto=format&fit=crop&w=1200&q=70');
-  background-size: cover;
-  background-position: center;
-  box-shadow: inset 10px 0 18px rgba(0, 0, 0, 0.5);
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.14) 0px,
+      rgba(0, 0, 0, 0.14) 2px,
+      transparent 2px,
+      transparent 12px
+    ),
+    linear-gradient(180deg, #6b4e31 0%, #4a3520 100%);
+  box-shadow: inset 0 9px 16px rgba(0, 0, 0, 0.5);
 }
 @media (max-width: 767px) {
   [data-page='home'] .snap-target {

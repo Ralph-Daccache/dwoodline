@@ -62,7 +62,7 @@ const CTA_PRIMARY =
 const CTA_GHOST =
   'inline-block border border-[#1A1A1A] text-[#1A1A1A] bg-white/20 backdrop-blur-sm px-stack-lg py-4 font-technical-label uppercase tracking-widest rounded-none transition-all duration-500 hover:bg-[#F5F5F7] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A] focus-visible:ring-offset-2';
 
-/** Literal veneer rolls — click a roll to unroll its sheet rightward and reveal a step. */
+/** Veneer rolls — click a wood dowel to unroll its veneer sheet downward and reveal a step. */
 function VeneerRolls() {
   const [active, setActive] = useState(0);
   return (
@@ -70,50 +70,40 @@ function VeneerRolls() {
       {PROCESS.map((step, i) => {
         const open = i === active;
         return (
-          <button
-            key={step.n}
-            type="button"
-            onClick={() => setActive(i)}
-            aria-expanded={open}
-            className="group relative flex h-20 w-full items-stretch overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-fixed-dim md:h-24"
-          >
-            {/* Roll cylinder (spindle) */}
-            <span className="veneer-roll relative z-20 flex w-14 flex-none items-center justify-center md:w-16">
-              <span className="font-display-hero text-2xl tabular-nums text-[#1a120a]">
+          <div key={step.n}>
+            {/* Wood dowel (the roll) */}
+            <button
+              type="button"
+              onClick={() => setActive(open ? -1 : i)}
+              aria-expanded={open}
+              className="veneer-dowel group relative flex h-14 w-full items-center gap-4 px-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-fixed-dim md:h-16"
+            >
+              <span className="font-display-hero text-2xl tabular-nums text-[#2b1701] md:text-3xl">
                 {step.n}
               </span>
-            </span>
-            {/* Unrolling veneer sheet */}
-            <span className="relative flex-1 overflow-hidden">
-              <span
-                aria-hidden="true"
-                className={`veneer-sheet absolute inset-0 origin-left transition-transform duration-700 ease-out ${
-                  open ? 'scale-x-100' : 'scale-x-0'
+              <span className="font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#2b1701]">
+                {step.title}
+              </span>
+              <MaterialIcon
+                name="expand_more"
+                className={`ml-auto text-[#2b1701] transition-transform duration-500 ${
+                  open ? 'rotate-180' : ''
                 }`}
               />
-              {/* Revealed content — fades in once the sheet has unrolled */}
-              <span
-                className={`relative z-10 flex h-full flex-col justify-center pl-6 pr-6 transition-opacity duration-500 ${
-                  open ? 'opacity-100 delay-200' : 'opacity-0'
-                }`}
-              >
-                <span className="font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#F5F5F7]">
-                  {step.title}
-                </span>
-                <span className="mt-1 max-w-xl text-sm text-[#F5F5F7]/75">{step.body}</span>
-              </span>
-              {/* Collapsed label (rolled state) */}
-              <span
-                className={`pointer-events-none absolute inset-0 flex items-center pl-6 transition-opacity duration-300 ${
-                  open ? 'opacity-0' : 'opacity-100'
-                }`}
-              >
-                <span className="font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#F5F5F7]/45 group-hover:text-[#F5F5F7]/70">
-                  {step.title}
-                </span>
-              </span>
-            </span>
-          </button>
+            </button>
+            {/* Unrolling veneer sheet (downward) */}
+            <div
+              className={`grid transition-all duration-700 ease-out ${
+                open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+              }`}
+            >
+              <div className="overflow-hidden">
+                <div className="veneer-sheet px-5 py-6">
+                  <p className="max-w-2xl text-sm text-[#F5F5F7]/85 md:text-base">{step.body}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         );
       })}
     </div>
@@ -238,8 +228,7 @@ export function HomePage() {
       </section>
 
       {/* Technical Specification — dark, textured, interactive process */}
-      <section className="snap-target relative bg-[#1A1A1A] text-[#F5F5F7] px-6 md:px-[80px] flex items-center justify-center py-16 md:py-24 overflow-hidden">
-        <div className="grain-overlay pointer-events-none absolute inset-0 z-0"></div>
+      <section className="snap-target wood-bg relative bg-[#1A1A1A] text-[#F5F5F7] px-6 md:px-[80px] flex items-center justify-center py-16 md:py-24 overflow-hidden">
         <div className="relative z-10 w-full max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start gap-stack-lg">
             <div className="max-w-xl">
