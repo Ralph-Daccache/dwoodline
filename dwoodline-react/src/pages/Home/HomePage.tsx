@@ -29,6 +29,15 @@ const SPECS = [
   { label: 'Heritage', value: 'Since 1955' },
 ] as const;
 
+const MARQUEE = [
+  'Calacatta Marble',
+  'Solid Walnut',
+  'Blackened Aluminium',
+  'Light Oak',
+  'CNC Precision',
+  'Since 1955',
+] as const;
+
 const CTA_PRIMARY =
   'inline-block bg-[#1A1A1A] text-white px-stack-lg py-4 font-technical-label uppercase tracking-widest rounded-none transition-all duration-500 hover:bg-[#705b3f] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A] focus-visible:ring-offset-2';
 const CTA_GHOST =
@@ -154,6 +163,25 @@ export function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Materials marquee — kinetic accent */}
+      <section
+        aria-hidden="true"
+        className="overflow-hidden border-y border-outline-variant/20 bg-surface py-5"
+      >
+        <div className="marquee-track flex w-max whitespace-nowrap font-technical-label text-technical-label uppercase tracking-[0.3em] text-on-surface-variant/50">
+          {[0, 1].map((copy) => (
+            <div key={copy} className="flex shrink-0 items-center">
+              {MARQUEE.map((item) => (
+                <span key={item} className="flex items-center">
+                  <span className="px-8">{item}</span>
+                  <span className="text-secondary/50">&#9670;</span>
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
       </section>
 
