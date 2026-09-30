@@ -18,7 +18,7 @@ const PROCESS = [
     title: 'Milling',
     body: 'State-of-the-art CNC precision meets the steady hand of a master carpenter, with tolerances held to 0.01mm.',
     image:
-      'https://images.unsplash.com/photo-1700973408133-b45276ec8feb?w=1400&q=75&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1582055193464-943584223be1?w=1400&q=75&auto=format&fit=crop',
   },
   {
     n: '03',
@@ -82,19 +82,30 @@ function VeneerRolls() {
             onClick={() => setActive(i)}
             aria-expanded={open}
             aria-label={`${step.title}. ${step.body}`}
-            style={{ backgroundImage: `url(${step.image})` }}
             className={`veneer ${open ? 'veneer-open' : ''}`}
           >
+            {/* dark substrate revealed as the sheet peels */}
+            <span className="veneer-desc">
+              <span className="veneer-desc-p">{step.body}</span>
+            </span>
+            {/* the wood veneer sheet that peels off left to right */}
+            <span
+              className="veneer-sheet"
+              style={{ backgroundImage: `url(${step.image})` }}
+              aria-hidden="true"
+            />
+            {/* the rolled-up leading edge, travelling right */}
+            <span
+              className="veneer-curl"
+              style={{ backgroundImage: `url(${step.image})` }}
+              aria-hidden="true"
+            />
             <span className="veneer-cap">
               <span className="veneer-num">{step.n}</span>
               <span className="veneer-title">{step.title}</span>
             </span>
             <span className="veneer-hint" aria-hidden="true">
               Unroll <span className="veneer-ar">&rsaquo;</span>
-            </span>
-            <span className="veneer-curl" aria-hidden="true" />
-            <span className="veneer-desc">
-              <span className="veneer-desc-p">{step.body}</span>
             </span>
           </button>
         );
@@ -153,14 +164,6 @@ export function HomePage() {
         <div className="scroll-indicator flex flex-col items-center gap-4 text-on-surface-variant">
           <div className="w-[2px] h-16 bg-on-surface-variant/40 relative overflow-hidden rounded-full">
             <div className="scroll-line absolute top-0 left-0 w-full bg-on-surface-variant rounded-full"></div>
-          </div>
-          <span className="font-technical-label text-technical-label uppercase tracking-widest text-on-surface-variant font-light text-[11px]">
-            Scroll
-          </span>
-          <div className="section-progress">
-            <div className="progress-dot active"></div>
-            <div className="progress-dot"></div>
-            <div className="progress-dot"></div>
           </div>
         </div>
       </section>
@@ -223,27 +226,31 @@ export function HomePage() {
       {/* Technical Specification: dark, textured, interactive process */}
       <section className="snap-target wood-bg relative bg-[#1A1A1A] text-[#F5F5F7] px-6 md:px-[80px] flex items-center justify-center py-16 md:py-24 overflow-hidden">
         <div className="relative z-10 w-full max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-stack-lg">
-            <div className="max-w-xl">
-              <span className="font-technical-label text-technical-label text-secondary-fixed-dim uppercase tracking-[0.2em]">
-                Material Integrity
-              </span>
-              <h2 className="font-display-hero text-headline-lg mt-stack-sm leading-tight text-balance">
-                Calculated elegance.
-              </h2>
-            </div>
-            <div className="grid grid-cols-2 gap-x-gutter gap-y-stack-md w-full md:w-auto">
-              {SPECS.map((spec) => (
-                <div key={spec.label}>
-                  <p className="font-technical-label text-[10px] text-[#F5F5F7]/40 uppercase mb-unit">
-                    {spec.label}
-                  </p>
-                  <p className="font-body-md text-body-md tabular-nums">{spec.value}</p>
-                </div>
-              ))}
-            </div>
+          <div className="max-w-xl">
+            <span className="font-technical-label text-technical-label text-secondary-fixed-dim uppercase tracking-[0.2em]">
+              Material Integrity
+            </span>
+            <h2 className="font-display-hero text-headline-lg mt-stack-sm leading-tight text-balance">
+              Calculated elegance.
+            </h2>
           </div>
           <VeneerRolls />
+          {/* Spec bar: full-width editorial row with hairline dividers */}
+          <div className="mt-stack-lg grid grid-cols-2 md:grid-cols-4">
+            {SPECS.map((spec) => (
+              <div
+                key={spec.label}
+                className="border-t border-[#F5F5F7]/15 pb-stack-sm pt-stack-sm md:pr-gutter"
+              >
+                <p className="font-technical-label mb-unit text-[10px] uppercase tracking-[0.2em] text-[#F5F5F7]/40">
+                  {spec.label}
+                </p>
+                <p className="font-display-hero text-xl tabular-nums text-[#F5F5F7] md:text-2xl">
+                  {spec.value}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </main>
