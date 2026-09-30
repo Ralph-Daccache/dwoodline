@@ -155,60 +155,37 @@ html.snap-portfolio {
   opacity: 1;
   transform: scale(1.4);
 }
-/* Section 3 — subtle dark wood-grain background (blends; keeps text crisp). */
+/* Section 3 background — real dark wood grain (blends; keeps text crisp). */
 [data-page='home'] .wood-bg {
-  background-color: #1a1a1a;
+  background-color: #17130f;
   background-image:
-    repeating-linear-gradient(
-      90deg,
-      rgba(112, 91, 63, 0.06) 0px,
-      rgba(112, 91, 63, 0.06) 2px,
-      transparent 2px,
-      transparent 7px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.22) 0px,
-      rgba(0, 0, 0, 0.22) 1px,
-      transparent 1px,
-      transparent 96px
-    ),
-    linear-gradient(180deg, #221a13 0%, #151311 100%);
+    url('https://www.transparenttextures.com/patterns/dark-wood.png'),
+    linear-gradient(180deg, #211a13 0%, #141110 100%);
 }
-/* Veneer roll — a wood dowel, rounded via vertical shading (light oak centre). */
+/* Veneer roll — a wood dowel: real grain + vertical shading for the rounded cylinder. */
 [data-page='home'] .veneer-dowel {
   border-radius: 3px;
-  background: linear-gradient(
-    180deg,
-    #4a3520 0%,
-    #8a6a4a 24%,
-    #dec2a0 50%,
-    #8a6a4a 76%,
-    #4a3520 100%
-  );
+  background-color: #8a6a4a;
+  background-image:
+    url('https://www.transparenttextures.com/patterns/wood-pattern.png'),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(255, 255, 255, 0.28) 26%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0.12) 74%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
   box-shadow:
     0 5px 14px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
-/* Veneer sheet — CSS wood grain revealed as the roll unfurls downward. */
+/* Veneer sheet — real wood grain revealed as the roll unfurls downward. */
 [data-page='home'] .veneer-sheet {
-  background-color: #5c4128;
+  background-color: #6b4e31;
   background-image:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.04) 0px,
-      rgba(255, 255, 255, 0.04) 1px,
-      transparent 1px,
-      transparent 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.14) 0px,
-      rgba(0, 0, 0, 0.14) 2px,
-      transparent 2px,
-      transparent 12px
-    ),
-    linear-gradient(180deg, #6b4e31 0%, #4a3520 100%);
+    url('https://www.transparenttextures.com/patterns/purty-wood.png'),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.28) 100%);
   box-shadow: inset 0 9px 16px rgba(0, 0, 0, 0.5);
 }
 @media (max-width: 767px) {

@@ -14,7 +14,7 @@ const PROCESS = [
   {
     n: '02',
     title: 'Milling',
-    body: 'State-of-the-art CNC precision meets the steady hand of a master carpenter — tolerances held to 0.01mm.',
+    body: 'State-of-the-art CNC precision meets the steady hand of a master carpenter, with tolerances held to 0.01mm.',
   },
   {
     n: '03',
@@ -37,7 +37,7 @@ const RECENT = [
     year: '2024',
     image:
       'https://lh3.googleusercontent.com/aida-public/AB6AXuBo9EdbdFsjsDzDV3L5NVDS5FzxmiAGo11Mzbp6B3wMhH3NuaScmGOylEAU8xKpgaSAsr0SNlE0N1XfNfaK_idLfOt0xupZimkCigAgEsiDaLVSSQrg9vshKNIxoZnF1mgb8ZjNQ-TXgOEsKMZjDAkVDQDeLRJiu35GzX_Uomrfm9qIv49Md1Nq-xR-vCB7itKISNwGno7PV2Z0M1RqmE3Wo_FvRY1I_kB-tn6YPJKWkgQ-E-XcecXxz1qi6PV7QvToOr6pZM9bSKQ',
-    alt: 'The Obsidian Penthouse — Calacatta marble and charred cedar interior, Milan.',
+    alt: 'The Obsidian Penthouse: Calacatta marble and charred cedar interior, Milan.',
   },
   {
     title: 'The Ritz Suites',
@@ -45,7 +45,7 @@ const RECENT = [
     year: '2024',
     image:
       'https://lh3.googleusercontent.com/aida-public/AB6AXuDQ9eRwwgbAKxpxfJ0NERJe8sohHkN1gbBNMtG3bwkzDL3MaSJHuyuZhYpOaJxdEYu65l8WpBfRqm466oD5gzB4VqMsAHXqwWWeU5WxPMYEsRK-MOWtQ_VVJoHLnd3g2TMMk-aiW7PbOkRhwSXPoQgtq6pkVMfJc4U4qz36FFuARV94CXsdrd7X4YyPJqKRavOJxZK_nmIvo7u-wL4ncujMarntjui04YkD8Rjp1BOWN8701UB2VXBS1JKwc1Vcf-sM4Sg4vDZT6us',
-    alt: 'The Ritz Suites — silk-panelled walls and brushed brass, Paris.',
+    alt: 'The Ritz Suites: silk-panelled walls and brushed brass, Paris.',
   },
   {
     title: 'Corporate Headquarters',
@@ -53,7 +53,7 @@ const RECENT = [
     year: '2024',
     image:
       'https://lh3.googleusercontent.com/aida-public/AB6AXuASEMcfBX8ZALZP_1J47nIfOVsJ8uuK9OzqeTkoskiszglyBjItVcVZ5dq8pHyc2vD5NUi3X30JAMLWYtCjTCZUD_82yzKsmYc4eeUq4B7_m-_TW-zN2m8w1LIutnXYNPzWUV2Jwkn8_z57AX30bc-jOMOAcJX9GqJ8TW9SUSqVPbdpQSkJvt8ZpLZ_iDqL7Fba2S2vzb8zKnIr5SOb6rUNjbwSYwA38RW2iCxuxI_h8nc6PaDRBcb9_QP245hK4Zgbq5BS2w-5h0k',
-    alt: 'Corporate Headquarters — concrete and precision-milled aluminium workspace, Berlin.',
+    alt: 'Corporate Headquarters: concrete and precision-milled aluminium workspace, Berlin.',
   },
 ] as const;
 
@@ -62,7 +62,7 @@ const CTA_PRIMARY =
 const CTA_GHOST =
   'inline-block border border-[#1A1A1A] text-[#1A1A1A] bg-white/20 backdrop-blur-sm px-stack-lg py-4 font-technical-label uppercase tracking-widest rounded-none transition-all duration-500 hover:bg-[#F5F5F7] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A] focus-visible:ring-offset-2';
 
-/** Veneer rolls — click a wood dowel to unroll its veneer sheet downward and reveal a step. */
+/** Veneer rolls: click a wood dowel to unroll its veneer sheet downward and reveal a step. */
 function VeneerRolls() {
   const [active, setActive] = useState(0);
   return (
@@ -117,7 +117,7 @@ export function HomePage() {
 
   return (
     <main className="w-full">
-      {/* Hero — video, one full viewport */}
+      {/* Hero: video, one full viewport */}
       <section className="snap-target relative w-full flex items-center justify-center overflow-hidden py-20">
         <video
           className="absolute inset-0 z-0 w-full h-full object-cover"
@@ -145,7 +145,7 @@ export function HomePage() {
             dwoodline
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mt-stack-md text-balance">
-            Bespoke architectural woodwork, engineered to the millimetre — marble, walnut, and
+            Bespoke architectural woodwork, engineered to the millimetre in marble, walnut, and
             blackened aluminium.
           </p>
           <div className="mt-stack-lg flex flex-col md:flex-row items-center justify-center gap-gutter">
@@ -172,7 +172,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Materiality — asymmetric feature, fits one viewport */}
+      {/* Materiality: asymmetric feature, fits one viewport */}
       <section className="snap-target px-6 md:px-[80px] bg-surface flex flex-col justify-center pt-28 pb-20">
         <div className="w-full max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-stack-md mb-stack-lg">
@@ -195,13 +195,13 @@ export function HomePage() {
               />
             </Link>
           </div>
-          {/* Expanding project panels — hover a panel to open it (desktop) */}
+          {/* Expanding project panels: hover a panel to open it (desktop) */}
           <div className="flex flex-col md:flex-row gap-2 md:h-[52vh]">
             {RECENT.map((p, i) => (
               <Link
                 key={p.title}
                 to={ROUTES.portfolio}
-                aria-label={`${p.title} — ${p.location}`}
+                aria-label={`${p.title}, ${p.location}`}
                 className="group relative flex-1 md:hover:flex-[2.5] h-[26vh] md:h-full overflow-hidden transition-all duration-700 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
               >
                 <img
@@ -227,7 +227,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Technical Specification — dark, textured, interactive process */}
+      {/* Technical Specification: dark, textured, interactive process */}
       <section className="snap-target wood-bg relative bg-[#1A1A1A] text-[#F5F5F7] px-6 md:px-[80px] flex items-center justify-center py-16 md:py-24 overflow-hidden">
         <div className="relative z-10 w-full max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start gap-stack-lg">
