@@ -325,8 +325,9 @@ html.snap-portfolio {
   opacity: 1;
 }
 [data-page='home'] .veneer-open .veneer-curl {
-  left: 100%;
-  width: 40px;
+  /* stops short of the edge so the rolled-up cylinder stays visible */
+  left: 86%;
+  width: 44px;
   opacity: 1;
 }
 [data-page='home'] .veneer-open .veneer-hint {

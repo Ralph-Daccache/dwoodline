@@ -70,8 +70,8 @@ const CTA_GHOST =
 
 /** Veneer stack: click a veneer and its description unrolls left to right, led by a curl edge. */
 function VeneerRolls() {
-  // All veneers start unrolled (open); each toggles independently.
-  const [openItems, setOpenItems] = useState<readonly boolean[]>(() => PROCESS.map(() => true));
+  // All veneers start closed (rolled); each toggles independently.
+  const [openItems, setOpenItems] = useState<readonly boolean[]>(() => PROCESS.map(() => false));
   const toggle = (i: number): void =>
     setOpenItems((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
   return (
