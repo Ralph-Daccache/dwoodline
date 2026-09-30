@@ -319,7 +319,8 @@ html.snap-portfolio {
     inset 0 0 70px rgba(0, 0, 0, 0.66);
 }
 [data-page='home'] .veneer-open .veneer-sheet {
-  clip-path: inset(0 0 0 100%);
+  /* peel stops at the roll (86%); the rest of the veneer stays visible to its right */
+  clip-path: inset(0 0 0 86%);
 }
 [data-page='home'] .veneer-open .veneer-desc-p {
   opacity: 1;
