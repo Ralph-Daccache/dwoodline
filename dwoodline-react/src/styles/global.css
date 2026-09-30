@@ -155,38 +155,174 @@ html.snap-portfolio {
   opacity: 1;
   transform: scale(1.4);
 }
-/* Section 3 background — real dark wood grain (blends; keeps text crisp). */
+/* Section 3 background: clean dark walnut with a warm ambient glow (no tiling texture). */
 [data-page='home'] .wood-bg {
   background-color: #17130f;
-  background-image:
-    url('https://www.transparenttextures.com/patterns/dark-wood.png'),
-    linear-gradient(180deg, #211a13 0%, #141110 100%);
+  background-image: radial-gradient(120% 90% at 82% 0%, rgba(86, 64, 42, 0.4), transparent 60%);
 }
-/* Veneer roll — a wood dowel: real grain + vertical shading for the rounded cylinder. */
-[data-page='home'] .veneer-dowel {
-  border-radius: 3px;
-  background-color: #8a6a4a;
-  background-image:
-    url('https://www.transparenttextures.com/patterns/wood-pattern.png'),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(255, 255, 255, 0.28) 26%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0.12) 74%,
-      rgba(0, 0, 0, 0.55) 100%
-    );
+
+/* Veneer stack: real wood strips whose description unrolls left to right on click. */
+[data-page='home'] .veneer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  perspective: 1600px;
+}
+[data-page='home'] .veneer {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 150px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  appearance: none;
+  background-color: #2a2119;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
   box-shadow:
-    0 5px 14px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 14px 30px rgba(0, 0, 0, 0.5),
+    inset 0 -34px 44px -22px rgba(0, 0, 0, 0.72);
+  transition:
+    height 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.6s ease,
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-/* Veneer sheet — real wood grain revealed as the roll unfurls downward. */
-[data-page='home'] .veneer-sheet {
-  background-color: #6b4e31;
-  background-image:
-    url('https://www.transparenttextures.com/patterns/purty-wood.png'),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.28) 100%);
-  box-shadow: inset 0 9px 16px rgba(0, 0, 0, 0.5);
+[data-page='home'] .veneer:hover {
+  transform: translateY(-2px);
+}
+[data-page='home'] .veneer:focus-visible {
+  outline: 2px solid rgba(239, 233, 221, 0.7);
+  outline-offset: 3px;
+}
+[data-page='home'] .veneer-cap {
+  position: absolute;
+  z-index: 4;
+  left: 30px;
+  top: 26px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+}
+[data-page='home'] .veneer-num {
+  font-family: 'Noto Serif', serif;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  color: #fff;
+  opacity: 0.9;
+}
+[data-page='home'] .veneer-title {
+  font-family: 'Noto Serif', serif;
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 400;
+  color: #fff;
+}
+[data-page='home'] .veneer-hint {
+  position: absolute;
+  z-index: 4;
+  right: 26px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.4s;
+}
+[data-page='home'] .veneer-ar {
+  display: inline-block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-page='home'] .veneer-desc {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  padding: 26px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(
+    90deg,
+    rgba(12, 9, 7, 0.88) 0%,
+    rgba(12, 9, 7, 0.72) 50%,
+    rgba(12, 9, 7, 0.5) 100%
+  );
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.05s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-page='home'] .veneer-desc-p {
+  max-width: 60ch;
+  font-size: 15.5px;
+  line-height: 1.72;
+  color: #efe9dd;
+  transform: translateX(-18px);
+  opacity: 0;
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.18s,
+    opacity 0.6s ease 0.22s;
+}
+[data-page='home'] .veneer-curl {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 34px;
+  margin-left: -17px;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 40%;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(255, 255, 255, 0.32) 42%,
+    rgba(255, 255, 255, 0.14) 58%,
+    rgba(0, 0, 0, 0.42) 100%
+  );
+  box-shadow: 0 0 22px rgba(0, 0, 0, 0.5);
+  transition:
+    left 1.05s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease;
+}
+[data-page='home'] .veneer-open {
+  height: 246px;
+  box-shadow:
+    0 22px 42px rgba(0, 0, 0, 0.6),
+    inset 0 -34px 44px -22px rgba(0, 0, 0, 0.72);
+}
+[data-page='home'] .veneer-open .veneer-desc {
+  clip-path: inset(0 0 0 0);
+}
+[data-page='home'] .veneer-open .veneer-desc-p {
+  transform: translateX(0);
+  opacity: 1;
+}
+[data-page='home'] .veneer-open .veneer-curl {
+  left: 100%;
+  opacity: 1;
+}
+[data-page='home'] .veneer-open .veneer-hint {
+  opacity: 0;
+}
+[data-page='home'] .veneer-open .veneer-ar {
+  transform: rotate(90deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-page='home'] .veneer,
+  [data-page='home'] .veneer-desc,
+  [data-page='home'] .veneer-desc-p,
+  [data-page='home'] .veneer-curl,
+  [data-page='home'] .veneer-ar {
+    transition: none;
+  }
 }
 @media (max-width: 767px) {
   [data-page='home'] .snap-target {

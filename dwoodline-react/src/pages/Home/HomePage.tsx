@@ -10,16 +10,22 @@ const PROCESS = [
     n: '01',
     title: 'Drafting',
     body: 'Every project begins with a 1:1 scale blueprint analysis to ensure structural viability before a single board is cut.',
+    image:
+      'https://images.unsplash.com/photo-1736506159893-22cca29b8018?w=1400&q=75&auto=format&fit=crop',
   },
   {
     n: '02',
     title: 'Milling',
     body: 'State-of-the-art CNC precision meets the steady hand of a master carpenter, with tolerances held to 0.01mm.',
+    image:
+      'https://images.unsplash.com/photo-1700973408133-b45276ec8feb?w=1400&q=75&auto=format&fit=crop',
   },
   {
     n: '03',
     title: 'Longevity',
     body: 'Our joinery is engineered to outlast the structure it inhabits, guaranteed for decades.',
+    image:
+      'https://images.unsplash.com/photo-1571205086863-9d186c5cb8fb?w=1400&q=75&auto=format&fit=crop',
   },
 ] as const;
 
@@ -62,48 +68,35 @@ const CTA_PRIMARY =
 const CTA_GHOST =
   'inline-block border border-[#1A1A1A] text-[#1A1A1A] bg-white/20 backdrop-blur-sm px-stack-lg py-4 font-technical-label uppercase tracking-widest rounded-none transition-all duration-500 hover:bg-[#F5F5F7] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A] focus-visible:ring-offset-2';
 
-/** Veneer rolls: click a wood dowel to unroll its veneer sheet downward and reveal a step. */
+/** Veneer stack: click a veneer and its description unrolls left to right, led by a curl edge. */
 function VeneerRolls() {
   const [active, setActive] = useState(0);
   return (
-    <div className="mt-stack-lg flex flex-col gap-3">
+    <div className="veneer-stack mt-stack-lg">
       {PROCESS.map((step, i) => {
         const open = i === active;
         return (
-          <div key={step.n}>
-            {/* Wood dowel (the roll) */}
-            <button
-              type="button"
-              onClick={() => setActive(open ? -1 : i)}
-              aria-expanded={open}
-              className="veneer-dowel group relative flex h-14 w-full items-center gap-4 px-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-fixed-dim md:h-16"
-            >
-              <span className="font-display-hero text-2xl tabular-nums text-[#2b1701] md:text-3xl">
-                {step.n}
-              </span>
-              <span className="font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#2b1701]">
-                {step.title}
-              </span>
-              <MaterialIcon
-                name="expand_more"
-                className={`ml-auto text-[#2b1701] transition-transform duration-500 ${
-                  open ? 'rotate-180' : ''
-                }`}
-              />
-            </button>
-            {/* Unrolling veneer sheet (downward) */}
-            <div
-              className={`grid transition-all duration-700 ease-out ${
-                open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-              }`}
-            >
-              <div className="overflow-hidden">
-                <div className="veneer-sheet px-5 py-6">
-                  <p className="max-w-2xl text-sm text-[#F5F5F7]/85 md:text-base">{step.body}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <button
+            key={step.n}
+            type="button"
+            onClick={() => setActive(i)}
+            aria-expanded={open}
+            aria-label={`${step.title}. ${step.body}`}
+            style={{ backgroundImage: `url(${step.image})` }}
+            className={`veneer ${open ? 'veneer-open' : ''}`}
+          >
+            <span className="veneer-cap">
+              <span className="veneer-num">{step.n}</span>
+              <span className="veneer-title">{step.title}</span>
+            </span>
+            <span className="veneer-hint" aria-hidden="true">
+              Unroll <span className="veneer-ar">&rsaquo;</span>
+            </span>
+            <span className="veneer-curl" aria-hidden="true" />
+            <span className="veneer-desc">
+              <span className="veneer-desc-p">{step.body}</span>
+            </span>
+          </button>
         );
       })}
     </div>
