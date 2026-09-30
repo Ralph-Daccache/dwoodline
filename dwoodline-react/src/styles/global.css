@@ -160,19 +160,36 @@ html.snap-portfolio {
   background-color: #17130f;
   background-image: radial-gradient(120% 90% at 82% 0%, rgba(86, 64, 42, 0.4), transparent 60%);
 }
+/* Process section: fluid padding that clears the fixed header and fits any screen.
+   Defined after .snap-target so it wins the padding: 0 there (equal specificity). */
+[data-page='home'] .process-section {
+  justify-content: center;
+  padding: clamp(110px, 14vh, 126px) 24px clamp(24px, 4vh, 56px);
+}
+/* Section heading scales fluidly so the section fits small screens. */
+[data-page='home'] .process-section h2 {
+  font-size: clamp(30px, 7.5vw, 52px);
+  line-height: 1.05;
+}
+@media (min-width: 768px) {
+  [data-page='home'] .process-section {
+    padding: clamp(112px, 12vh, 132px) 80px clamp(48px, 8vh, 96px);
+  }
+}
 
 /* Veneer stack: real wood strips whose description unrolls left to right on click. */
 [data-page='home'] .veneer-stack {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: clamp(10px, 1.6vh, 16px);
   perspective: 1600px;
 }
 [data-page='home'] .veneer {
   position: relative;
   display: block;
   width: 100%;
-  height: 150px;
+  /* fluid: scales with viewport height so the stack fits any screen */
+  height: clamp(98px, 13vh, 148px);
   margin: 0;
   padding: 0;
   border: 0;
@@ -313,7 +330,7 @@ html.snap-portfolio {
 
 /* OPEN: sheet peels fully off, substrate and copy shown, roll parks at right */
 [data-page='home'] .veneer-open {
-  height: 240px;
+  height: clamp(206px, 32vh, 246px);
   box-shadow:
     0 22px 42px rgba(0, 0, 0, 0.6),
     inset 0 0 70px rgba(0, 0, 0, 0.66);

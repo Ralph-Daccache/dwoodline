@@ -75,7 +75,7 @@ function VeneerRolls() {
   const toggle = (i: number): void =>
     setOpenItems((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
   return (
-    <div className="veneer-stack mt-stack-lg">
+    <div className="veneer-stack mt-[clamp(18px,2.6vh,40px)]">
       {PROCESS.map((step, i) => {
         const open = openItems[i];
         return (
@@ -227,7 +227,7 @@ export function HomePage() {
       </section>
 
       {/* Technical Specification: dark, textured, interactive process */}
-      <section className="snap-target wood-bg relative bg-[#1A1A1A] text-[#F5F5F7] px-6 md:px-[80px] flex items-center justify-center py-16 md:py-24 overflow-hidden">
+      <section className="snap-target process-section wood-bg relative bg-[#1A1A1A] text-[#F5F5F7] overflow-hidden">
         <div className="relative z-10 w-full max-w-6xl mx-auto">
           <div className="max-w-xl">
             <span className="font-technical-label text-technical-label text-secondary-fixed-dim uppercase tracking-[0.2em]">
@@ -239,11 +239,11 @@ export function HomePage() {
           </div>
           <VeneerRolls />
           {/* Spec bar: full-width editorial row with hairline dividers */}
-          <div className="mt-stack-lg grid grid-cols-2 md:grid-cols-4">
+          <div className="mt-[clamp(18px,2.6vh,40px)] grid grid-cols-2 gap-x-gutter md:grid-cols-4">
             {SPECS.map((spec) => (
               <div
                 key={spec.label}
-                className="border-t border-[#F5F5F7]/15 pb-stack-sm pt-stack-sm md:pr-gutter"
+                className="border-t border-[#F5F5F7]/15 py-[clamp(10px,1.6vh,18px)] md:pr-gutter"
               >
                 <p className="font-technical-label mb-unit text-[10px] uppercase tracking-[0.2em] text-[#F5F5F7]/40">
                   {spec.label}
