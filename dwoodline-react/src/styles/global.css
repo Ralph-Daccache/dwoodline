@@ -161,6 +161,29 @@ html.snap-portfolio {
   opacity: 0.06;
   mix-blend-mode: overlay;
 }
+/* Literal veneer rolls — spindle cylinder + unrolling wood sheet. */
+[data-page='home'] .veneer-roll {
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    #2c1d10 0%,
+    #6b4e31 26%,
+    #b98d5e 50%,
+    #6b4e31 74%,
+    #2c1d10 100%
+  );
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+[data-page='home'] .veneer-sheet {
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.18)),
+    url('https://images.unsplash.com/photo-1598928636135-d146006ff4be?auto=format&fit=crop&w=1200&q=70');
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 10px 0 18px rgba(0, 0, 0, 0.5);
+}
 @media (max-width: 767px) {
   [data-page='home'] .snap-target {
     min-height: auto;

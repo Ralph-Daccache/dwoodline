@@ -62,51 +62,60 @@ const CTA_PRIMARY =
 const CTA_GHOST =
   'inline-block border border-[#1A1A1A] text-[#1A1A1A] bg-white/20 backdrop-blur-sm px-stack-lg py-4 font-technical-label uppercase tracking-widest rounded-none transition-all duration-500 hover:bg-[#F5F5F7] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A] focus-visible:ring-offset-2';
 
-/** Interactive process — click a step to switch; sliding indicator + crossfading detail. */
-function ProcessSteps() {
+/** Literal veneer rolls — click a roll to unroll its sheet rightward and reveal a step. */
+function VeneerRolls() {
   const [active, setActive] = useState(0);
   return (
-    <div className="mt-stack-lg">
-      <div className="relative grid grid-cols-3 border-t border-[#F5F5F7]/15">
-        <span
-          aria-hidden="true"
-          className="absolute -top-px left-0 h-[2px] bg-secondary-fixed-dim transition-transform duration-500 ease-out"
-          style={{ width: 'calc(100% / 3)', transform: `translateX(${active * 100}%)` }}
-        />
-        {PROCESS.map((step, i) => (
+    <div className="mt-stack-lg flex flex-col gap-3">
+      {PROCESS.map((step, i) => {
+        const open = i === active;
+        return (
           <button
             key={step.n}
             type="button"
             onClick={() => setActive(i)}
-            aria-pressed={i === active}
-            className={`text-left pt-6 pr-4 pb-2 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-fixed-dim ${
-              i === active ? 'text-surface-bright' : 'text-[#F5F5F7]/40 hover:text-[#F5F5F7]/70'
-            }`}
+            aria-expanded={open}
+            className="group relative flex h-20 w-full items-stretch overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-fixed-dim md:h-24"
           >
-            <span className="font-display-hero text-4xl md:text-5xl tabular-nums leading-none">
-              {step.n}
+            {/* Roll cylinder (spindle) */}
+            <span className="veneer-roll relative z-20 flex w-14 flex-none items-center justify-center md:w-16">
+              <span className="font-display-hero text-2xl tabular-nums text-[#1a120a]">
+                {step.n}
+              </span>
             </span>
-            <span className="mt-3 block font-technical-label text-technical-label uppercase tracking-[0.2em]">
-              {step.title}
+            {/* Unrolling veneer sheet */}
+            <span className="relative flex-1 overflow-hidden">
+              <span
+                aria-hidden="true"
+                className={`veneer-sheet absolute inset-0 origin-left transition-transform duration-700 ease-out ${
+                  open ? 'scale-x-100' : 'scale-x-0'
+                }`}
+              />
+              {/* Revealed content — fades in once the sheet has unrolled */}
+              <span
+                className={`relative z-10 flex h-full flex-col justify-center pl-6 pr-6 transition-opacity duration-500 ${
+                  open ? 'opacity-100 delay-200' : 'opacity-0'
+                }`}
+              >
+                <span className="font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#F5F5F7]">
+                  {step.title}
+                </span>
+                <span className="mt-1 max-w-xl text-sm text-[#F5F5F7]/75">{step.body}</span>
+              </span>
+              {/* Collapsed label (rolled state) */}
+              <span
+                className={`pointer-events-none absolute inset-0 flex items-center pl-6 transition-opacity duration-300 ${
+                  open ? 'opacity-0' : 'opacity-100'
+                }`}
+              >
+                <span className="font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#F5F5F7]/45 group-hover:text-[#F5F5F7]/70">
+                  {step.title}
+                </span>
+              </span>
             </span>
           </button>
-        ))}
-      </div>
-      <div className="relative mt-8 min-h-[5.5rem]">
-        {PROCESS.map((step, i) => (
-          <p
-            key={step.n}
-            aria-hidden={i !== active}
-            className={`font-body-lg text-body-lg max-w-2xl text-[#F5F5F7]/70 transition-all duration-500 ${
-              i === active
-                ? 'opacity-100 translate-y-0'
-                : 'pointer-events-none absolute inset-0 opacity-0 translate-y-2'
-            }`}
-          >
-            {step.body}
-          </p>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }
@@ -229,13 +238,7 @@ export function HomePage() {
       </section>
 
       {/* Technical Specification — dark, textured, interactive process */}
-      <section className="snap-target relative bg-[#1A1A1A] text-[#F5F5F7] px-6 md:px-[80px] flex items-center justify-center py-24 overflow-hidden">
-        <img
-          className="pointer-events-none absolute inset-0 z-0 w-full h-full object-cover opacity-[0.1] grayscale"
-          src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?auto=format&fit=crop&w=1600&q=70"
-          alt=""
-          aria-hidden="true"
-        />
+      <section className="snap-target relative bg-[#1A1A1A] text-[#F5F5F7] px-6 md:px-[80px] flex items-center justify-center py-16 md:py-24 overflow-hidden">
         <div className="grain-overlay pointer-events-none absolute inset-0 z-0"></div>
         <div className="relative z-10 w-full max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start gap-stack-lg">
@@ -258,7 +261,7 @@ export function HomePage() {
               ))}
             </div>
           </div>
-          <ProcessSteps />
+          <VeneerRolls />
         </div>
       </section>
     </main>
