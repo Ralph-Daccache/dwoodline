@@ -30,6 +30,33 @@ const SPECS = [
   { label: 'Heritage', value: 'Since 1955' },
 ] as const;
 
+const RECENT = [
+  {
+    title: 'The Obsidian Penthouse',
+    location: 'Milan, Italy',
+    year: '2024',
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuBo9EdbdFsjsDzDV3L5NVDS5FzxmiAGo11Mzbp6B3wMhH3NuaScmGOylEAU8xKpgaSAsr0SNlE0N1XfNfaK_idLfOt0xupZimkCigAgEsiDaLVSSQrg9vshKNIxoZnF1mgb8ZjNQ-TXgOEsKMZjDAkVDQDeLRJiu35GzX_Uomrfm9qIv49Md1Nq-xR-vCB7itKISNwGno7PV2Z0M1RqmE3Wo_FvRY1I_kB-tn6YPJKWkgQ-E-XcecXxz1qi6PV7QvToOr6pZM9bSKQ',
+    alt: 'The Obsidian Penthouse — Calacatta marble and charred cedar interior, Milan.',
+  },
+  {
+    title: 'The Ritz Suites',
+    location: 'Paris, France',
+    year: '2024',
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuDQ9eRwwgbAKxpxfJ0NERJe8sohHkN1gbBNMtG3bwkzDL3MaSJHuyuZhYpOaJxdEYu65l8WpBfRqm466oD5gzB4VqMsAHXqwWWeU5WxPMYEsRK-MOWtQ_VVJoHLnd3g2TMMk-aiW7PbOkRhwSXPoQgtq6pkVMfJc4U4qz36FFuARV94CXsdrd7X4YyPJqKRavOJxZK_nmIvo7u-wL4ncujMarntjui04YkD8Rjp1BOWN8701UB2VXBS1JKwc1Vcf-sM4Sg4vDZT6us',
+    alt: 'The Ritz Suites — silk-panelled walls and brushed brass, Paris.',
+  },
+  {
+    title: 'Corporate Headquarters',
+    location: 'Berlin, Germany',
+    year: '2024',
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuASEMcfBX8ZALZP_1J47nIfOVsJ8uuK9OzqeTkoskiszglyBjItVcVZ5dq8pHyc2vD5NUi3X30JAMLWYtCjTCZUD_82yzKsmYc4eeUq4B7_m-_TW-zN2m8w1LIutnXYNPzWUV2Jwkn8_z57AX30bc-jOMOAcJX9GqJ8TW9SUSqVPbdpQSkJvt8ZpLZ_iDqL7Fba2S2vzb8zKnIr5SOb6rUNjbwSYwA38RW2iCxuxI_h8nc6PaDRBcb9_QP245hK4Zgbq5BS2w-5h0k',
+    alt: 'Corporate Headquarters — concrete and precision-milled aluminium workspace, Berlin.',
+  },
+] as const;
+
 const CTA_PRIMARY =
   'inline-block bg-[#1A1A1A] text-white px-stack-lg py-4 font-technical-label uppercase tracking-widest rounded-none transition-all duration-500 hover:bg-[#705b3f] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A] focus-visible:ring-offset-2';
 const CTA_GHOST =
@@ -149,57 +176,54 @@ export function HomePage() {
       {/* Materiality — asymmetric feature, fits one viewport */}
       <section className="snap-target px-6 md:px-[80px] bg-surface flex flex-col justify-center pt-28 pb-20">
         <div className="w-full max-w-6xl mx-auto">
-          <div className="mb-stack-lg max-w-2xl">
-            <h2 className="font-headline-lg text-headline-lg text-on-background mb-stack-sm text-balance">
-              Structural minimalism meets heritage.
-            </h2>
-            <p className="font-body-lg text-body-lg text-on-surface-variant text-pretty">
-              Our practice is rooted in the mathematical intent of architectural blueprints —
-              Calacatta marble and premium walnut, shaped into spaces that hold their authority
-              quietly.
-            </p>
-          </div>
-          <div className="grid grid-cols-12 gap-gutter items-stretch">
-            <div className="col-span-12 md:col-span-7 aspect-[16/9] bg-surface-container overflow-hidden group">
-              <img
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9odQsBgZudrfZXPYsu9JhpTZNGzUVwjudFCK1BbpMjNEJ7CgPV1e7qcKkxFlAFSANtoepzO7i1q4TcCEp83x2cJFIahBae3Hgugk3BzjKh67cXzMHb8uJVLPjEDU3cdBJlIXcxEpqZPCAqgRJnwKJmLQ9lql9xm7Pc-UwccHxREBkcWjKySAy7V0ZEQDE42jxHARuUE0-DmJSx0jBFGxRtYwcw45UYgXN6uI3ZNY5diEIFLgUmmbcG53T1fg4uEDPuPwJwl3pdJI"
-                alt="Floor-to-ceiling walnut cabinetry framing a Calacatta marble island in a minimalist bespoke kitchen."
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-stack-md mb-stack-lg">
+            <div className="max-w-xl">
+              <span className="font-technical-label text-technical-label text-secondary uppercase tracking-[0.3em]">
+                Selected Work
+              </span>
+              <h2 className="font-headline-lg text-headline-lg text-on-background mt-stack-sm text-balance">
+                Recent projects.
+              </h2>
+            </div>
+            <Link
+              to={ROUTES.portfolio}
+              className="inline-flex items-center gap-unit group font-technical-label text-technical-label uppercase tracking-widest text-on-background border-b border-on-background/30 pb-1 transition-colors hover:text-secondary hover:border-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+            >
+              Explore Projects
+              <MaterialIcon
+                name="arrow_forward"
+                className="text-[14px] group-hover:translate-x-2 transition-transform"
               />
-            </div>
-            <div className="col-span-12 md:col-span-5 flex flex-col gap-stack-md">
-              <div className="text-right border-l border-outline-variant/30 pl-stack-md">
-                <span className="font-headline-md text-headline-md block tabular-nums">1955</span>
-                <span className="font-body-md text-sm text-on-surface-variant">
-                  Founded in Michigan
+            </Link>
+          </div>
+          {/* Expanding project panels — hover a panel to open it (desktop) */}
+          <div className="flex flex-col md:flex-row gap-2 md:h-[52vh]">
+            {RECENT.map((p, i) => (
+              <Link
+                key={p.title}
+                to={ROUTES.portfolio}
+                aria-label={`${p.title} — ${p.location}`}
+                className="group relative flex-1 md:hover:flex-[2.5] h-[26vh] md:h-full overflow-hidden transition-all duration-700 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              >
+                <img
+                  src={p.image}
+                  alt={p.alt}
+                  className="w-full h-full object-cover grayscale md:group-hover:grayscale-0 scale-105 md:group-hover:scale-100 transition-all duration-[900ms] ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-on-background/85 via-on-background/20 to-transparent"></div>
+                <span className="absolute top-stack-md right-stack-md font-display-hero text-2xl text-white/30 tabular-nums">
+                  0{i + 1}
                 </span>
-              </div>
-              <div className="flex flex-col justify-between p-stack-md border border-outline-variant/10 bg-surface-container-low h-full">
-                <div>
-                  <span className="font-technical-label text-technical-label bg-secondary text-white px-3 py-1 mb-stack-sm inline-block">
-                    Solid Walnut
+                <div className="absolute bottom-0 left-0 p-stack-md text-white">
+                  <span className="font-technical-label text-technical-label uppercase tracking-widest text-white/60 block mb-1">
+                    {p.location} · {p.year}
                   </span>
-                  <h3 className="font-headline-md text-body-lg font-bold mt-stack-sm">
-                    The Heritage Library
+                  <h3 className="font-headline-md text-xl md:text-2xl text-white whitespace-nowrap">
+                    {p.title}
                   </h3>
-                  <p className="font-body-md text-body-md text-on-surface-variant mt-stack-sm text-sm">
-                    Structural black aluminum inserts supporting cantilevered oak shelving.
-                  </p>
                 </div>
-                <div className="pt-stack-md border-t border-outline-variant/20 mt-auto">
-                  <Link
-                    to={ROUTES.portfolio}
-                    className="font-technical-label text-technical-label uppercase tracking-widest inline-flex items-center gap-unit group text-xs transition-colors hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-                  >
-                    Explore Project
-                    <MaterialIcon
-                      name="arrow_forward"
-                      className="text-[14px] group-hover:translate-x-2 transition-transform"
-                    />
-                  </Link>
-                </div>
-              </div>
-            </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -207,8 +231,8 @@ export function HomePage() {
       {/* Technical Specification — dark, textured, interactive process */}
       <section className="snap-target relative bg-[#1A1A1A] text-[#F5F5F7] px-6 md:px-[80px] flex items-center justify-center py-24 overflow-hidden">
         <img
-          className="pointer-events-none absolute inset-0 z-0 w-full h-full object-cover opacity-[0.06]"
-          src="https://picsum.photos/seed/dwoodline-workshop/1920/1080"
+          className="pointer-events-none absolute inset-0 z-0 w-full h-full object-cover opacity-[0.1] grayscale"
+          src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?auto=format&fit=crop&w=1600&q=70"
           alt=""
           aria-hidden="true"
         />
