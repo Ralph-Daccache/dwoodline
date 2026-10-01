@@ -1,16 +1,15 @@
-import { useRef } from 'react';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
 import { InquiryForm } from '@/components/InquiryForm/InquiryForm';
-import { useLuxeScroll } from '@/hooks/useLuxeScroll';
+import { useSectionScroll } from '@/hooks/useSectionScroll';
 
 export function InquiryPage() {
-  const scopeRef = useRef<HTMLElement>(null);
-  useLuxeScroll(scopeRef);
+  // Desktop section-snap (footer-aware), matching Home / Projects / Services.
+  useSectionScroll();
 
   return (
-    <main ref={scopeRef}>
+    <main>
       {/* Inquiry Section (Dramatic Transition) */}
-      <section className="min-h-[100dvh] bg-[#1A1A1A] text-[#F5F5F7] flex flex-col justify-center relative overflow-hidden pt-[clamp(104px,16vw,160px)] pb-stack-lg">
+      <section className="snap-target min-h-[100dvh] bg-[#1A1A1A] text-[#F5F5F7] flex flex-col justify-center relative overflow-hidden pt-[clamp(104px,16vw,160px)] pb-stack-lg">
         {/* Background Image Backdrop for Materiality */}
         <div className="absolute inset-0 opacity-10 grayscale pointer-events-none">
           <img
@@ -49,44 +48,56 @@ export function InquiryPage() {
           </div>
         </div>
       </section>
-      {/* Technical Specification Detail (Visual Break) */}
-      <section className="bg-[#0D0D0D] py-stack-lg px-6 md:px-[80px]">
-        <div className="border-t border-[#F5F5F7]/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-gutter">
-          <div className="flex gap-8 overflow-x-auto pb-4 md:pb-0 w-full md:w-auto no-scrollbar">
-            <div className="flex flex-col">
-              <span className="font-technical-label text-[10px] text-[#F5F5F7]/30 uppercase">
-                Material Reference
+      {/* Technical Specification (closing section) */}
+      <section className="snap-target min-h-[100dvh] bg-[#0D0D0D] text-[#F5F5F7] flex flex-col justify-center px-6 md:px-[80px] pt-[clamp(90px,14vw,120px)] pb-stack-lg">
+        <div className="w-full max-w-6xl mx-auto">
+          <span className="font-technical-label text-technical-label uppercase tracking-[0.3em] text-[#F5F5F7]/40 block mb-stack-md">
+            Specification
+          </span>
+          <h2 className="font-display-hero text-headline-lg leading-tight max-w-3xl text-balance">
+            Engineered to exact tolerances, finished by hand.
+          </h2>
+          <p className="font-body-lg text-body-lg text-[#F5F5F7]/50 max-w-xl mt-stack-md">
+            Every commission is documented to the millimetre. These are the standards we hold on
+            material, origin, and precision.
+          </p>
+          <div className="mt-[clamp(40px,8vh,96px)] border-t border-[#F5F5F7]/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-gutter">
+            <div className="flex gap-8 overflow-x-auto pb-4 md:pb-0 w-full md:w-auto no-scrollbar">
+              <div className="flex flex-col">
+                <span className="font-technical-label text-[10px] text-[#F5F5F7]/30 uppercase">
+                  Material Reference
+                </span>
+                <span className="font-body-md text-[#F5F5F7] mt-1 whitespace-nowrap">
+                  Black Anodized Aluminum
+                </span>
+              </div>
+              <div className="w-[1px] h-10 bg-[#F5F5F7]/10 hidden md:block"></div>
+              <div className="flex flex-col">
+                <span className="font-technical-label text-[10px] text-[#F5F5F7]/30 uppercase">
+                  Studio Origin
+                </span>
+                <span className="font-body-md text-[#F5F5F7] mt-1 whitespace-nowrap">
+                  Milan, Italy / 1955
+                </span>
+              </div>
+              <div className="w-[1px] h-10 bg-[#F5F5F7]/10 hidden md:block"></div>
+              <div className="flex flex-col">
+                <span className="font-technical-label text-[10px] text-[#F5F5F7]/30 uppercase">
+                  Precision Rating
+                </span>
+                <span className="font-body-md text-[#F5F5F7] mt-1 whitespace-nowrap">
+                  0.02mm Tolerance
+                </span>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <span className="w-12 h-12 flex items-center justify-center border border-[#F5F5F7]/10 text-[#F5F5F7] hover:bg-[#F5F5F7] hover:text-[#1A1A1A] transition-colors duration-300">
+                <MaterialIcon name="north_east" className="text-sm" />
               </span>
-              <span className="font-body-md text-[#F5F5F7] mt-1 whitespace-nowrap">
-                Black Anodized Aluminum
+              <span className="w-12 h-12 flex items-center justify-center border border-[#F5F5F7]/10 text-[#F5F5F7] hover:bg-[#F5F5F7] hover:text-[#1A1A1A] transition-colors duration-300">
+                <MaterialIcon name="expand_more" className="text-sm" />
               </span>
             </div>
-            <div className="w-[1px] h-10 bg-[#F5F5F7]/10 hidden md:block"></div>
-            <div className="flex flex-col">
-              <span className="font-technical-label text-[10px] text-[#F5F5F7]/30 uppercase">
-                Studio Origin
-              </span>
-              <span className="font-body-md text-[#F5F5F7] mt-1 whitespace-nowrap">
-                Milan, Italy / 1955
-              </span>
-            </div>
-            <div className="w-[1px] h-10 bg-[#F5F5F7]/10 hidden md:block"></div>
-            <div className="flex flex-col">
-              <span className="font-technical-label text-[10px] text-[#F5F5F7]/30 uppercase">
-                Precision Rating
-              </span>
-              <span className="font-body-md text-[#F5F5F7] mt-1 whitespace-nowrap">
-                0.02mm Tolerance
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <span className="w-12 h-12 flex items-center justify-center border border-[#F5F5F7]/10 text-[#F5F5F7] hover:bg-[#F5F5F7] hover:text-[#1A1A1A] transition-colors duration-300">
-              <MaterialIcon name="north_east" className="text-sm" />
-            </span>
-            <span className="w-12 h-12 flex items-center justify-center border border-[#F5F5F7]/10 text-[#F5F5F7] hover:bg-[#F5F5F7] hover:text-[#1A1A1A] transition-colors duration-300">
-              <MaterialIcon name="expand_more" className="text-sm" />
-            </span>
           </div>
         </div>
       </section>
