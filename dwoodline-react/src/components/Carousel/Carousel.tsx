@@ -30,7 +30,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
         ref={sliderRef}
         className="project-carousel w-full overflow-x-auto no-scrollbar flex h-[70vh] scroll-smooth cursor-grab"
       >
-        {slides.map((slide, index) => (
+        {slides.map((slide) => (
           <article
             key={slide.title}
             className="flex-none w-screen h-full carousel-snap-start relative group overflow-hidden"
@@ -43,11 +43,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-on-background/80 to-transparent z-10"></div>
-            <div
-              className={`absolute ${
-                index === 0 ? 'bottom-16 left-20' : 'bottom-margin-page left-margin-page'
-              } z-20 flex flex-col gap-stack-md text-white max-w-2xl`}
-            >
+            <div className="absolute bottom-margin-page left-margin-page right-6 z-20 flex flex-col gap-stack-md text-white max-w-2xl">
               <div className="flex items-center gap-4">
                 <span className="font-technical-label text-technical-label px-4 py-1 border border-white/20 bg-white/10 backdrop-blur-sm uppercase">
                   {slide.location}
@@ -80,7 +76,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
           </article>
         ))}
       </div>
-      <div className="absolute top-1/2 left-8 -translate-y-1/2 z-30">
+      <div className="absolute top-1/2 left-8 -translate-y-1/2 z-30 hidden md:block">
         <button
           type="button"
           onClick={goPrev}
@@ -90,7 +86,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
           <MaterialIcon name="chevron_left" />
         </button>
       </div>
-      <div className="absolute top-1/2 right-8 -translate-y-1/2 z-30">
+      <div className="absolute top-1/2 right-8 -translate-y-1/2 z-30 hidden md:block">
         <button type="button" onClick={goNext} className={CONTROL_CLASS} aria-label="Next project">
           <MaterialIcon name="chevron_right" />
         </button>

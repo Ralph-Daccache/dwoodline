@@ -93,7 +93,7 @@ export function PortfolioPage() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="px-[80px] snap-target pt-[160px] pb-[80px]">
+      <section className="px-6 md:px-[80px] snap-target pt-[120px] md:pt-[160px] pb-[clamp(40px,8vw,80px)]">
         <div className="flex flex-col gap-unit">
           <span className="font-technical-label text-technical-label text-secondary uppercase tracking-[0.2em]">
             Portfolio — 2024
@@ -105,8 +105,8 @@ export function PortfolioPage() {
       </section>
 
       {CATEGORIES.map((category) => (
-        <section key={category.id} className="snap-target pt-[80px] pb-[40px]">
-          <div className="px-[80px] mb-8">
+        <section key={category.id} className="snap-target pt-[clamp(48px,8vw,80px)] pb-[40px]">
+          <div className="px-6 md:px-[80px] mb-8">
             <h2 className="text-secondary uppercase tracking-[0.4em] border-b border-secondary/20 pb-4 inline-block font-headline-md text-headline-md">
               {category.heading}
             </h2>

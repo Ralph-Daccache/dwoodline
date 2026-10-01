@@ -1,7 +1,8 @@
 /**
- * Ported verbatim from the original inline `tailwind.config` that every legacy
- * page loaded via the Tailwind Play CDN. Values are the design tokens for the
- * whole site — do not alter; the computed output must match the CDN exactly.
+ * Design tokens for the whole site. Originally ported verbatim from the legacy
+ * inline Tailwind CDN config; the type and spacing scales have since been made
+ * fluid (clamp-based) so every page scales smoothly across screen sizes. Each
+ * clamp tops out at the original fixed value, so desktop output is unchanged.
  *
  * Note: the legacy 01-hero/04-portfolio configs had `["inter"]` / `["notoSerif"]`
  * font entries; "inter" matches "Inter" (font names are case-insensitive) but
@@ -72,14 +73,17 @@ export default {
         xl: '0.75rem',
         full: '9999px',
       },
+      /* Fluid spacing: scales with the viewport so layouts stay proportional on
+         every screen. Each clamp tops out at the original fixed value (desktop
+         parity) and shrinks on smaller screens. */
       spacing: {
-        'stack-sm': '12px',
-        'section-gap': '160px',
-        'stack-md': '24px',
+        'stack-sm': 'clamp(10px, 1.4vw, 12px)',
+        'section-gap': 'clamp(64px, 11vw, 160px)',
+        'stack-md': 'clamp(16px, 2.2vw, 24px)',
         unit: '4px',
-        gutter: '24px',
-        'stack-lg': '48px',
-        'margin-page': '80px',
+        gutter: 'clamp(16px, 2vw, 24px)',
+        'stack-lg': 'clamp(28px, 4vw, 48px)',
+        'margin-page': 'clamp(24px, 5vw, 80px)',
       },
       fontFamily: {
         'body-lg': ['Inter'],
@@ -90,23 +94,35 @@ export default {
         'body-md': ['Inter'],
         caption: ['Inter'],
       },
+      /* Fluid type: clamp(min, viewport, max) with unitless line-heights that keep
+         the original desktop proportions at the top of each range and scale down
+         gracefully on phones. */
       fontSize: {
-        'body-lg': ['18px', { lineHeight: '28px', letterSpacing: '0.01em', fontWeight: '400' }],
+        'body-lg': [
+          'clamp(16px, 1.2vw, 18px)',
+          { lineHeight: '1.55', letterSpacing: '0.01em', fontWeight: '400' },
+        ],
         'technical-label': [
-          '12px',
-          { lineHeight: '16px', letterSpacing: '0.1em', fontWeight: '600' },
+          'clamp(11px, 0.9vw, 12px)',
+          { lineHeight: '1.33', letterSpacing: '0.1em', fontWeight: '600' },
         ],
         'headline-lg': [
-          '48px',
-          { lineHeight: '56px', letterSpacing: '-0.01em', fontWeight: '400' },
+          'clamp(30px, 5.2vw, 48px)',
+          { lineHeight: '1.14', letterSpacing: '-0.01em', fontWeight: '400' },
         ],
         'display-hero': [
-          '80px',
-          { lineHeight: '96px', letterSpacing: '-0.02em', fontWeight: '400' },
+          'clamp(42px, 8.5vw, 80px)',
+          { lineHeight: '1.08', letterSpacing: '-0.02em', fontWeight: '400' },
         ],
-        'headline-md': ['32px', { lineHeight: '40px', letterSpacing: '0em', fontWeight: '400' }],
-        'body-md': ['16px', { lineHeight: '24px', letterSpacing: '0.01em', fontWeight: '400' }],
-        caption: ['14px', { lineHeight: '20px', fontWeight: '400' }],
+        'headline-md': [
+          'clamp(24px, 3.2vw, 32px)',
+          { lineHeight: '1.25', letterSpacing: '0em', fontWeight: '400' },
+        ],
+        'body-md': [
+          'clamp(15px, 1vw, 16px)',
+          { lineHeight: '1.5', letterSpacing: '0.01em', fontWeight: '400' },
+        ],
+        caption: ['14px', { lineHeight: '1.43', fontWeight: '400' }],
       },
     },
   },

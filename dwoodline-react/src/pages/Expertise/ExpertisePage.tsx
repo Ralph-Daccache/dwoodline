@@ -35,7 +35,7 @@ export function ExpertisePage() {
         >
           <div className="absolute inset-0 architectural-grid"></div>
           <div className="light-beam"></div>
-          <div className="max-w-6xl mx-auto px-6 md:px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-24 items-center z-10">
+          <div className="max-w-6xl mx-auto px-6 md:px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center z-10">
             <div className="reveal">
               <span className="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block reveal-stagger-1">
                 Chapter 01 — Division 06

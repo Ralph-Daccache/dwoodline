@@ -397,8 +397,10 @@ html.snap-portfolio {
 [data-page='expertise'] .snap-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  height: 100vh;
-  padding-top: 80px;
+  height: 100dvh;
+  /* clear the fixed nav + breathing room, fluid across screens */
+  padding-top: clamp(104px, 14vh, 128px);
+  padding-bottom: clamp(24px, 4vh, 48px);
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
@@ -492,7 +494,7 @@ html.snap-portfolio {
 @media (max-width: 767px) {
   [data-page='expertise'] .snap-section {
     height: auto;
-    min-height: 100vh;
+    min-height: 100dvh;
     overflow: visible;
   }
   [data-page='expertise'] .detail-circle {
@@ -506,7 +508,7 @@ html.snap-portfolio {
    ========================================================================= */
 [data-page='portfolio'] section.snap-target,
 [data-page='portfolio'] footer.snap-target {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;

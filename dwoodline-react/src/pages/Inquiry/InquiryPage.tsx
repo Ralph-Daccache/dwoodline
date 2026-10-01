@@ -10,7 +10,7 @@ export function InquiryPage() {
   return (
     <main ref={scopeRef}>
       {/* Inquiry Section (Dramatic Transition) */}
-      <section className="min-h-screen bg-[#1A1A1A] text-[#F5F5F7] flex flex-col justify-center relative overflow-hidden">
+      <section className="min-h-[100dvh] bg-[#1A1A1A] text-[#F5F5F7] flex flex-col justify-center relative overflow-hidden pt-[clamp(104px,16vw,160px)] pb-stack-lg">
         {/* Background Image Backdrop for Materiality */}
         <div className="absolute inset-0 opacity-10 grayscale pointer-events-none">
           <img

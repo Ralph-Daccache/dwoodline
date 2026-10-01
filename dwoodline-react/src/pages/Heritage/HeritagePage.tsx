@@ -25,7 +25,7 @@ export function HeritagePage() {
               <span className="font-technical-label text-secondary uppercase tracking-[0.2em]">
                 Our Heritage
               </span>
-              <h1 className="font-display-hero text-on-background serif-text">
+              <h1 className="font-display-hero text-display-hero text-on-background serif-text">
                 Architectural Precision.
               </h1>
             </div>
@@ -71,7 +71,9 @@ export function HeritagePage() {
             </div>
             <div className="grid grid-cols-2 gap-gutter w-full lg:w-4/5">
               <div className="aspect-square bg-oak/30 technical-border flex flex-col justify-end p-stack-md space-y-stack-sm">
-                <span className="font-headline-md serif-text text-secondary">70+</span>
+                <span className="font-headline-md text-headline-md serif-text text-secondary">
+                  70+
+                </span>
                 <span className="font-technical-label text-on-surface-variant uppercase tracking-wider">
                   Years of Mastery
                 </span>
@@ -93,7 +95,9 @@ export function HeritagePage() {
       <section className="mt-section-gap border-t border-[#1A1A1A]/10 pt-stack-lg">
         <div className="flex flex-col md:flex-row justify-between items-start gap-gutter">
           <div className="md:w-1/3">
-            <h2 className="font-headline-md serif-text">The Architectural Timeline</h2>
+            <h2 className="font-headline-md text-headline-md serif-text">
+              The Architectural Timeline
+            </h2>
             <p className="font-body-md text-on-surface-variant mt-stack-sm">
               A chronological journey through seven decades of technical innovation and refined
               luxury.
@@ -102,7 +106,9 @@ export function HeritagePage() {
           <div className="md:w-2/3 w-full space-y-stack-lg border-l border-on-background/10 pl-stack-lg">
             <div className="relative group cursor-default">
               <div className="absolute -left-[54px] top-1 w-3 h-3 bg-on-background" />
-              <span className="font-headline-md serif-text block text-secondary">1955</span>
+              <span className="font-headline-md text-headline-md serif-text block text-secondary">
+                1955
+              </span>
               <span className="font-technical-label uppercase tracking-widest text-on-background mt-2 block">
                 Foundation
               </span>
@@ -113,7 +119,7 @@ export function HeritagePage() {
             </div>
             <div className="relative group cursor-default">
               <div className="absolute -left-[54px] top-1 w-3 h-3 bg-primary-fixed-dim group-hover:bg-on-background transition-colors" />
-              <span className="font-headline-md serif-text block text-on-background/30 group-hover:text-secondary transition-colors">
+              <span className="font-headline-md text-headline-md serif-text block text-on-background/30 group-hover:text-secondary transition-colors">
                 1982
               </span>
               <span className="font-technical-label uppercase tracking-widest text-on-background mt-2 block">
@@ -126,7 +132,7 @@ export function HeritagePage() {
             </div>
             <div className="relative group cursor-default">
               <div className="absolute -left-[54px] top-1 w-3 h-3 bg-primary-fixed-dim group-hover:bg-on-background transition-colors" />
-              <span className="font-headline-md serif-text block text-on-background/30 group-hover:text-secondary transition-colors">
+              <span className="font-headline-md text-headline-md serif-text block text-on-background/30 group-hover:text-secondary transition-colors">
                 2024
               </span>
               <span className="font-technical-label uppercase tracking-widest text-on-background mt-2 block">
