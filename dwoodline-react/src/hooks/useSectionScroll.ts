@@ -18,7 +18,15 @@ export function useSectionScroll(): void {
     );
     if (sections.length === 0) return;
 
+    // The footer is treated as a virtual final section: scrolling down from the
+    // last real section snaps it into view, and scrolling up returns to that
+    // section. Skipped if the footer is already a .snap-target (then it is a
+    // real entry in `sections`).
+    const footer = document.querySelector<HTMLElement>('footer');
+    const hasVirtualFooter = !!footer && !footer.classList.contains('snap-target');
+
     let isAnimating = false;
+    let atFooter = false;
     let lastWheelTime = 0;
     let touchStartY = 0;
     let touchStartX = 0;
@@ -41,11 +49,35 @@ export function useSectionScroll(): void {
 
     const snapTo = (index: number): void => {
       if (index < 0 || index >= sections.length) return;
+      atFooter = false;
       isAnimating = true;
       sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
       window.setTimeout(() => {
         isAnimating = false;
       }, ANIMATION_MS);
+    };
+
+    const goToFooter = (): void => {
+      atFooter = true;
+      isAnimating = true;
+      footer?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.setTimeout(() => {
+        isAnimating = false;
+      }, ANIMATION_MS);
+    };
+
+    /** Footer-aware step: returns true if it handled the gesture. */
+    const stepFooter = (dir: number): boolean => {
+      if (!hasVirtualFooter) return false;
+      if (atFooter && dir === -1) {
+        snapTo(sections.length - 1);
+        return true;
+      }
+      if (getCurrentSectionIndex() === sections.length - 1 && dir === 1 && !atFooter) {
+        goToFooter();
+        return true;
+      }
+      return false;
     };
 
     const handleWheel = (e: WheelEvent): void => {
@@ -61,6 +93,10 @@ export function useSectionScroll(): void {
       }
       lastWheelTime = now;
       const dir = e.deltaY > 0 ? 1 : -1;
+      if (stepFooter(dir)) {
+        e.preventDefault();
+        return;
+      }
       const next = getCurrentSectionIndex() + dir;
       if (next >= 0 && next < sections.length) {
         e.preventDefault();
@@ -83,6 +119,11 @@ export function useSectionScroll(): void {
       e.preventDefault();
       if (isAnimating || Math.abs(dy) < TOUCH_THRESHOLD) return;
       const dir = dy > 0 ? 1 : -1;
+      if (stepFooter(dir)) {
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+        return;
+      }
       const next = getCurrentSectionIndex() + dir;
       if (next >= 0 && next < sections.length) {
         touchStartY = e.touches[0].clientY;
@@ -94,9 +135,15 @@ export function useSectionScroll(): void {
     const handleKey = (e: KeyboardEvent): void => {
       if (isAnimating) return;
       const cur = getCurrentSectionIndex();
+      const isDown = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ';
+      const isUp = e.key === 'ArrowUp' || e.key === 'PageUp';
+      if ((isDown || isUp) && stepFooter(isDown ? 1 : -1)) {
+        e.preventDefault();
+        return;
+      }
       let next: number | null = null;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') next = cur + 1;
-      else if (e.key === 'ArrowUp' || e.key === 'PageUp') next = cur - 1;
+      if (isDown) next = cur + 1;
+      else if (isUp) next = cur - 1;
       else if (e.key === 'Home') next = 0;
       else if (e.key === 'End') next = sections.length - 1;
       if (next !== null && next >= 0 && next < sections.length) {
