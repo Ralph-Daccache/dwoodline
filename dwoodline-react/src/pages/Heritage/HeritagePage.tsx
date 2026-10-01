@@ -31,15 +31,18 @@ export function HeritagePage() {
             </div>
             <div className="space-y-stack-md max-w-xl">
               <p className="font-body-lg text-on-surface-variant leading-relaxed">
-                Founded in the mid-century modern era, dwoodline has spent seven decades perfecting
-                the synthesis of structural integrity and aesthetic purity. Our journey began with a
-                single vision: to treat every piece of timber with the reverence of a master
-                architect.
+                Established in 1955, D Woodline was founded with a clear purpose: to create
+                exceptional architectural woodwork. Today, led by the third generation of our
+                family, we carry forward a tradition of luxury, precision, and genuine care for our
+                craft.
               </p>
               <p className="font-body-md text-on-surface-variant/80">
-                From the selection of premium Light Oak to the final sanding of Calacatta marble
-                surfaces, our process remains a disciplined pursuit of perfection. We don&apos;t
-                just build structures; we curate the environments where legacy lives.
+                Our work balances the past and the future, merging classical woodworking techniques
+                with advanced manufacturing technology to create high-end interiors that are
+                elegant, highly functional, and attuned to modern design. Built on a strict
+                attention to detail and only the finest materials, we have partnered with renowned
+                brands and interior architecture studios to bring their most important projects to
+                life.
               </p>
             </div>
             <div className="pt-stack-md">
@@ -64,9 +67,7 @@ export function HeritagePage() {
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPrPXgRqYDHM-FDq6IbdL6cI69jeGddMkA0aztb5yYysQZ_2-u0eph0wJu9oBNASx-lzPt5LXy4rkey-3s8lJX6AAUCsk-eqW5sSEkVsGK87jlHyfOOqkyLsDlVueLv2fZnTnZ1KM5lh7jJxZMw-w6thB3-OG3hvksLw7hfPW9A2tU7CLCqGfhBJHCGYbeI4HHhFJ_GltBtZawKDzKuehyPArEPmuQEngKdM3fd-z0mUd5yyTqfpxkLQxhj_p-pv87_1aTIFUof8o"
               />
               <div className="absolute bottom-0 left-0 p-stack-md bg-white/80 backdrop-blur-sm border-r border-t border-[#1A1A1A]/10">
-                <span className="font-technical-label text-[#1A1A1A]">
-                  PROVENANCE: PROJECT ALPHA, 1958
-                </span>
+                <span className="font-technical-label text-[#1A1A1A]">ESTABLISHED 1955</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-gutter w-full lg:w-4/5">
@@ -96,51 +97,50 @@ export function HeritagePage() {
         <div className="flex flex-col md:flex-row justify-between items-start gap-gutter">
           <div className="md:w-1/3">
             <h2 className="font-headline-md text-headline-md serif-text">
-              The Architectural Timeline
+              Three generations of craft
             </h2>
             <p className="font-body-md text-on-surface-variant mt-stack-sm">
-              A chronological journey through seven decades of technical innovation and refined
-              luxury.
+              Seven decades, three generations, one uncompromising standard of craft.
             </p>
           </div>
           <div className="md:w-2/3 w-full space-y-stack-lg border-l border-on-background/10 pl-stack-lg">
             <div className="relative group cursor-default">
               <div className="absolute -left-[54px] top-1 w-3 h-3 bg-on-background" />
               <span className="font-headline-md text-headline-md serif-text block text-secondary">
-                1955
+                I
               </span>
               <span className="font-technical-label uppercase tracking-widest text-on-background mt-2 block">
-                Foundation
+                First Generation · 1955
               </span>
               <p className="font-body-md text-on-surface-variant mt-4 max-w-lg">
-                Founded in the wake of the post-war design boom, dwoodline established its first
-                workshop dedicated to bespoke residential joinery.
+                D Woodline is founded with a clear purpose: to create exceptional architectural
+                woodwork, grounded in luxury and precision.
               </p>
             </div>
             <div className="relative group cursor-default">
               <div className="absolute -left-[54px] top-1 w-3 h-3 bg-primary-fixed-dim group-hover:bg-on-background transition-colors" />
               <span className="font-headline-md text-headline-md serif-text block text-on-background/30 group-hover:text-secondary transition-colors">
-                1982
+                II
               </span>
               <span className="font-technical-label uppercase tracking-widest text-on-background mt-2 block">
-                The Modern Pivot
+                Second Generation
               </span>
               <p className="font-body-md text-on-surface-variant mt-4 max-w-lg">
-                Expansion into commercial architectural systems, introducing the signature Black
-                Aluminum and Light Oak framework.
+                The family&apos;s standards of precision and care are refined and handed down,
+                keeping craft at the centre of every commission.
               </p>
             </div>
             <div className="relative group cursor-default">
               <div className="absolute -left-[54px] top-1 w-3 h-3 bg-primary-fixed-dim group-hover:bg-on-background transition-colors" />
               <span className="font-headline-md text-headline-md serif-text block text-on-background/30 group-hover:text-secondary transition-colors">
-                2024
+                III
               </span>
               <span className="font-technical-label uppercase tracking-widest text-on-background mt-2 block">
-                Digital Precision
+                Third Generation · Today
               </span>
               <p className="font-body-md text-on-surface-variant mt-4 max-w-lg">
-                Leveraging advanced computational design to achieve 0.01mm tolerance in bespoke
-                furniture and structural partitions.
+                Classical woodworking techniques are merged with advanced manufacturing to produce
+                elegant, highly functional interiors for modern design.
               </p>
             </div>
           </div>
