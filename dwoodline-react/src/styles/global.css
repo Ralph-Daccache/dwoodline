@@ -517,9 +517,10 @@ html.snap-portfolio {
    never hidden under the nav on shorter (laptop) screens. Vertical centering
    pushed the heading up under the header when the carousel nearly filled the
    viewport. */
-[data-page='portfolio'] .portfolio-category {
+[data-page='portfolio'] section.snap-target.portfolio-category {
   justify-content: flex-start;
-  padding-top: clamp(124px, 14vh, 156px);
+  /* just clears the fixed header, with a small gap above the heading */
+  padding-top: clamp(112px, 10vh, 120px);
 }
 @media (max-width: 767px) {
   [data-page='portfolio'] section.snap-target,

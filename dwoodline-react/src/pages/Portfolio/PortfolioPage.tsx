@@ -105,7 +105,7 @@ export function PortfolioPage() {
 
       {CATEGORIES.map((category) => (
         <section key={category.id} className="snap-target portfolio-category pb-[40px]">
-          <div className="px-6 md:px-[80px] mb-8">
+          <div className="px-6 md:px-[80px] mb-4">
             <h2 className="text-secondary uppercase tracking-[0.4em] border-b border-secondary/20 pb-4 inline-block font-headline-md text-headline-md">
               {category.heading}
             </h2>

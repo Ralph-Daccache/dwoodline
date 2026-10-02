@@ -28,7 +28,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
     <div className="relative w-full group/carousel" data-carousel-id={carouselId}>
       <div
         ref={sliderRef}
-        className="project-carousel w-full h-[min(70vh,calc(100dvh-300px))] overflow-x-auto no-scrollbar flex scroll-smooth cursor-grab"
+        className="project-carousel w-full h-[min(78vh,calc(100dvh-240px))] overflow-x-auto no-scrollbar flex scroll-smooth cursor-grab"
       >
         {slides.map((slide) => (
           <article
