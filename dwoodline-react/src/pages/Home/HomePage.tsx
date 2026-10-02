@@ -204,7 +204,7 @@ export function HomePage() {
                 <img
                   src={p.image}
                   alt={p.alt}
-                  className="w-full h-full object-cover grayscale md:group-hover:grayscale-0 scale-105 md:group-hover:scale-100 transition-all duration-[900ms] ease-out"
+                  className="w-full h-full object-cover scale-105 md:group-hover:scale-100 transition-all duration-[900ms] ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-on-background/85 via-on-background/20 to-transparent"></div>
                 <span className="absolute top-stack-md right-stack-md font-display-hero text-2xl text-white/30 tabular-nums">
