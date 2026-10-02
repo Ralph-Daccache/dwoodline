@@ -22,7 +22,7 @@ const CATEGORIES: CategorySection[] = [
         year: '2024',
         title: 'The Obsidian Penthouse',
         description:
-          'A structural dialogue between darkness and light. We sculpted this private residence using Calacatta marble and hand-charred cedar, creating a retreat that defies the urban noise through material silence.',
+          'A private residence wrapped in warm, dark timber, designed as a calm retreat from the city.',
       },
       {
         image:
@@ -31,7 +31,7 @@ const CATEGORIES: CategorySection[] = [
         year: '2023',
         title: 'Amanita Sky Suites',
         description:
-          "Redefining coastal luxury through the lens of tectonic precision. The suites utilize the cliffside's natural basalt geometry to frame the Aegean Sea within monolithic white architectural volumes.",
+          'Coastal suites finished in pale, sunlit wood that frames the sea through clean, simple lines.',
       },
     ],
   },
@@ -46,7 +46,7 @@ const CATEGORIES: CategorySection[] = [
         year: '2024',
         title: 'The Ritz Suites',
         description:
-          'A modern interpretation of Parisian grandeur. Integrating silk-panelled walls with brushed brass accents to redefine the classical luxury experience for the 21st century.',
+          'A modern take on Parisian grandeur, built around rich panelling and finely detailed joinery.',
       },
       {
         image:
@@ -55,7 +55,7 @@ const CATEGORIES: CategorySection[] = [
         year: '2025',
         title: 'Zenith Wellness Club',
         description:
-          'Minimalist spa architecture focused on light and silence. We utilized sand-blasted glass and rough-hewn granite to create a sensory journey through natural textures.',
+          'A spa interior built around light and silence, with warm wood bringing a tactile calm.',
       },
     ],
   },
@@ -69,8 +69,7 @@ const CATEGORIES: CategorySection[] = [
         location: 'Berlin, Germany',
         year: '2024',
         title: 'Corporate Headquarters',
-        description:
-          'A workspace designed for cognitive clarity. We integrated dynamic lighting systems with raw industrial concrete and precision-milled aluminum to foster innovation through environment.',
+        description: 'A workspace shaped by warm timber and clean lines, made for focus and quiet.',
       },
       {
         image:

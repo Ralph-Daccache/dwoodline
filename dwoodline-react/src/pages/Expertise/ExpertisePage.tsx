@@ -176,13 +176,14 @@ export function ExpertisePage() {
                 Chapter 03 — Technicality
               </span>
               <h2 className="font-headline-lg text-headline-lg serif-text leading-tight mb-6 reveal-stagger-2">
-                Hardware Integration &amp;
+                Concealed Hardware &amp;
                 <br />
-                Black Aluminum Coordination
+                Precision Installation
               </h2>
               <p className="font-body-lg text-surface-container-highest max-w-3xl mb-6 reveal-stagger-3 opacity-80">
-                Where wood meets metal. We coordinate complex architectural hardware, specialized
-                lighting profiles, and mechanical systems into the millwork fabric.
+                The details that disappear. We integrate concealed hardware and lighting into the
+                woodwork so every mechanism works quietly and each piece sits flawlessly for
+                decades.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 reveal-stagger-3">
                 <div className="p-5 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
@@ -239,7 +240,7 @@ export function ExpertisePage() {
                 <div className="w-48 h-1 bg-black/80 shadow-lg mb-2"></div>
                 <div className="w-32 h-1 bg-black/80 shadow-lg"></div>
                 <span className="text-[8px] uppercase tracking-tighter opacity-40 absolute -top-4">
-                  Al-Plate 04
+                  Oak Panel 04
                 </span>
               </div>
               <div

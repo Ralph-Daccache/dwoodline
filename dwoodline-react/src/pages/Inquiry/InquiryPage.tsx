@@ -14,7 +14,7 @@ export function InquiryPage() {
           <img
             data-parallax
             className="w-full h-full object-cover"
-            alt="A close-up high-resolution photograph of dark black aluminum architectural panels with a subtle brushed texture. The lighting is moody and low-key, highlighting the crisp edges and structural integrity of the material. Deep shadows and cool highlights emphasize the minimalist and industrial aesthetic, perfectly aligned with a luxury design studio's brand identity."
+            alt="Dark, richly grained wood panelling used as a subtle backdrop."
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN8tsGWMRYnl-csyNbBkr_0w-JQ-i4WvoIS1in2dCA3sVfqC6OYp3kZzmyyokLzt36L-hptXAJQPEC0pD8SxE8M5ZWA9nesn4qcvXgy9wtjLXsq3DF8mgFDw9o644IkBgPV17kKYaACuj3nF2lpsPuClftV-ZwUudDK2cCMVjDSEgQkYSkKPQ0DFPS-Q3Z6vRI6WOfr9cTsXW-DTmZa8LnCIZ7brX2jTKiw2hu86M1EWkknZ_yTcu5X_v5iTG-gJSfloCgMD_oB3w"
           />
         </div>
@@ -30,7 +30,7 @@ export function InquiryPage() {
             </h2>
             <p className="font-body-lg text-body-lg text-[#F5F5F7]/60 max-w-md">
               We invite architects and private clients to discuss bespoke commissions. Our studio
-              operates with the same precision we apply to our wood and aluminum structures.
+              operates with the same precision and care we bring to every piece of our woodwork.
             </p>
             <div className="mt-section-gap hidden md:block">
               <div className="flex items-center gap-4 group cursor-pointer">

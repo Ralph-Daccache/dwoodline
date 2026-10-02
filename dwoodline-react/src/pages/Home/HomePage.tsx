@@ -32,7 +32,7 @@ const PROCESS = [
 const SPECS = [
   { label: 'Precision', value: '0.01mm Tolerance' },
   { label: 'Sourcing', value: 'Certified Walnut' },
-  { label: 'Finish', value: 'Matte Aluminum' },
+  { label: 'Finish', value: 'Hand-Finished' },
   { label: 'Heritage', value: 'Since 1955' },
 ] as const;
 
@@ -43,7 +43,7 @@ const RECENT = [
     year: '2024',
     image:
       'https://lh3.googleusercontent.com/aida-public/AB6AXuBo9EdbdFsjsDzDV3L5NVDS5FzxmiAGo11Mzbp6B3wMhH3NuaScmGOylEAU8xKpgaSAsr0SNlE0N1XfNfaK_idLfOt0xupZimkCigAgEsiDaLVSSQrg9vshKNIxoZnF1mgb8ZjNQ-TXgOEsKMZjDAkVDQDeLRJiu35GzX_Uomrfm9qIv49Md1Nq-xR-vCB7itKISNwGno7PV2Z0M1RqmE3Wo_FvRY1I_kB-tn6YPJKWkgQ-E-XcecXxz1qi6PV7QvToOr6pZM9bSKQ',
-    alt: 'The Obsidian Penthouse: Calacatta marble and charred cedar interior, Milan.',
+    alt: 'The Obsidian Penthouse, a private residence interior in Milan.',
   },
   {
     title: 'The Ritz Suites',
@@ -51,7 +51,7 @@ const RECENT = [
     year: '2024',
     image:
       'https://lh3.googleusercontent.com/aida-public/AB6AXuDQ9eRwwgbAKxpxfJ0NERJe8sohHkN1gbBNMtG3bwkzDL3MaSJHuyuZhYpOaJxdEYu65l8WpBfRqm466oD5gzB4VqMsAHXqwWWeU5WxPMYEsRK-MOWtQ_VVJoHLnd3g2TMMk-aiW7PbOkRhwSXPoQgtq6pkVMfJc4U4qz36FFuARV94CXsdrd7X4YyPJqKRavOJxZK_nmIvo7u-wL4ncujMarntjui04YkD8Rjp1BOWN8701UB2VXBS1JKwc1Vcf-sM4Sg4vDZT6us',
-    alt: 'The Ritz Suites: silk-panelled walls and brushed brass, Paris.',
+    alt: 'The Ritz Suites, a hospitality interior in Paris.',
   },
   {
     title: 'Corporate Headquarters',
@@ -59,7 +59,7 @@ const RECENT = [
     year: '2024',
     image:
       'https://lh3.googleusercontent.com/aida-public/AB6AXuASEMcfBX8ZALZP_1J47nIfOVsJ8uuK9OzqeTkoskiszglyBjItVcVZ5dq8pHyc2vD5NUi3X30JAMLWYtCjTCZUD_82yzKsmYc4eeUq4B7_m-_TW-zN2m8w1LIutnXYNPzWUV2Jwkn8_z57AX30bc-jOMOAcJX9GqJ8TW9SUSqVPbdpQSkJvt8ZpLZ_iDqL7Fba2S2vzb8zKnIr5SOb6rUNjbwSYwA38RW2iCxuxI_h8nc6PaDRBcb9_QP245hK4Zgbq5BS2w-5h0k',
-    alt: 'Corporate Headquarters: concrete and precision-milled aluminium workspace, Berlin.',
+    alt: 'Corporate Headquarters, a workspace interior in Berlin.',
   },
 ] as const;
 
@@ -150,8 +150,7 @@ export function HomePage() {
             D Woodline
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mt-stack-md text-balance">
-            Bespoke architectural woodwork, engineered to the millimetre in marble, walnut, and
-            blackened aluminium.
+            Classical woodworking craft and modern precision, for high-end interiors.
           </p>
           <div className="mt-stack-lg flex flex-col md:flex-row items-center justify-center gap-gutter">
             <Link to={ROUTES.portfolio} className={CTA_PRIMARY}>
