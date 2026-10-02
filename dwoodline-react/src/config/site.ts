@@ -22,9 +22,9 @@ export interface FooterColumn {
 }
 
 export const SITE = {
-  brand: 'dwoodline',
+  brand: 'D Woodline',
   taglineLines: ['Architectural Woodwork', 'Since 1955'],
-  copyright: '© 1955 dwoodline. Architectural Precision. All rights reserved.',
+  copyright: '© 1955 D Woodline. Architectural Precision. All rights reserved.',
   location: 'Lebanon',
   social: {
     instagram: 'https://instagram.com/dwoodline_sal/',

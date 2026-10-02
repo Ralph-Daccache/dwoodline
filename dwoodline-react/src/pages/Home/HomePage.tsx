@@ -147,7 +147,7 @@ export function HomePage() {
             Architectural Woodwork · Since 1955
           </span>
           <h1 className="font-display-hero text-display-hero text-on-surface tracking-[-0.04em] mix-blend-multiply">
-            dwoodline
+            D Woodline
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mt-stack-md text-balance">
             Bespoke architectural woodwork, engineered to the millimetre in marble, walnut, and

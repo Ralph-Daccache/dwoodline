@@ -19,7 +19,7 @@ export function Nav({ onOpenMenu }: NavProps) {
   const { pathname } = useLocation();
   return (
     <nav className="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-6 md:px-[80px] py-[clamp(16px,3.5vw,32px)]">
-      <div className="text-[clamp(18px,3vw,24px)] font-light tracking-[0.3em] uppercase text-[#1A1A1A] dark:text-[#F5F5F7]">
+      <div className="text-[clamp(18px,3vw,24px)] font-light tracking-[0.12em] text-[#1A1A1A] dark:text-[#F5F5F7]">
         {SITE.brand}
       </div>
       <div className="hidden md:flex items-center gap-stack-lg">

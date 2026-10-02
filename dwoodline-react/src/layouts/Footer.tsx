@@ -14,9 +14,7 @@ export function Footer() {
     <footer className="w-full bg-[#1A1A1A] dark:bg-[#0D0D0D] border-t border-[#F5F5F7]/10">
       <div className="px-6 md:px-[80px] pt-16 pb-12 flex flex-col lg:flex-row gap-16 justify-between">
         <div className="flex flex-col gap-6 min-w-[180px]">
-          <div className="text-lg font-light tracking-widest text-[#F5F5F7] uppercase">
-            {SITE.brand}
-          </div>
+          <div className="text-lg font-light tracking-widest text-[#F5F5F7]">{SITE.brand}</div>
           <div className="flex flex-col gap-1">
             {SITE.taglineLines.map((line) => (
               <p
