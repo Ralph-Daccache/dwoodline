@@ -169,7 +169,7 @@ export function HomePage() {
       </section>
 
       {/* Materiality: asymmetric feature, fits one viewport */}
-      <section className="snap-target px-6 md:px-[80px] bg-surface flex flex-col justify-center pt-28 pb-20">
+      <section className="snap-target home-recent bg-surface flex flex-col justify-center">
         <div className="w-full max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-stack-md mb-stack-lg">
             <div className="max-w-xl">

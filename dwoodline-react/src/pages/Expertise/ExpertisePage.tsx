@@ -65,7 +65,10 @@ export function ExpertisePage() {
             <div className="flex flex-col gap-3 w-full justify-center py-2">
               {/* Circle 1 — left */}
               <div className="detail-circle self-start ml-8">
-                <div className="w-40 h-40 rounded-full overflow-hidden" style={CIRCLE_BORDER}>
+                <div
+                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  style={CIRCLE_BORDER}
+                >
                   <img
                     src="https://picsum.photos/seed/dwl01/160/160"
                     className="w-full h-full object-cover"
@@ -75,7 +78,10 @@ export function ExpertisePage() {
               </div>
               {/* Circle 2 — right */}
               <div className="detail-circle self-end mr-8">
-                <div className="w-40 h-40 rounded-full overflow-hidden" style={CIRCLE_BORDER}>
+                <div
+                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  style={CIRCLE_BORDER}
+                >
                   <img
                     src="https://picsum.photos/seed/dwl02/160/160"
                     className="w-full h-full object-cover"
@@ -85,7 +91,10 @@ export function ExpertisePage() {
               </div>
               {/* Circle 3 — left */}
               <div className="detail-circle self-start ml-8">
-                <div className="w-40 h-40 rounded-full overflow-hidden" style={CIRCLE_BORDER}>
+                <div
+                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  style={CIRCLE_BORDER}
+                >
                   <img
                     src="https://picsum.photos/seed/dwl03/160/160"
                     className="w-full h-full object-cover"
@@ -95,7 +104,10 @@ export function ExpertisePage() {
               </div>
               {/* Circle 4 — right */}
               <div className="detail-circle self-end mr-8">
-                <div className="w-40 h-40 rounded-full overflow-hidden" style={CIRCLE_BORDER}>
+                <div
+                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  style={CIRCLE_BORDER}
+                >
                   <img
                     src="https://picsum.photos/seed/dwl04/160/160"
                     className="w-full h-full object-cover"
@@ -149,7 +161,7 @@ export function ExpertisePage() {
                 </div>
               </div>
             </div>
-            <div className="reveal reveal-stagger-2 relative h-[400px] overflow-hidden rounded-sm border border-outline-variant/20 shadow-xl">
+            <div className="reveal reveal-stagger-2 relative h-[clamp(260px,42vh,400px)] overflow-hidden rounded-sm border border-outline-variant/20 shadow-xl">
               <div className="absolute inset-0 bg-[#e5e2e1] z-2 veneer-mask transition-all duration-[2s]"></div>
               <img
                 alt="Walnut veneer detail"
@@ -231,7 +243,7 @@ export function ExpertisePage() {
               </div>
             </div>
             {/* Exploded View Animation */}
-            <div className="relative reveal flex items-center justify-center h-[400px]">
+            <div className="relative reveal flex items-center justify-center h-[clamp(260px,42vh,400px)]">
               <div className="absolute w-64 h-80 bg-[#313030] border border-white/5 shadow-2xl rounded-sm z-10"></div>
               <div
                 className="absolute hardware-component hardware-left z-20"
