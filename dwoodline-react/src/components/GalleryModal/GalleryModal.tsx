@@ -33,13 +33,13 @@ export function GalleryModal({ projectName, onClose }: GalleryModalProps) {
             </button>
           </div>
           <div className="p-8">
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {images.map((image) => (
                 <img
                   key={image}
                   src={image}
                   alt=""
-                  className="w-full h-48 object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                  className="w-full aspect-[4/3] object-cover cursor-pointer hover:opacity-80 transition-opacity"
                   onClick={() => setFullSrc(image)}
                 />
               ))}

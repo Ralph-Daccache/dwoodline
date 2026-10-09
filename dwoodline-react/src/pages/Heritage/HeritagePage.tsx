@@ -9,9 +9,9 @@ export function HeritagePage() {
   useLuxeScroll(scopeRef);
 
   return (
-    <main ref={scopeRef} className="pt-[100px] md:pt-[160px] pb-section-gap px-6 md:px-[80px]">
+    <main ref={scopeRef} className="pt-[clamp(96px,14vh,160px)] pb-section-gap px-6 md:px-[80px]">
       {/* Heritage Section */}
-      <section className="relative min-h-[819px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[clamp(560px,88svh,819px)] flex items-center justify-center overflow-hidden">
         {/* Background Large Typography */}
         <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none">
           <span className="font-headline-lg text-[25vw] leading-none text-primary-fixed-dim/10 tracking-tighter opacity-30 serif-text">
@@ -105,7 +105,7 @@ export function HeritagePage() {
           </div>
           <div className="md:w-2/3 w-full space-y-stack-lg border-l border-on-background/10 pl-stack-lg">
             <div className="relative group cursor-default">
-              <div className="absolute -left-[54px] top-1 w-3 h-3 bg-on-background" />
+              <div className="absolute -left-[28px] md:-left-[54px] top-1 w-3 h-3 bg-on-background" />
               <span className="font-headline-md text-headline-md serif-text block text-secondary">
                 I
               </span>
@@ -118,7 +118,7 @@ export function HeritagePage() {
               </p>
             </div>
             <div className="relative group cursor-default">
-              <div className="absolute -left-[54px] top-1 w-3 h-3 bg-primary-fixed-dim group-hover:bg-on-background transition-colors" />
+              <div className="absolute -left-[28px] md:-left-[54px] top-1 w-3 h-3 bg-primary-fixed-dim group-hover:bg-on-background transition-colors" />
               <span className="font-headline-md text-headline-md serif-text block text-on-background/30 group-hover:text-secondary transition-colors">
                 II
               </span>
@@ -131,7 +131,7 @@ export function HeritagePage() {
               </p>
             </div>
             <div className="relative group cursor-default">
-              <div className="absolute -left-[54px] top-1 w-3 h-3 bg-primary-fixed-dim group-hover:bg-on-background transition-colors" />
+              <div className="absolute -left-[28px] md:-left-[54px] top-1 w-3 h-3 bg-primary-fixed-dim group-hover:bg-on-background transition-colors" />
               <span className="font-headline-md text-headline-md serif-text block text-on-background/30 group-hover:text-secondary transition-colors">
                 III
               </span>

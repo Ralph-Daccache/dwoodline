@@ -33,7 +33,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
         {slides.map((slide) => (
           <article
             key={slide.title}
-            className="flex-none w-screen h-full carousel-snap-start relative group overflow-hidden"
+            className="flex-none basis-full w-full h-full carousel-snap-start relative group overflow-hidden"
           >
             <div className="absolute inset-0 z-0 overflow-hidden">
               <img
@@ -43,7 +43,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-on-background/80 to-transparent z-10"></div>
-            <div className="absolute bottom-margin-page left-margin-page right-6 z-20 flex flex-col gap-stack-md text-white max-w-2xl">
+            <div className="absolute left-6 bottom-20 right-6 md:left-margin-page md:bottom-margin-page z-20 flex flex-col gap-stack-md text-white max-w-2xl">
               <div className="flex items-center gap-4">
                 <span className="font-technical-label text-technical-label px-4 py-1 border border-white/20 bg-white/10 backdrop-blur-sm uppercase">
                   {slide.location}
@@ -57,7 +57,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
               <p className="font-body-md text-body-md text-white/70 max-w-lg">
                 {slide.description}
               </p>
-              <div className="mt-stack-sm flex gap-stack-md">
+              <div className="mt-stack-sm flex flex-wrap gap-stack-md">
                 <button
                   type="button"
                   onClick={() => onViewProject(slide.title)}

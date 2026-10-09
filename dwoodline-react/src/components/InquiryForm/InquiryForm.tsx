@@ -20,7 +20,7 @@ export function InquiryForm() {
   }
 
   return (
-    <form className="space-y-12" onSubmit={handleSubmit}>
+    <form className="space-y-[clamp(24px,4vh,48px)]" onSubmit={handleSubmit}>
       <div className="group">
         <label className="font-technical-label text-technical-label uppercase tracking-widest text-[#F5F5F7]/40 block mb-2">
           Principal Name
@@ -57,7 +57,7 @@ export function InquiryForm() {
           onChange={(e) => setMessage(e.target.value)}
         />
       </div>
-      <div className="pt-8">
+      <div className="pt-[clamp(8px,2vh,32px)]">
         <button
           className="w-full md:w-auto px-16 py-6 bg-[#F5F5F7] text-[#1A1A1A] font-technical-label text-technical-label uppercase tracking-[0.2em] transition-all duration-500 hover:bg-[#dec2a0] hover:text-[#1A1A1A]"
           type="submit"

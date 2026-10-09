@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useIsDesktop } from './useIsDesktop';
 
 /**
  * Expertise (03) scroll behavior — a near-verbatim port of the page's inline
@@ -16,6 +17,7 @@ const WHEEL_COOLDOWN_MS = 150;
 const TOUCH_THRESHOLD = 50;
 
 export function useExpertiseScroll(): void {
+  const isDesktop = useIsDesktop();
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll<HTMLElement>('.snap-section'));
     const dots = Array.from(document.querySelectorAll<HTMLElement>('.progress-dot'));
@@ -76,7 +78,7 @@ export function useExpertiseScroll(): void {
 
     // ---- Desktop-only wheel / touch / keyboard navigation ----
     let cleanupNav = (): void => {};
-    if (window.innerWidth >= 768) {
+    if (isDesktop) {
       const footer = document.querySelector<HTMLElement>('footer');
       let isAnimating = false;
       let lastWheelTime = 0;
@@ -263,5 +265,5 @@ export function useExpertiseScroll(): void {
       window.removeEventListener('scroll', onParallax);
       cleanupNav();
     };
-  }, []);
+  }, [isDesktop]);
 }

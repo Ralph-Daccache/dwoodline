@@ -8,7 +8,7 @@ export function InquiryPage() {
   return (
     <main>
       {/* Inquiry Section (Dramatic Transition) */}
-      <section className="snap-target min-h-[100dvh] bg-[#1A1A1A] text-[#F5F5F7] flex flex-col justify-center relative overflow-hidden pt-[clamp(104px,11vh,128px)] pb-stack-lg">
+      <section className="snap-target min-h-[100dvh] bg-[#1A1A1A] text-[#F5F5F7] flex flex-col justify-start relative overflow-hidden pt-[clamp(104px,11vh,128px)] pb-stack-lg">
         {/* Background Image Backdrop for Materiality */}
         <div className="absolute inset-0 opacity-10 grayscale pointer-events-none">
           <img
@@ -32,7 +32,7 @@ export function InquiryPage() {
               We invite architects and private clients to discuss bespoke commissions. Our studio
               operates with the same precision and care we bring to every piece of our woodwork.
             </p>
-            <div className="mt-section-gap hidden md:block">
+            <div className="mt-[clamp(32px,6vh,96px)] hidden md:block">
               <div className="flex items-center gap-4 group cursor-pointer">
                 <div className="w-12 h-[1px] bg-[#F5F5F7]/20 group-hover:w-20 transition-all duration-500"></div>
                 <span className="font-technical-label text-technical-label uppercase tracking-widest text-[#F5F5F7]/40">

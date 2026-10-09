@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useIsDesktop } from './useIsDesktop';
 
 /**
  * Portfolio (04) desktop-only vertical section navigation — the simple
@@ -10,8 +11,9 @@ const WHEEL_COOLDOWN_MS = 150;
 const TOUCH_THRESHOLD = 50;
 
 export function useSectionScroll(): void {
+  const isDesktop = useIsDesktop();
   useEffect(() => {
-    if (window.innerWidth < 768) return;
+    if (!isDesktop) return;
 
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>('section.snap-target, footer.snap-target'),
@@ -163,5 +165,5 @@ export function useSectionScroll(): void {
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('keydown', handleKey);
     };
-  }, []);
+  }, [isDesktop]);
 }

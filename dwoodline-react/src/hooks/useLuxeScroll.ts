@@ -28,6 +28,9 @@ export function useLuxeScroll(scopeRef: RefObject<HTMLElement>): void {
     const scope = scopeRef.current;
     if (!scope) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Desktop only: on phones use native scroll (Lenis hijacking touch scroll
+    // is janky and inconsistent with the rest of the site).
+    if (!window.matchMedia('(min-width: 768px)').matches) return;
 
     const lenis = new Lenis({
       lerp: 0.38,

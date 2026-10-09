@@ -123,7 +123,7 @@ export function HomePage() {
   return (
     <main className="w-full">
       {/* Hero: video, one full viewport */}
-      <section className="snap-target relative w-full flex items-center justify-center overflow-hidden py-20">
+      <section className="snap-target relative w-full flex items-center justify-center overflow-hidden py-[clamp(48px,8vh,80px)]">
         <video
           className="absolute inset-0 z-0 w-full h-full object-cover"
           autoPlay
@@ -198,7 +198,7 @@ export function HomePage() {
                 key={p.title}
                 to={ROUTES.portfolio}
                 aria-label={`${p.title}, ${p.location}`}
-                className="group relative flex-1 md:hover:flex-[2.5] h-[26vh] md:h-full overflow-hidden transition-all duration-700 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                className="group relative flex-1 md:hover:flex-[2.5] h-[clamp(132px,20vh,200px)] md:h-full overflow-hidden transition-all duration-700 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
               >
                 <img
                   src={p.image}
@@ -213,7 +213,7 @@ export function HomePage() {
                   <span className="font-technical-label text-technical-label uppercase tracking-widest text-white/60 block mb-1">
                     {p.location} · {p.year}
                   </span>
-                  <h3 className="font-headline-md text-xl md:text-2xl text-white whitespace-nowrap">
+                  <h3 className="font-headline-md text-xl md:text-2xl text-white md:whitespace-nowrap">
                     {p.title}
                   </h3>
                 </div>

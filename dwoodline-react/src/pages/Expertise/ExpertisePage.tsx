@@ -62,11 +62,11 @@ export function ExpertisePage() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-3 w-full justify-center py-2">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full place-items-center py-2">
               {/* Circle 1 — left */}
-              <div className="detail-circle self-start ml-8">
+              <div className="detail-circle lg:justify-self-start">
                 <div
-                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  className="w-[clamp(72px,10vh,132px)] h-[clamp(72px,10vh,132px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -77,9 +77,9 @@ export function ExpertisePage() {
                 </div>
               </div>
               {/* Circle 2 — right */}
-              <div className="detail-circle self-end mr-8">
+              <div className="detail-circle lg:justify-self-end">
                 <div
-                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  className="w-[clamp(72px,10vh,132px)] h-[clamp(72px,10vh,132px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -90,9 +90,9 @@ export function ExpertisePage() {
                 </div>
               </div>
               {/* Circle 3 — left */}
-              <div className="detail-circle self-start ml-8">
+              <div className="detail-circle lg:justify-self-start">
                 <div
-                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  className="w-[clamp(72px,10vh,132px)] h-[clamp(72px,10vh,132px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -103,9 +103,9 @@ export function ExpertisePage() {
                 </div>
               </div>
               {/* Circle 4 — right */}
-              <div className="detail-circle self-end mr-8">
+              <div className="detail-circle lg:justify-self-end">
                 <div
-                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  className="w-[clamp(72px,10vh,132px)] h-[clamp(72px,10vh,132px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -245,20 +245,14 @@ export function ExpertisePage() {
             {/* Exploded View Animation */}
             <div className="relative reveal flex items-center justify-center h-[clamp(260px,42vh,400px)]">
               <div className="absolute w-64 h-80 bg-[#313030] border border-white/5 shadow-2xl rounded-sm z-10"></div>
-              <div
-                className="absolute hardware-component hardware-left z-20"
-                style={{ left: '-10%' }}
-              >
-                <div className="w-48 h-1 bg-black/80 shadow-lg mb-2"></div>
-                <div className="w-32 h-1 bg-black/80 shadow-lg"></div>
+              <div className="absolute hardware-component hardware-left z-20 left-0 lg:left-[-10%]">
+                <div className="w-40 sm:w-48 h-1 bg-black/80 shadow-lg mb-2"></div>
+                <div className="w-28 sm:w-32 h-1 bg-black/80 shadow-lg"></div>
                 <span className="text-[8px] uppercase tracking-tighter opacity-40 absolute -top-4">
                   Oak Panel 04
                 </span>
               </div>
-              <div
-                className="absolute hardware-component hardware-right z-20"
-                style={{ right: '-10%' }}
-              >
+              <div className="absolute hardware-component hardware-right z-20 right-0 lg:right-[-10%]">
                 <div className="w-12 h-12 border-2 border-tertiary-fixed rounded-full opacity-40"></div>
                 <span className="text-[8px] uppercase tracking-tighter opacity-40 absolute -bottom-4">
                   Pivot-Hinge X-1
