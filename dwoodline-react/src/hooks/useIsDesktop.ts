@@ -15,8 +15,14 @@ export function useIsDesktop(query = '(min-width: 768px)'): boolean {
     const mql = window.matchMedia(query);
     const onChange = (): void => setIsDesktop(mql.matches);
     onChange();
-    mql.addEventListener('change', onChange);
-    return () => mql.removeEventListener('change', onChange);
+    // Prefer the modern event API; fall back to the deprecated addListener for
+    // older WebKit (Safari < 14) which lacks addEventListener on MediaQueryList.
+    if (mql.addEventListener) {
+      mql.addEventListener('change', onChange);
+      return () => mql.removeEventListener('change', onChange);
+    }
+    mql.addListener(onChange);
+    return () => mql.removeListener(onChange);
   }, [query]);
 
   return isDesktop;

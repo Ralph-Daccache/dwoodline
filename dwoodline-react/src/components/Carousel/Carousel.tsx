@@ -33,7 +33,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
         {slides.map((slide) => (
           <article
             key={slide.title}
-            className="flex-none basis-full w-full h-full carousel-snap-start relative group overflow-hidden"
+            className="flex-none w-full h-full carousel-snap-start relative group overflow-hidden"
           >
             <div className="absolute inset-0 z-0 overflow-hidden">
               <img

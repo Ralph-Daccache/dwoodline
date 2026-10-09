@@ -18,11 +18,6 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
-      /* Height-based breakpoint for short laptops, so sections can tighten
-         padding/sizing by viewport height (not just width). */
-      screens: {
-        short: { raw: '(max-height: 760px)' },
-      },
       colors: {
         'primary-fixed-dim': '#c6c6c8',
         'on-error': '#ffffff',

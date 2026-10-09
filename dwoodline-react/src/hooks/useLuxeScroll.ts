@@ -3,6 +3,7 @@ import type { RefObject } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useIsDesktop } from './useIsDesktop';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,13 +25,14 @@ const EASE = 'sine.inOut';
  * automatically unless wrapped in `[data-no-animate]`.
  */
 export function useLuxeScroll(scopeRef: RefObject<HTMLElement>): void {
+  // Desktop only (reactive): on phones use native scroll, and re-evaluate when
+  // the viewport crosses 768px instead of only at mount.
+  const isDesktop = useIsDesktop();
   useEffect(() => {
     const scope = scopeRef.current;
     if (!scope) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    // Desktop only: on phones use native scroll (Lenis hijacking touch scroll
-    // is janky and inconsistent with the rest of the site).
-    if (!window.matchMedia('(min-width: 768px)').matches) return;
+    if (!isDesktop) return;
 
     const lenis = new Lenis({
       lerp: 0.38,
@@ -163,5 +165,5 @@ export function useLuxeScroll(scopeRef: RefObject<HTMLElement>): void {
       lenis.off('scroll', onLenisScroll);
       lenis.destroy();
     };
-  }, [scopeRef]);
+  }, [scopeRef, isDesktop]);
 }
