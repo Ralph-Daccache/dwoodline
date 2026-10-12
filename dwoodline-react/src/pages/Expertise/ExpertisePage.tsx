@@ -62,11 +62,11 @@ export function ExpertisePage() {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full place-items-center py-2">
+            <div className="flex flex-col gap-3 w-full justify-center py-2">
               {/* Circle 1 — left */}
-              <div className="detail-circle lg:justify-self-start">
+              <div className="detail-circle self-start ml-8">
                 <div
-                  className="w-[clamp(72px,10vh,132px)] h-[clamp(72px,10vh,132px)] rounded-full overflow-hidden"
+                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -77,9 +77,9 @@ export function ExpertisePage() {
                 </div>
               </div>
               {/* Circle 2 — right */}
-              <div className="detail-circle lg:justify-self-end">
+              <div className="detail-circle self-end mr-8">
                 <div
-                  className="w-[clamp(72px,10vh,132px)] h-[clamp(72px,10vh,132px)] rounded-full overflow-hidden"
+                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -90,9 +90,9 @@ export function ExpertisePage() {
                 </div>
               </div>
               {/* Circle 3 — left */}
-              <div className="detail-circle lg:justify-self-start">
+              <div className="detail-circle self-start ml-8">
                 <div
-                  className="w-[clamp(72px,10vh,132px)] h-[clamp(72px,10vh,132px)] rounded-full overflow-hidden"
+                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -103,9 +103,9 @@ export function ExpertisePage() {
                 </div>
               </div>
               {/* Circle 4 — right */}
-              <div className="detail-circle lg:justify-self-end">
+              <div className="detail-circle self-end mr-8">
                 <div
-                  className="w-[clamp(72px,10vh,132px)] h-[clamp(72px,10vh,132px)] rounded-full overflow-hidden"
+                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img

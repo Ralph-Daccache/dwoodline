@@ -123,7 +123,7 @@ export function HomePage() {
   return (
     <main className="w-full">
       {/* Hero: video, one full viewport */}
-      <section className="snap-target relative w-full flex items-center justify-center overflow-hidden py-[clamp(48px,8vh,80px)]">
+      <section className="snap-target home-hero relative w-full flex items-center justify-center overflow-hidden">
         <video
           className="absolute inset-0 z-0 w-full h-full object-cover"
           autoPlay
@@ -143,7 +143,7 @@ export function HomePage() {
         </video>
         <div className="absolute inset-0 bg-white/10 backdrop-contrast-75"></div>
         <div className="relative z-10 text-center px-6 md:px-[80px] max-w-4xl mx-auto">
-          <span className="font-technical-label text-technical-label uppercase tracking-[0.4em] text-on-surface-variant block mb-stack-md">
+          <span className="font-technical-label text-technical-label uppercase tracking-[0.22em] md:tracking-[0.4em] text-on-surface-variant block mb-stack-md">
             Architectural Woodwork · Since 1955
           </span>
           <h1 className="font-display-hero text-display-hero text-on-surface tracking-[-0.04em] mix-blend-multiply">
@@ -162,7 +162,7 @@ export function HomePage() {
           </div>
         </div>
         <div className="scroll-indicator flex flex-col items-center gap-4 text-on-surface-variant">
-          <div className="w-[2px] h-16 bg-on-surface-variant/40 relative overflow-hidden rounded-full">
+          <div className="w-[2px] h-12 md:h-16 bg-on-surface-variant/40 relative overflow-hidden rounded-full">
             <div className="scroll-line absolute top-0 left-0 w-full bg-on-surface-variant rounded-full"></div>
           </div>
         </div>

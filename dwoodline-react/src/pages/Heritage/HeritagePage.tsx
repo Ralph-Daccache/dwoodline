@@ -9,7 +9,7 @@ export function HeritagePage() {
   useLuxeScroll(scopeRef);
 
   return (
-    <main ref={scopeRef} className="pt-[clamp(96px,14vh,160px)] pb-section-gap px-6 md:px-[80px]">
+    <main ref={scopeRef} className="pt-[clamp(120px,17vh,168px)] pb-section-gap px-6 md:px-[80px]">
       {/* Heritage Section */}
       <section className="relative min-h-[clamp(560px,88svh,819px)] flex items-center justify-center overflow-hidden">
         {/* Background Large Typography */}

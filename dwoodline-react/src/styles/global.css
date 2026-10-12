@@ -176,6 +176,20 @@ html.snap-portfolio {
     padding: clamp(112px, 12vh, 132px) 80px clamp(48px, 8vh, 96px);
   }
 }
+/* Hero: always a full viewport (also on phones), content centred between the
+   fixed header and the scroll indicator so neither overlaps the buttons.
+   Higher specificity than the base .snap-target (padding:0, mobile min-height:auto). */
+[data-page='home'] .snap-target.home-hero {
+  min-height: 100svh;
+  justify-content: center;
+  padding: 88px 0 112px;
+}
+@media (min-width: 768px) {
+  [data-page='home'] .snap-target.home-hero {
+    min-height: 100dvh;
+    padding: 104px 0 112px;
+  }
+}
 /* Recent-projects section: top-align and clear the fixed header, restoring the
    side gutter that the base .snap-target padding:0 removes. */
 [data-page='home'] .home-recent {
