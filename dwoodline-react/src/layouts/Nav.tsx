@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { PRIMARY_NAV, ROUTES } from '@/config/routes';
 import { SITE } from '@/config/site';
@@ -16,8 +17,21 @@ interface NavProps {
 /** Fixed top navigation, identical on every page (active link tracks the route). */
 export function Nav({ onOpenMenu }: NavProps) {
   const { pathname } = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+
+  // Solid tan at the top of the page; translucent and blurred once scrolling starts.
+  useEffect(() => {
+    const onScroll = (): void => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [pathname]);
   return (
-    <nav className="fixed top-0 w-full z-50 flex justify-between items-center bg-brand px-6 md:px-[80px] py-[clamp(16px,3.5vw,32px)]">
+    <nav
+      className={`fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-[80px] py-[clamp(16px,3.5vw,32px)] transition-[background-color,backdrop-filter] duration-300 ${
+        scrolled ? 'bg-brand/70 backdrop-blur-md' : 'bg-brand'
+      }`}
+    >
       <Link
         to={ROUTES.home}
         aria-label={`${SITE.brand}, home`}
