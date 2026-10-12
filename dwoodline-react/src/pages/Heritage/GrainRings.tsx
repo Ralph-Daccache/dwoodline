@@ -32,7 +32,8 @@ interface RingGeo {
 
 interface DiscGeo {
   rings: RingGeo[];
-  radii: number[];
+  /** x position of each ring's edge along the 3 o'clock axis (exact, for ruler ticks) */
+  edgeX: number[];
   outer: string;
   bark: string;
   rays: string[];
@@ -110,6 +111,15 @@ function buildDisc(count: number, seed: number, rMax: number): DiscGeo {
     };
   });
 
+  // exact ring-edge x at angle 0, including eccentricity and wobble
+  const edgeX = radii.map((r, k) => {
+    const wob =
+      0.025 * r * Math.sin(p1 + k * 0.05) +
+      0.012 * r * Math.sin(p2 - k * 0.04) +
+      0.006 * r * Math.sin(p3 + k * 0.09);
+    return CX + ex * (k / count) + r + wob;
+  });
+
   const bark = outline(count - 1, rMax + 15, 9);
   const outer = outline(count - 1, rMax + 12);
 
@@ -146,7 +156,7 @@ function buildDisc(count: number, seed: number, rMax: number): DiscGeo {
     return `M${left.join('L')}L${right.join('L')}Z`;
   });
 
-  return { rings, radii, outer, bark, rays, cracks };
+  return { rings, edgeX, outer, bark, rays, cracks };
 }
 
 export interface DiscMark {
@@ -299,7 +309,7 @@ export function WoodDisc({
             vectorEffect="non-scaling-stroke"
           />
           {marks.map((m) => {
-            const x = CX + geo.radii[Math.min(m.ring, geo.radii.length - 1)];
+            const x = geo.edgeX[Math.min(m.ring, geo.edgeX.length - 1)];
             return (
               <g key={m.label} data-mark>
                 <line

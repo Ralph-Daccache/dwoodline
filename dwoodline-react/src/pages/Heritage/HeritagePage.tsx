@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -73,7 +73,8 @@ export function HeritagePage() {
   const scopeRef = useRef<HTMLElement>(null);
   useLuxeScroll(scopeRef);
 
-  useEffect(() => {
+  // layout effect: hide/animate before first paint so the hero never flashes
+  useLayoutEffect(() => {
     const root = scopeRef.current;
     if (!root) return undefined;
 
@@ -224,6 +225,7 @@ export function HeritagePage() {
         const idx96 = GEN2_YEAR - START_YEAR;
         const last = stageRings.length - 1;
         gsap.set([stageGroup, stageRings], { svgOrigin: '500 500' });
+        gsap.set(stageRings.slice(FOUNDING_RINGS + 1), { autoAlpha: 0 });
         gsap.set(stageDetail, { autoAlpha: 0 });
         gsap.set(marks, { autoAlpha: 0 });
         gsap.set(marks[0], { autoAlpha: 1 });
@@ -282,7 +284,6 @@ export function HeritagePage() {
         tl.to(stageDetail, { autoAlpha: 1, duration: 0.9 }, 6.1);
         tl.to(marks[2], { autoAlpha: 1, duration: 0.3 }, 6.5);
 
-        tl.to(stageGroup, { rotation: 34, duration: 7.8, svgOrigin: '500 500' }, 0);
         tl.to({}, { duration: 0.01 }, 7.8);
 
         gsap.from(q('[data-stage-disc]'), {
@@ -354,7 +355,10 @@ export function HeritagePage() {
         data-hero
         className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#140e09] px-6 pb-[clamp(72px,12vh,128px)] pt-[clamp(120px,17vh,168px)] text-surface md:px-[80px]"
       >
-        <div data-hero-disc className="absolute inset-0 flex items-center justify-center">
+        <div
+          data-hero-disc
+          className="absolute inset-0 flex items-center justify-center will-change-transform"
+        >
           <WoodDisc
             count={RING_COUNT}
             seed={1955}
