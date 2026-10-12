@@ -36,6 +36,9 @@ const GENERATIONS = [
 ] as const;
 
 const START_YEAR = 1955;
+/* The counter stops on one year per generation. The Generation II year is a
+   PLACEHOLDER until the family confirms it; Generation III is always the current year. */
+const GEN2_YEAR = 1985;
 
 /** Splits a line into words, each wrapped in a clip mask for the load-in reveal. */
 function MaskedWords({ text }: { text: string }) {
@@ -225,17 +228,10 @@ export function HeritagePage() {
           tl.to(ring, { scale: 1, autoAlpha: 1, duration: 1, ease: 'power2.out' }, i * step);
         });
         tl.to(stageGroup, { rotation: 38, svgOrigin: '500 500', duration: total }, 0);
-        tl.to(
-          counter,
-          {
-            year: endYear,
-            duration: total,
-            onUpdate: () => {
-              if (yearEl) yearEl.textContent = String(Math.round(counter.year));
-            },
-          },
-          0,
-        );
+        const writeYear = (): void => {
+          if (yearEl) yearEl.textContent = String(Math.round(counter.year));
+        };
+        const stops = [GEN2_YEAR, endYear];
         [1, 2].forEach((idx) => {
           const at = (total / 3) * idx;
           tl.to(
@@ -244,6 +240,12 @@ export function HeritagePage() {
             at - 0.3,
           );
           tl.to(panels[idx], { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, at);
+          // roll up to this generation's year, then hold it until the next one
+          tl.to(
+            counter,
+            { year: stops[idx - 1], duration: 0.9, ease: 'power2.inOut', onUpdate: writeYear },
+            at - 0.4,
+          );
         });
 
         /* ---- Slices: rise and reveal ---- */
