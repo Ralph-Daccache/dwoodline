@@ -36,9 +36,9 @@ const GENERATIONS = [
 ] as const;
 
 const START_YEAR = 1955;
-/* The counter stops on one year per generation. The Generation II year is a
-   PLACEHOLDER until the family confirms it; Generation III is always the current year. */
-const GEN2_YEAR = 1985;
+/* The counter stops on one year per generation: I = START_YEAR, II = GEN2_YEAR,
+   III = the current year. */
+const GEN2_YEAR = 1996;
 
 /** Splits a line into words, each wrapped in a clip mask for the load-in reveal. */
 function MaskedWords({ text }: { text: string }) {
