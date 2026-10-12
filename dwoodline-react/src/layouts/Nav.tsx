@@ -6,10 +6,8 @@ import { LogoMark } from '@/components/Logo/LogoMark';
 
 const LINK_BASE =
   "font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase transition-all duration-500";
-const LINK_ACTIVE =
-  'text-[#1A1A1A] dark:text-[#F5F5F7] border-b border-[#1A1A1A] dark:border-[#F5F5F7] pb-1 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7]';
-const LINK_INACTIVE =
-  'text-[#1A1A1A]/50 dark:text-[#F5F5F7]/50 hover:text-[#1A1A1A] dark:hover:text-[#F5F5F7]';
+const LINK_ACTIVE = 'text-white border-b border-white pb-1 hover:text-white';
+const LINK_INACTIVE = 'text-white/80 hover:text-white';
 
 interface NavProps {
   onOpenMenu: () => void;
@@ -19,19 +17,17 @@ interface NavProps {
 export function Nav({ onOpenMenu }: NavProps) {
   const { pathname } = useLocation();
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-[#1A1A1A]/10 dark:border-[#F5F5F7]/10 bg-[#F5F5F7]/80 backdrop-blur-md dark:bg-[#1A1A1A]/80 flex justify-between items-center px-6 md:px-[80px] py-[clamp(16px,3.5vw,32px)]">
+    <nav className="fixed top-0 w-full z-50 flex justify-between items-center bg-brand px-6 md:px-[80px] py-[clamp(16px,3.5vw,32px)]">
       <Link
         to={ROUTES.home}
         aria-label={`${SITE.brand}, home`}
-        className="flex items-center gap-3 text-[clamp(18px,3vw,24px)] font-light tracking-[0.12em] text-[#1A1A1A] dark:text-[#F5F5F7]"
+        className="flex items-center gap-3 text-[clamp(18px,3vw,24px)] font-light tracking-[0.12em] text-white"
       >
-        <span className="flex shrink-0 items-center bg-brand px-[clamp(8px,1.2vw,12px)] py-[clamp(6px,0.9vw,9px)]">
-          <LogoMark
-            className="h-[clamp(18px,2.6vw,26px)] w-auto"
-            outlineClassName="text-white"
-            solidClassName="text-white"
-          />
-        </span>
+        <LogoMark
+          className="h-[clamp(24px,3.6vw,34px)] w-auto shrink-0"
+          outlineClassName="text-white"
+          solidClassName="text-white"
+        />
         {SITE.brand}
       </Link>
       <div className="hidden md:flex items-center gap-stack-lg">
@@ -46,7 +42,7 @@ export function Nav({ onOpenMenu }: NavProps) {
         ))}
       </div>
       <button type="button" className="md:hidden" onClick={onOpenMenu} aria-label="Open menu">
-        <MaterialIcon name="menu" className="text-primary" />
+        <MaterialIcon name="menu" className="text-white" />
       </button>
     </nav>
   );
