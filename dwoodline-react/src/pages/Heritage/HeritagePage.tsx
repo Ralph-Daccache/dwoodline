@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ROUTES } from '@/config/routes';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
 import { useLuxeScroll } from '@/hooks/useLuxeScroll';
-import { GrainRings } from './GrainRings';
+import { WoodDisc } from './GrainRings';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,10 +35,20 @@ const GENERATIONS = [
   },
 ] as const;
 
-const START_YEAR = 1955;
 /* The counter stops on one year per generation: I = START_YEAR, II = GEN2_YEAR,
-   III = the current year. */
+   III = the current year. The log has one growth ring per year in between. */
+const START_YEAR = 1955;
 const GEN2_YEAR = 1996;
+const END_YEAR = new Date().getFullYear();
+const RING_COUNT = END_YEAR - START_YEAR + 1;
+/** Rings already grown when the pinned scene starts (the founding years). */
+const FOUNDING_RINGS = 6;
+
+const MOTES = Array.from({ length: 26 }, (_, i) => ({
+  left: (i * 37 + 11) % 100,
+  top: (i * 53 + 7) % 100,
+  size: 2 + (i % 3),
+}));
 
 /** Splits a line into words, each wrapped in a clip mask for the load-in reveal. */
 function MaskedWords({ text }: { text: string }) {
@@ -80,17 +90,40 @@ export function HeritagePage() {
         root.classList.add('hx-motion');
         ScrollTrigger.config({ ignoreMobileResize: true });
         const q = gsap.utils.selector(root);
+        // rings are painted outer-first; flip so index 0 is the innermost year
+        const ringsOf = (sel: string): SVGElement[] =>
+          (q(sel) as unknown as SVGElement[]).reverse();
 
-        /* ---- Hero: load-in, breathing rings, depth, zoom-through on scroll ---- */
-        const heroRings = q('[data-hero-ring]');
+        /* ---- Hero: the log grows ring by ring, then turns under a moving light ---- */
+        const heroRings = ringsOf('[data-hero-ring]');
         const heroGroup = q('[data-hero] [data-ring-group]');
-        gsap.set(heroRings, { svgOrigin: '500 500' });
+        gsap.set([heroGroup, heroRings], { svgOrigin: '500 500' });
+        gsap.fromTo(
+          heroRings,
+          {
+            scale: (i: number, el: SVGElement) => (i === 0 ? 0 : Number(el.dataset.ratio)),
+            autoAlpha: 0,
+          },
+          { scale: 1, autoAlpha: 1, duration: 1.3, ease: 'power2.out', stagger: 0.026, delay: 0.1 },
+        );
+        gsap.fromTo(
+          q('[data-hero] [data-disc-detail], [data-hero] [data-bark]'),
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 1.6, delay: 2.4, ease: 'power1.out' },
+        );
+        gsap.to(heroGroup, {
+          rotation: 360,
+          duration: 420,
+          ease: 'none',
+          repeat: -1,
+          svgOrigin: '500 500',
+        });
         gsap.from(q('[data-hero] [data-word]'), {
           yPercent: 115,
           duration: 1.3,
           ease: 'power4.out',
           stagger: 0.09,
-          delay: 0.15,
+          delay: 0.5,
         });
         gsap.from(q('[data-hero-fade]'), {
           autoAlpha: 0,
@@ -98,39 +131,22 @@ export function HeritagePage() {
           duration: 1.1,
           ease: 'power3.out',
           stagger: 0.15,
-          delay: 0.7,
+          delay: 1,
         });
-        gsap.from(heroRings, {
-          scale: 0.2,
-          autoAlpha: 0,
-          duration: 2.4,
-          ease: 'power3.out',
-          stagger: { each: 0.05, from: 'start' },
-        });
-        heroRings.forEach((ring, i) => {
-          gsap.to(ring, {
-            rotation: (i % 2 === 0 ? 1 : -1) * (2.5 + i * 0.35),
-            duration: 11 + (i % 5) * 2,
+        q('[data-mote]').forEach((mote, i) => {
+          gsap.to(mote, {
+            y: -(50 + (i % 5) * 28),
+            x: (i % 2 === 0 ? 1 : -1) * (14 + (i % 4) * 9),
+            opacity: 0.15 + (i % 4) * 0.12,
+            duration: 6 + (i % 6) * 1.7,
             ease: 'sine.inOut',
             repeat: -1,
             yoyo: true,
-            svgOrigin: '500 500',
+            delay: (i % 7) * 0.4,
           });
         });
-        q('[data-slab]').forEach((slab, i) => {
-          gsap.to(slab, {
-            y: i % 2 === 0 ? -18 : 16,
-            rotation: `+=${i % 2 === 0 ? 2.5 : -2}`,
-            duration: 5 + i * 1.3,
-            ease: 'sine.inOut',
-            repeat: -1,
-            yoyo: true,
-          });
-        });
-        gsap.to(heroGroup, {
-          scale: 1.9,
-          opacity: 0.25,
-          svgOrigin: '500 500',
+        gsap.to(q('[data-hero-disc]'), {
+          scale: 1.45,
           ease: 'none',
           scrollTrigger: {
             trigger: '[data-hero]',
@@ -154,29 +170,27 @@ export function HeritagePage() {
         let removePointer = (): void => undefined;
         if (fine) {
           const hero = root.querySelector<HTMLElement>('[data-hero]');
-          const slabs = q('[data-depth]') as HTMLElement[];
-          const setters = slabs.map((el) => ({
-            x: gsap.quickTo(el, 'x', { duration: 1.1, ease: 'power3.out' }),
-            y: gsap.quickTo(el, 'yPercent', { duration: 1.1, ease: 'power3.out' }),
-            depth: Number(el.dataset.depth ?? 0),
-          }));
-          const ringX = gsap.quickTo(heroGroup[0], 'x', { duration: 1.6, ease: 'power3.out' });
-          const ringY = gsap.quickTo(heroGroup[0], 'y', { duration: 1.6, ease: 'power3.out' });
-          const onMove = (e: PointerEvent): void => {
-            const nx = (e.clientX / window.innerWidth - 0.5) * 2;
-            const ny = (e.clientY / window.innerHeight - 0.5) * 2;
-            setters.forEach((s) => {
-              s.x(nx * s.depth);
-              s.y(ny * s.depth * 0.25);
-            });
-            ringX(nx * -26);
-            ringY(ny * -26);
-          };
-          hero?.addEventListener('pointermove', onMove);
-          removePointer = () => hero?.removeEventListener('pointermove', onMove);
+          const svg = root.querySelector<SVGElement>('[data-hero] svg');
+          const glint = root.querySelector<SVGElement>('[data-hero] [data-glint]');
+          if (hero && svg && glint) {
+            const sx = gsap.quickTo(svg, 'x', { duration: 1.6, ease: 'power3.out' });
+            const sy = gsap.quickTo(svg, 'y', { duration: 1.6, ease: 'power3.out' });
+            const gx = gsap.quickTo(glint, 'x', { duration: 0.9, ease: 'power3.out' });
+            const gy = gsap.quickTo(glint, 'y', { duration: 0.9, ease: 'power3.out' });
+            const onMove = (e: PointerEvent): void => {
+              const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+              const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+              sx(nx * -22);
+              sy(ny * -22);
+              gx(nx * 300);
+              gy(ny * 260);
+            };
+            hero.addEventListener('pointermove', onMove);
+            removePointer = () => hero.removeEventListener('pointermove', onMove);
+          }
         }
 
-        /* ---- Statement: words scrub from faint to solid ---- */
+        /* ---- Statement: words surface as you read ---- */
         gsap.fromTo(
           q('[data-scrub-word]'),
           { opacity: 0.12 },
@@ -200,52 +214,83 @@ export function HeritagePage() {
           scrollTrigger: { trigger: '[data-statement-body]', start: 'top 88%' },
         });
 
-        /* ---- Pinned stage: rings grow outward, years count up, generations swap ---- */
-        const stageRings = q('[data-stage-ring]');
+        /* ---- Pinned stage: the log grows only while the counter rolls ---- */
+        const stageRings = ringsOf('[data-stage-ring]');
+        const stageGroup = q('[data-stage] [data-ring-group]');
+        const stageDetail = q('[data-stage] [data-disc-detail], [data-stage] [data-bark]');
+        const marks = q('[data-stage] [data-mark]');
         const panels = q('[data-gen]');
         const yearEl = root.querySelector<HTMLElement>('[data-year]');
-        const stageGroup = q('[data-stage] [data-ring-group]');
-        gsap.set(stageRings, { svgOrigin: '500 500', scale: 0.35, autoAlpha: 0 });
+        const idx96 = GEN2_YEAR - START_YEAR;
+        const last = stageRings.length - 1;
+        gsap.set([stageGroup, stageRings], { svgOrigin: '500 500' });
+        gsap.set(stageDetail, { autoAlpha: 0 });
+        gsap.set(marks, { autoAlpha: 0 });
+        gsap.set(marks[0], { autoAlpha: 1 });
         gsap.set(panels, { autoAlpha: 0, y: 28 });
         gsap.set(panels[0], { autoAlpha: 1, y: 0 });
 
-        const step = 0.45;
-        const total = (stageRings.length - 1) * step + 1;
-        const endYear = new Date().getFullYear();
         const counter = { year: START_YEAR };
+        const writeYear = (): void => {
+          if (yearEl) yearEl.textContent = String(Math.round(counter.year));
+        };
         const tl = gsap.timeline({
           defaults: { ease: 'none' },
           scrollTrigger: {
             trigger: '[data-stage]',
             start: 'top top',
-            end: '+=280%',
+            end: '+=300%',
             pin: true,
             scrub: 0.7,
             anticipatePin: 1,
           },
         });
-        stageRings.forEach((ring, i) => {
-          tl.to(ring, { scale: 1, autoAlpha: 1, duration: 1, ease: 'power2.out' }, i * step);
+        // the founding years are already on the log when the scene starts
+        stageRings.forEach((el, j) => {
+          if (j > FOUNDING_RINGS) return;
+          gsap.set(el, { scale: 1, autoAlpha: 1 });
         });
-        tl.to(stageGroup, { rotation: 38, svgOrigin: '500 500', duration: total }, 0);
-        const writeYear = (): void => {
-          if (yearEl) yearEl.textContent = String(Math.round(counter.year));
+        const grow = (from: number, to: number, start: number, len: number): void => {
+          const n = to - from + 1;
+          for (let j = from; j <= to; j += 1) {
+            const el = stageRings[j];
+            tl.fromTo(
+              el,
+              { scale: Number(el.dataset.ratio), autoAlpha: 0 },
+              { scale: 1, autoAlpha: 1, duration: 0.5, ease: 'power1.out' },
+              start + ((j - from) / n) * (len - 0.5),
+            );
+          }
         };
-        const stops = [GEN2_YEAR, endYear];
-        [1, 2].forEach((idx) => {
-          const at = (total / 3) * idx;
-          tl.to(
-            panels[idx - 1],
-            { autoAlpha: 0, y: -28, duration: 0.5, ease: 'power2.in' },
-            at - 0.3,
-          );
-          tl.to(panels[idx], { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, at);
-          // roll up to this generation's year, then hold it until the next one
-          tl.to(
-            counter,
-            { year: stops[idx - 1], duration: 0.9, ease: 'power2.inOut', onUpdate: writeYear },
-            at - 0.4,
-          );
+        const roll = (year: number, start: number, len: number): void => {
+          tl.to(counter, { year, duration: len, ease: 'power2.inOut', onUpdate: writeYear }, start);
+        };
+        const swap = (outIdx: number, inIdx: number, outAt: number, inAt: number): void => {
+          tl.to(panels[outIdx], { autoAlpha: 0, y: -28, duration: 0.5, ease: 'power2.in' }, outAt);
+          tl.to(panels[inIdx], { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, inAt);
+        };
+
+        // hold on 1955 (0 to 2), roll to 1996 (2 to 3.6), hold, roll to today (5 to 6.6), hold
+        grow(FOUNDING_RINGS + 1, idx96, 2, 1.6);
+        roll(GEN2_YEAR, 2, 1.4);
+        swap(0, 1, 2, 3.2);
+        tl.to(marks[1], { autoAlpha: 1, duration: 0.3 }, 3.3);
+
+        grow(idx96 + 1, last, 5, 1.6);
+        roll(END_YEAR, 5, 1.4);
+        swap(1, 2, 5, 6.2);
+        tl.to(stageDetail, { autoAlpha: 1, duration: 0.9 }, 6.1);
+        tl.to(marks[2], { autoAlpha: 1, duration: 0.3 }, 6.5);
+
+        tl.to(stageGroup, { rotation: 34, duration: 7.8, svgOrigin: '500 500' }, 0);
+        tl.to({}, { duration: 0.01 }, 7.8);
+
+        gsap.from(q('[data-stage-disc]'), {
+          scale: 0.72,
+          autoAlpha: 0,
+          duration: 1.4,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: '[data-stage]', start: 'top 75%' },
         });
 
         /* ---- Slices: rise and reveal ---- */
@@ -304,57 +349,39 @@ export function HeritagePage() {
 
   return (
     <main ref={scopeRef} data-no-animate className="w-full max-w-full overflow-x-clip">
-      {/* Hero: a field of living growth rings with drifting timber slabs */}
+      {/* Hero: a sawn log, one ring per year, turning under a light that follows you */}
       <section
         data-hero
-        className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-surface px-6 pb-[clamp(72px,12vh,128px)] pt-[clamp(120px,17vh,168px)] md:px-[80px]"
+        className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#140e09] px-6 pb-[clamp(72px,12vh,128px)] pt-[clamp(120px,17vh,168px)] text-surface md:px-[80px]"
       >
-        <GrainRings
-          count={24}
-          seed={1955}
-          ringAttr="hero-ring"
-          className="absolute left-1/2 top-1/2 h-[130%] w-[130%] -translate-x-1/2 -translate-y-1/2 text-secondary/80 md:h-[125%] md:w-[125%]"
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(46%_38%_at_50%_50%,rgba(252,249,248,0.92)_0%,rgba(252,249,248,0.55)_60%,rgba(252,249,248,0)_100%)]" />
-
-        <div
-          data-depth="46"
-          className="absolute right-[-4%] top-[10%] w-[26vw] max-w-[420px] md:right-[2%] md:top-[20%] md:w-[16vw]"
-        >
-          <div
-            data-slab
-            className="aspect-[3/4] rotate-[7deg] overflow-hidden border border-on-background/10 shadow-[0_40px_80px_-30px_rgba(112,91,63,0.55)]"
-          >
-            <img
-              src={IMG_WOOD}
-              alt=""
-              className="h-full w-full object-cover opacity-90 contrast-110"
-            />
-          </div>
+        <div data-hero-disc className="absolute inset-0 flex items-center justify-center">
+          <WoodDisc
+            count={RING_COUNT}
+            seed={1955}
+            ringAttr="hero-ring"
+            glint
+            className="h-auto w-[max(125vw,125vh)] max-w-none shrink-0"
+          />
         </div>
-        <div
-          data-depth="-34"
-          className="absolute bottom-[2%] left-[-6%] w-[28vw] max-w-[460px] md:bottom-[8%] md:left-[2%] md:w-[15vw]"
-        >
-          <div
-            data-slab
-            className="aspect-[4/5] -rotate-[8deg] overflow-hidden border border-on-background/10 shadow-[0_40px_80px_-30px_rgba(28,27,27,0.5)]"
-          >
-            <img
-              src={IMG_ROOM}
-              alt=""
-              className="h-full w-full object-cover opacity-80 grayscale"
+        <div className="absolute inset-0 bg-[radial-gradient(52%_46%_at_50%_50%,rgba(20,14,9,0.82)_0%,rgba(20,14,9,0.45)_62%,rgba(20,14,9,0.12)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          {MOTES.map((m, i) => (
+            <span
+              key={i}
+              data-mote
+              className="absolute rounded-full bg-[#f6dcae] opacity-40"
+              style={{ left: `${m.left}%`, top: `${m.top}%`, width: m.size, height: m.size }}
             />
-          </div>
+          ))}
         </div>
 
         <div data-hero-copy className="relative z-10 mx-auto w-full max-w-6xl text-center">
-          <h1 className="font-display-hero text-display-hero serif-text text-on-background">
+          <h1 className="font-display-hero text-display-hero serif-text text-surface">
             <MaskedWords text="Architectural Precision." />
           </h1>
           <p
             data-hero-fade
-            className="font-body-lg mx-auto mt-stack-lg max-w-2xl text-balance text-on-surface-variant"
+            className="font-body-lg mx-auto mt-stack-lg max-w-2xl text-balance text-surface/85"
           >
             Seven decades of architectural woodwork, grown ring by ring across three generations of
             one family.
@@ -365,14 +392,14 @@ export function HeritagePage() {
           >
             <Link
               to={ROUTES.portfolio}
-              className="inline-flex items-center gap-4 bg-on-background px-10 py-5 font-technical-label uppercase tracking-widest text-background transition-colors duration-500 hover:bg-secondary"
+              className="inline-flex items-center gap-4 bg-surface px-10 py-5 font-technical-label uppercase tracking-widest text-on-background transition-colors duration-500 hover:bg-secondary-fixed-dim"
             >
               Explore Archive
               <MaterialIcon name="arrow_forward" className="text-sm" />
             </Link>
             <Link
               to={ROUTES.inquiry}
-              className="inline-flex items-center border border-on-background/40 bg-surface/60 px-10 py-5 font-technical-label uppercase tracking-widest text-on-background backdrop-blur-sm transition-colors duration-500 hover:bg-on-background hover:text-background"
+              className="inline-flex items-center border border-surface/60 bg-on-background/30 px-10 py-5 font-technical-label uppercase tracking-widest text-surface backdrop-blur-sm transition-colors duration-500 hover:bg-surface hover:text-on-background"
             >
               Start a Project
             </Link>
@@ -403,24 +430,31 @@ export function HeritagePage() {
         </div>
       </section>
 
-      {/* Pinned stage: the rings grow, the years climb, the generations pass */}
+      {/* Pinned stage: the log grows while the counter rolls, then holds for each generation */}
       <section
         data-stage
         className="relative flex min-h-[100svh] flex-col items-center justify-center gap-6 overflow-hidden bg-[#1c1b1b] px-6 pb-8 pt-[88px] text-surface md:flex-row md:gap-16 md:px-[80px] md:pt-[112px]"
       >
-        <div className="relative aspect-square w-full max-w-[min(80vw,32svh)] shrink-0 text-secondary-fixed-dim md:max-w-[min(46vw,72svh)]">
-          <GrainRings
-            count={15}
+        <div
+          data-stage-disc
+          className="relative aspect-square w-full max-w-[min(80vw,32svh)] shrink-0 md:max-w-[min(46vw,72svh)]"
+        >
+          <WoodDisc
+            count={RING_COUNT}
             seed={7}
             ringAttr="stage-ring"
-            r0={30}
-            step={30}
             className="h-full w-full"
+            vignette={false}
+            marks={[
+              { ring: 0, label: String(START_YEAR) },
+              { ring: GEN2_YEAR - START_YEAR, label: String(GEN2_YEAR) },
+              { ring: RING_COUNT - 1, label: String(END_YEAR) },
+            ]}
           />
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <div className="pointer-events-none absolute bottom-[4%] left-[3%] -rotate-3 bg-[#f3ead8] px-4 py-2 shadow-[0_10px_28px_rgba(0,0,0,0.55)]">
             <span
               data-year
-              className="font-headline-lg serif-text text-[clamp(40px,7vw,84px)] leading-none tracking-tight text-surface"
+              className="font-headline-lg serif-text block text-[clamp(26px,4.2vw,50px)] leading-none tracking-tight text-on-background"
             >
               {START_YEAR}
             </span>
@@ -485,16 +519,15 @@ export function HeritagePage() {
           </article>
           <article
             data-slice
-            className="group relative flex-1 overflow-hidden bg-[#1c1b1b] text-surface md:transition-[flex] md:duration-700 md:ease-out md:hover:flex-[2.4]"
+            className="group relative flex-1 overflow-hidden bg-[#140e09] text-surface md:transition-[flex] md:duration-700 md:ease-out md:hover:flex-[2.4]"
           >
-            <GrainRings
-              count={12}
+            <WoodDisc
+              count={40}
               seed={31}
               ringAttr="slice-ring"
-              r0={20}
-              step={34}
-              className="absolute inset-0 h-full w-full scale-125 text-secondary-fixed-dim/60 transition-transform duration-[1800ms] ease-out group-hover:scale-150"
+              className="absolute left-1/2 top-1/2 h-auto w-[170%] max-w-none -translate-x-1/2 -translate-y-[46%] transition-transform duration-[1800ms] ease-out group-hover:scale-110"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
             <div className="absolute inset-0 flex flex-col justify-end p-stack-md">
               <span className="font-headline-lg text-headline-lg serif-text text-secondary-fixed-dim">
                 70+
@@ -517,7 +550,7 @@ export function HeritagePage() {
             <div data-magnet className="inline-block p-3 md:p-6">
               <Link
                 to={ROUTES.inquiry}
-                className="group inline-flex items-center gap-4 whitespace-nowrap bg-on-background px-8 py-6 md:px-12 font-technical-label uppercase tracking-widest text-background transition-colors duration-500 hover:bg-secondary"
+                className="group inline-flex items-center gap-4 whitespace-nowrap bg-on-background px-8 py-6 font-technical-label uppercase tracking-widest text-background transition-colors duration-500 hover:bg-secondary md:px-12"
               >
                 Start a Project
                 <MaterialIcon
