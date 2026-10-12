@@ -52,8 +52,10 @@ html.snap-portfolio {
   html.snap-proximity {
     scroll-snap-type: none;
   }
+  /* proximity (not mandatory): sections/footer taller than the screen must stay
+     freely scrollable instead of snapping the user back. */
   html.snap-portfolio {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
   }
 }
 
@@ -555,7 +557,7 @@ html.snap-portfolio {
   [data-page='portfolio'] section.snap-target,
   [data-page='portfolio'] footer.snap-target {
     scroll-snap-align: start;
-    scroll-snap-stop: always;
+    scroll-snap-stop: normal;
   }
 }
 [data-page='portfolio'] .project-carousel {
