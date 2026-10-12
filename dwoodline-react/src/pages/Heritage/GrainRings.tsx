@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useId, useMemo } from 'react';
 
 /** Small seeded PRNG so every render of a ring field is identical. */
 function mulberry32(seed: number): () => number {
@@ -57,7 +57,7 @@ export function GrainRings({
   step = 26,
 }: GrainRingsProps) {
   const paths = useMemo(() => buildRings(count, seed, r0, step), [count, seed, r0, step]);
-  const gradId = `grain-core-${seed}`;
+  const gradId = `grain-core-${useId().replace(/:/g, '')}`;
   const attrs = { [`data-${ringAttr}`]: '' };
   return (
     <svg

@@ -412,13 +412,18 @@ html.snap-portfolio {
 }
 /* Pinned generations stage: with motion on, the three panels overlay each other
    and GSAP cross-fades them. Without motion they simply stack and stay readable. */
+@media (max-height: 700px) {
+  /* short screens: drop the secondary intro line so the pinned stage always fits */
+  [data-page='heritage'] .stage-intro {
+    display: none;
+  }
+}
 [data-page='heritage'] .hx-motion .gen-list {
-  min-height: 13.5rem;
+  display: grid;
 }
 [data-page='heritage'] .hx-motion .gen-panel {
-  position: absolute;
-  inset: 0 auto auto 0;
-  width: 100%;
+  grid-area: 1 / 1;
+  margin-top: 0 !important; /* cancel space-y stacking; panels share one cell */
 }
 
 /* =========================================================================

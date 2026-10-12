@@ -8,7 +8,6 @@ import { useLuxeScroll } from '@/hooks/useLuxeScroll';
 import { GrainRings } from './GrainRings';
 
 gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.config({ ignoreMobileResize: true });
 
 const IMG_ROOM =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuCPrPXgRqYDHM-FDq6IbdL6cI69jeGddMkA0aztb5yYysQZ_2-u0eph0wJu9oBNASx-lzPt5LXy4rkey-3s8lJX6AAUCsk-eqW5sSEkVsGK87jlHyfOOqkyLsDlVueLv2fZnTnZ1KM5lh7jJxZMw-w6thB3-OG3hvksLw7hfPW9A2tU7CLCqGfhBJHCGYbeI4HHhFJ_GltBtZawKDzKuehyPArEPmuQEngKdM3fd-z0mUd5yyTqfpxkLQxhj_p-pv87_1aTIFUof8o';
@@ -76,6 +75,7 @@ export function HeritagePage() {
         if (!motion) return undefined;
 
         root.classList.add('hx-motion');
+        ScrollTrigger.config({ ignoreMobileResize: true });
         const q = gsap.utils.selector(root);
 
         /* ---- Hero: load-in, breathing rings, depth, zoom-through on scroll ---- */
@@ -289,6 +289,8 @@ export function HeritagePage() {
           window.removeEventListener('load', refresh);
           removePointer();
           removeMagnet();
+          if (yearEl) yearEl.textContent = String(START_YEAR);
+          ScrollTrigger.config({ ignoreMobileResize: false });
           root.classList.remove('hx-motion');
         };
       },
@@ -404,7 +406,7 @@ export function HeritagePage() {
         data-stage
         className="relative flex min-h-[100svh] flex-col items-center justify-center gap-6 overflow-hidden bg-[#1c1b1b] px-6 pb-8 pt-[88px] text-surface md:flex-row md:gap-16 md:px-[80px] md:pt-[112px]"
       >
-        <div className="relative aspect-square w-full max-w-[min(88vw,40svh)] shrink-0 text-secondary-fixed-dim md:max-w-[min(46vw,72svh)]">
+        <div className="relative aspect-square w-full max-w-[min(80vw,32svh)] shrink-0 text-secondary-fixed-dim md:max-w-[min(46vw,72svh)]">
           <GrainRings
             count={15}
             seed={7}
@@ -426,7 +428,7 @@ export function HeritagePage() {
           <h2 className="font-headline-md text-headline-md serif-text text-surface">
             Three generations of craft
           </h2>
-          <p className="font-body-md mt-stack-sm text-surface/70">
+          <p className="stage-intro font-body-md mt-stack-sm text-surface/70">
             Seven decades, three generations, one uncompromising standard of craft.
           </p>
           <div className="gen-list relative mt-stack-lg space-y-stack-lg">
