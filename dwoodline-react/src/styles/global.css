@@ -508,7 +508,9 @@ html.snap-portfolio {
   [data-page='expertise'] .snap-section {
     height: auto;
     min-height: 100dvh;
-    overflow: visible;
+    /* height is auto, so content is never clipped; hidden stops the oversized
+       rotated .light-beam from widening the page (horizontal scroll/zoom-out). */
+    overflow: hidden;
   }
   [data-page='expertise'] .detail-circle {
     opacity: 1 !important;
