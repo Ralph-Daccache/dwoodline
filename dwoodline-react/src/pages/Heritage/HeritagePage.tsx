@@ -316,7 +316,7 @@ export function HeritagePage() {
           >
             <Link
               to={ROUTES.portfolio}
-              className="inline-flex items-center gap-4 bg-surface px-10 py-5 font-technical-label uppercase tracking-widest text-on-background transition-colors duration-500 hover:bg-secondary-fixed-dim"
+              className="inline-flex items-center gap-4 bg-surface px-10 py-5 font-technical-label uppercase tracking-widest text-on-background transition-colors duration-500 hover:bg-brand"
             >
               Explore Archive
               <MaterialIcon name="arrow_forward" className="text-sm" />
@@ -474,7 +474,7 @@ export function HeritagePage() {
             <div data-magnet className="inline-block p-3 md:p-6">
               <Link
                 to={ROUTES.inquiry}
-                className="group inline-flex items-center gap-4 whitespace-nowrap bg-on-background px-8 py-6 font-technical-label uppercase tracking-widest text-background transition-colors duration-500 hover:bg-secondary md:px-12"
+                className="group inline-flex items-center gap-4 whitespace-nowrap bg-on-background px-8 py-6 font-technical-label uppercase tracking-widest text-background transition-colors duration-500 hover:bg-brand hover:text-on-background md:px-12"
               >
                 Start a Project
                 <MaterialIcon

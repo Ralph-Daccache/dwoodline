@@ -26,6 +26,8 @@ export default {
         'surface-container-high': '#eae7e7',
         'primary-container': '#f5f5f7',
         secondary: '#705b3f',
+        /* Logo tan (#C4A98A): accent for buttons/highlights and the mark */
+        brand: '#c4a98a',
         'on-surface-variant': '#44474a',
         'on-tertiary-container': '#8a6a4a',
         'surface-container-low': '#f6f3f2',

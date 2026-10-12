@@ -61,7 +61,7 @@ export function Carousel({ carouselId, slides, onViewProject }: CarouselProps) {
                 <button
                   type="button"
                   onClick={() => onViewProject(slide.title)}
-                  className="bg-white text-on-background px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-colors duration-500"
+                  className="bg-white text-on-background px-8 py-4 font-technical-label text-technical-label uppercase tracking-widest hover:bg-brand hover:text-on-background transition-colors duration-500"
                 >
                   View Project
                 </button>
