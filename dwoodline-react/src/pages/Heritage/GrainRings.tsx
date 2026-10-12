@@ -175,17 +175,14 @@ interface WoodDiscProps {
   rMax?: number;
   /** Edge-darkening vignette over the cut face (off while the disc is still growing). */
   vignette?: boolean;
-  /** Cursor-driven specular light over the cut face (hero only). */
-  glint?: boolean;
   /** Measuring ruler ticks along the rings (stage only). */
   marks?: DiscMark[];
 }
 
 /**
  * Decorative sawn log cross-section (SVG). Layers, bottom to top: bark, one
- * filled band per growth year, pith, rays and checks, fine grain, vignette and
- * (optionally) a movable specular glint. Everything is plain SVG so it scales
- * crisply at any size.
+ * filled band per growth year, pith, rays and checks, fine grain and an optional
+ * vignette. Everything is plain SVG so it scales crisply at any size.
  */
 export function WoodDisc({
   count,
@@ -193,7 +190,6 @@ export function WoodDisc({
   ringAttr,
   className,
   rMax = 430,
-  glint = false,
   vignette = true,
   marks,
 }: WoodDiscProps) {
@@ -202,7 +198,6 @@ export function WoodDisc({
   const clipId = `disc-clip-${uid}`;
   const grainId = `disc-grain-${uid}`;
   const vigId = `disc-vig-${uid}`;
-  const glintId = `disc-glint-${uid}`;
   const attrs = { [`data-${ringAttr}`]: '' };
 
   return (
@@ -234,10 +229,6 @@ export function WoodDisc({
         <radialGradient id={vigId} cx="50%" cy="50%" r="50%">
           <stop offset="55%" stopColor="#000" stopOpacity="0" />
           <stop offset="100%" stopColor="#000" stopOpacity="0.42" />
-        </radialGradient>
-        <radialGradient id={glintId} cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#fff3d6" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="#fff3d6" stopOpacity="0" />
         </radialGradient>
       </defs>
 
@@ -284,16 +275,6 @@ export function WoodDisc({
           opacity="0.55"
         />
         {vignette && <rect width="1000" height="1000" fill={`url(#${vigId})`} />}
-        {glint && (
-          <circle
-            data-glint
-            cx="440"
-            cy="400"
-            r="340"
-            fill={`url(#${glintId})`}
-            style={{ mixBlendMode: 'overlay' }}
-          />
-        )}
       </g>
 
       {marks && (

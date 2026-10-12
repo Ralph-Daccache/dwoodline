@@ -6,6 +6,7 @@ import { ROUTES } from '@/config/routes';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
 import { useLuxeScroll } from '@/hooks/useLuxeScroll';
 import { WoodDisc } from './GrainRings';
+import woodDiscUrl from '@/assets/wood-disc.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -43,12 +44,6 @@ const END_YEAR = new Date().getFullYear();
 const RING_COUNT = END_YEAR - START_YEAR + 1;
 /** Rings already grown when the pinned scene starts (the founding years). */
 const FOUNDING_RINGS = 6;
-
-const MOTES = Array.from({ length: 26 }, (_, i) => ({
-  left: (i * 37 + 11) % 100,
-  top: (i * 53 + 7) % 100,
-  size: 2 + (i % 3),
-}));
 
 /** Splits a line into words, each wrapped in a clip mask for the load-in reveal. */
 function MaskedWords({ text }: { text: string }) {
@@ -95,36 +90,19 @@ export function HeritagePage() {
         const ringsOf = (sel: string): SVGElement[] =>
           (q(sel) as unknown as SVGElement[]).reverse();
 
-        /* ---- Hero: the log grows ring by ring, then turns under a moving light ---- */
-        const heroRings = ringsOf('[data-hero-ring]');
-        const heroGroup = q('[data-hero] [data-ring-group]');
-        gsap.set([heroGroup, heroRings], { svgOrigin: '500 500' });
-        gsap.fromTo(
-          heroRings,
-          {
-            scale: (i: number, el: SVGElement) => (i === 0 ? 0 : Number(el.dataset.ratio)),
-            autoAlpha: 0,
-          },
-          { scale: 1, autoAlpha: 1, duration: 1.3, ease: 'power2.out', stagger: 0.026, delay: 0.1 },
-        );
-        gsap.fromTo(
-          q('[data-hero] [data-disc-detail], [data-hero] [data-bark]'),
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 1.6, delay: 2.4, ease: 'power1.out' },
-        );
-        gsap.to(heroGroup, {
-          rotation: 360,
-          duration: 420,
-          ease: 'none',
-          repeat: -1,
-          svgOrigin: '500 500',
+        /* ---- Hero: one-time reveal only (the log is a baked image, so it stays cheap) ---- */
+        gsap.from(q('[data-hero-disc] img'), {
+          scale: 1.07,
+          autoAlpha: 0,
+          duration: 1.8,
+          ease: 'power2.out',
         });
         gsap.from(q('[data-hero] [data-word]'), {
           yPercent: 115,
           duration: 1.3,
           ease: 'power4.out',
           stagger: 0.09,
-          delay: 0.5,
+          delay: 0.35,
         });
         gsap.from(q('[data-hero-fade]'), {
           autoAlpha: 0,
@@ -132,29 +110,7 @@ export function HeritagePage() {
           duration: 1.1,
           ease: 'power3.out',
           stagger: 0.15,
-          delay: 1,
-        });
-        q('[data-mote]').forEach((mote, i) => {
-          gsap.to(mote, {
-            y: -(50 + (i % 5) * 28),
-            x: (i % 2 === 0 ? 1 : -1) * (14 + (i % 4) * 9),
-            opacity: 0.15 + (i % 4) * 0.12,
-            duration: 6 + (i % 6) * 1.7,
-            ease: 'sine.inOut',
-            repeat: -1,
-            yoyo: true,
-            delay: (i % 7) * 0.4,
-          });
-        });
-        gsap.to(q('[data-hero-disc]'), {
-          scale: 1.45,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '[data-hero]',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 0.6,
-          },
+          delay: 0.85,
         });
         gsap.to(q('[data-hero-copy]'), {
           y: -70,
@@ -167,29 +123,6 @@ export function HeritagePage() {
             scrub: 0.6,
           },
         });
-
-        let removePointer = (): void => undefined;
-        if (fine) {
-          const hero = root.querySelector<HTMLElement>('[data-hero]');
-          const svg = root.querySelector<SVGElement>('[data-hero] svg');
-          const glint = root.querySelector<SVGElement>('[data-hero] [data-glint]');
-          if (hero && svg && glint) {
-            const sx = gsap.quickTo(svg, 'x', { duration: 1.6, ease: 'power3.out' });
-            const sy = gsap.quickTo(svg, 'y', { duration: 1.6, ease: 'power3.out' });
-            const gx = gsap.quickTo(glint, 'x', { duration: 0.9, ease: 'power3.out' });
-            const gy = gsap.quickTo(glint, 'y', { duration: 0.9, ease: 'power3.out' });
-            const onMove = (e: PointerEvent): void => {
-              const nx = (e.clientX / window.innerWidth - 0.5) * 2;
-              const ny = (e.clientY / window.innerHeight - 0.5) * 2;
-              sx(nx * -22);
-              sy(ny * -22);
-              gx(nx * 300);
-              gy(ny * 260);
-            };
-            hero.addEventListener('pointermove', onMove);
-            removePointer = () => hero.removeEventListener('pointermove', onMove);
-          }
-        }
 
         /* ---- Statement: words surface as you read ---- */
         gsap.fromTo(
@@ -335,7 +268,6 @@ export function HeritagePage() {
         return () => {
           window.clearTimeout(t);
           window.removeEventListener('load', refresh);
-          removePointer();
           removeMagnet();
           if (yearEl) yearEl.textContent = String(START_YEAR);
           ScrollTrigger.config({ ignoreMobileResize: false });
@@ -350,35 +282,23 @@ export function HeritagePage() {
 
   return (
     <main ref={scopeRef} data-no-animate className="w-full max-w-full overflow-x-clip">
-      {/* Hero: a sawn log, one ring per year, turning under a light that follows you */}
+      {/* Hero: a sawn log, one ring per year (baked image, no continuous animation) */}
       <section
         data-hero
         className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#140e09] px-6 pb-[clamp(72px,12vh,128px)] pt-[clamp(120px,17vh,168px)] text-surface md:px-[80px]"
       >
-        <div
-          data-hero-disc
-          className="absolute inset-0 flex items-center justify-center will-change-transform"
-        >
-          <WoodDisc
-            count={RING_COUNT}
-            seed={1955}
-            ringAttr="hero-ring"
-            glint
-            className="h-auto w-[max(125vw,125vh)] max-w-none shrink-0"
+        <div data-hero-disc className="absolute inset-0 flex items-center justify-center">
+          <img
+            src={woodDiscUrl}
+            alt=""
+            width={1800}
+            height={1800}
+            decoding="async"
+            fetchPriority="high"
+            className="h-auto w-[max(125vw,125vh)] max-w-none shrink-0 select-none"
           />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(52%_46%_at_50%_50%,rgba(20,14,9,0.82)_0%,rgba(20,14,9,0.45)_62%,rgba(20,14,9,0.12)_100%)]" />
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          {MOTES.map((m, i) => (
-            <span
-              key={i}
-              data-mote
-              className="absolute rounded-full bg-[#f6dcae] opacity-40"
-              style={{ left: `${m.left}%`, top: `${m.top}%`, width: m.size, height: m.size }}
-            />
-          ))}
-        </div>
-
         <div data-hero-copy className="relative z-10 mx-auto w-full max-w-6xl text-center">
           <h1 className="font-display-hero text-display-hero serif-text text-surface">
             <MaskedWords text="Architectural Precision." />
