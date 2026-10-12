@@ -25,7 +25,13 @@ export function Nav({ onOpenMenu }: NavProps) {
         aria-label={`${SITE.brand}, home`}
         className="flex items-center gap-3 text-[clamp(18px,3vw,24px)] font-light tracking-[0.12em] text-[#1A1A1A] dark:text-[#F5F5F7]"
       >
-        <LogoMark className="h-[clamp(26px,4vw,36px)] w-auto shrink-0" />
+        <span className="flex shrink-0 items-center bg-brand px-[clamp(8px,1.2vw,12px)] py-[clamp(6px,0.9vw,9px)]">
+          <LogoMark
+            className="h-[clamp(18px,2.6vw,26px)] w-auto"
+            outlineClassName="text-white"
+            solidClassName="text-white"
+          />
+        </span>
         {SITE.brand}
       </Link>
       <div className="hidden md:flex items-center gap-stack-lg">
