@@ -28,8 +28,10 @@ export function Nav({ onOpenMenu }: NavProps) {
   }, [pathname]);
   return (
     <nav
-      className={`fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-[80px] py-[clamp(16px,3.5vw,32px)] transition-[background-color,backdrop-filter] duration-300 ${
-        scrolled ? 'bg-brand/70 backdrop-blur-md' : 'bg-brand'
+      className={`site-nav fixed z-50 flex items-center justify-between px-6 md:px-[80px] ${
+        scrolled
+          ? 'site-nav-glass inset-x-3 top-3 rounded-2xl py-3 md:inset-x-6 md:px-[56px]'
+          : 'inset-x-0 top-0 bg-brand py-[clamp(16px,3.5vw,32px)]'
       }`}
     >
       <Link
