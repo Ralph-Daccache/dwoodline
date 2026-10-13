@@ -52,10 +52,10 @@ html.snap-portfolio {
   html.snap-proximity {
     scroll-snap-type: none;
   }
-  /* proximity (not mandatory): sections/footer taller than the screen must stay
-     freely scrollable instead of snapping the user back. */
+  /* Projects: sections are one screen tall, so any vertical snap acts like forced
+     paging and fights touch momentum and the sideways carousel. Scroll natively. */
   html.snap-portfolio {
-    scroll-snap-type: y proximity;
+    scroll-snap-type: none;
   }
 }
 
@@ -567,13 +567,6 @@ html.snap-portfolio {
   justify-content: flex-start;
   /* just clears the fixed header, with a small gap above the heading */
   padding-top: clamp(112px, 10vh, 120px);
-}
-@media (max-width: 767px) {
-  [data-page='portfolio'] section.snap-target,
-  [data-page='portfolio'] footer.snap-target {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
-  }
 }
 [data-page='portfolio'] .project-carousel {
   scroll-snap-type: x mandatory;
