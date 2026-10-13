@@ -2,11 +2,23 @@
 
 **Project**: D. Woodline - Architectural Heritage Website
 **Repository**: https://github.com/Ralph-Daccache/dwoodline
-**Live URL**: https://ralph-daccache.github.io/dwoodline/
+**Live URL**: https://ralph-daccache.github.io/dwoodline/ (legacy static site)
 
 ---
 
-## CRITICAL DEPLOYMENT RULES
+## CURRENT STACK (React migration — supersedes the static-HTML rules below)
+
+The site was migrated from the 5 static HTML pages to a **React 18 + Vite + TypeScript + React Router + Tailwind** app living in `dwoodline-react/`. This is now the active codebase; the static `01-hero.html`..`05-inquiry.html` files and the gh-pages notes below are legacy.
+
+- **Deploy**: push to `main`. A GitHub Action (`.github/workflows/hostinger.yml`) runs `npm ci` + lint + build and deploys `dwoodline-react/dist/` to **Hostinger via FTPS**. No manual gh-pages push. (The old "push to gh-pages / never touch root index.html" rules apply only to the legacy static site.)
+- **Build/validate** (node_modules can't live on Google Drive): edit canonical files on Drive, copy to the local scratchpad build dir, run `tsc` / `eslint` / `prettier` / `vite build` there, then commit the Drive copies.
+- **Design discipline**: taste-skill + redesign-skill. Copy has zero em-dashes. Prefer real photography over hand-rolled CSS textures.
+
+See the "Session 5" entry at the end of this file for the latest work.
+
+---
+
+## CRITICAL DEPLOYMENT RULES (LEGACY static site only — see CURRENT STACK above)
 
 1. **Always push to BOTH main AND gh-pages**: `git push origin main && git push origin main:gh-pages`
 2. **GitHub Pages deploys from gh-pages branch** — NOT main
@@ -291,4 +303,32 @@ git log origin/main --oneline -3
 
 ---
 
-**Last Updated**: May 19, 2026 — Session 4: Mobile optimization complete across all 5 pages
+## Session 5 — React app + Home redesign (Sep 30, 2026)
+
+Active codebase is now `dwoodline-react/` (see CURRENT STACK at top).
+
+Home page (`src/pages/Home/HomePage.tsx`, styles in `src/styles/global.css`):
+- **Hero** — video, one viewport, section-snap scroll (`useHomeScroll` + `useSectionScroll`).
+- **Section 2 "Recent projects"** — expanding image panels (hover to open on desktop).
+- **Section 3 "The Process"** — a **peel-off veneer stack**: three real wood-veneer photos (Unsplash: dark walnut 01 / fumed grey oak 02 / honey oak 03). Clicking a strip peels the wood sheet off left→right (`.veneer-sheet` clip-path) to reveal a **dark substrate** (`#0c0908`) carrying the copy; the leading edge rolls into a wood cylinder (`.veneer-curl`) that travels right, thickens, and casts a shadow. One open at a time, keyboard-accessible, honors `prefers-reduced-motion`. Replaced an earlier CSS-texture "dowel" accordion that read as fake.
+- Specs now render as a full-width **spec bar** below the stack (hairline dividers, serif values), not a floating box beside the heading.
+- Section background: clean dark walnut + warm ambient radial glow (no tiling texture).
+- **Hero** — removed the "Scroll" label and the 3 progress dots (kept the thin animated line).
+
+Concept was approved via an interactive prototype artifact before wiring into React.
+
+Latest commits: `b3d50a8` (peel animation + spec bar + hero cleanup), `88f4089` (veneer section), `91175dc` (real textures + em-dash purge).
+
+---
+
+## Session 6 (Oct 12-13, 2026): Responsive pass, About redesign, brand header (LIVE, `main` @ `14f665e`)
+
+- **Responsive pass** (laptop 1366x768 + mobile 390x844; also 1280x720, 360x780): reactive `useIsDesktop` gate for the snap/Lenis hooks, mobile menu `inert` when closed, header-clear spacing, full-height mobile Home hero (own `.home-hero` rule; Tailwind `py-*` is overridden by `.snap-target{padding:0}`), Expertise mobile `overflow:hidden` (light-beam was widening the page to 860px), Services circles kept as the original zigzag (room beside each for a future caption), Projects mobile uses `proximity` snap (mandatory snapped users back).
+- **About page redesign** (`src/pages/Heritage/`): hero = baked real-wood log image `src/assets/wood-disc.jpg` (static, cheap); statement scrubs word by word; **pinned stage** = SVG log with one ring per year (`GrainRings.tsx` exports `WoodDisc`), year counter holds on **1955 / 1996 / current year** per generation, ruler ticks on real ring edges; hover-expanding slices; magnetic CTA. GSAP + ScrollTrigger, reduced-motion safe. Generation II year **1996** is confirmed by the owner.
+- **Brand**: logo mark `src/components/Logo/LogoMark.tsx` (traced from the owner's logo); header is logo tan `#C4A98A` (`brand` token) with white logo/text; on scroll it becomes a floating frosted-glass pill (`.site-nav-glass`). Mobile menu is tan too. Button hovers use `bg-brand`.
+- Checkpoint tag `checkpoint-responsive-pass-1` (pre About redesign). Review screenshots live in `dwoodline-react/review-screenshots/` (not committed).
+- Pending: owner said to continue with more pages; ask which pages/style. Original vector logo (SVG/AI) still wanted for an exact mark.
+
+---
+
+**Last Updated**: Oct 13, 2026 — Session 6: responsive pass + About redesign + brand header live
