@@ -54,10 +54,10 @@ html.snap-portfolio {
   html.snap-proximity {
     scroll-snap-type: none;
   }
-  /* Projects: sections are one screen tall, so any vertical snap acts like forced
-     paging and fights touch momentum and the sideways carousel. Scroll natively. */
+  /* Projects: one section per swipe, like the laptop. The footer is the final
+     snap stop (see below) so the page can always scroll all the way down. */
   html.snap-portfolio {
-    scroll-snap-type: none;
+    scroll-snap-type: y mandatory;
   }
 }
 
@@ -569,6 +569,17 @@ html.snap-portfolio {
   justify-content: flex-start;
   /* just clears the fixed header, with a small gap above the heading */
   padding-top: clamp(112px, 10vh, 120px);
+}
+@media (max-width: 767px) {
+  [data-page='portfolio'] section.snap-target {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  /* Last stop: the page bottom. Without this, mandatory snapping pulled users
+     back from the footer to the last section. */
+  [data-page='portfolio'] footer {
+    scroll-snap-align: end;
+  }
 }
 [data-page='portfolio'] .project-carousel {
   scroll-snap-type: x mandatory;
