@@ -14,6 +14,8 @@ body {
   background-color: var(--color-background);
   color: var(--color-on-background);
   overflow-x: hidden;
+  /* clip (modern browsers) avoids the momentum-scroll quirks of overflow-x:hidden on body */
+  overflow-x: clip;
 }
 
 /* Material Symbols default axis is wght 400 (Home/Portfolio). Weight-specific
@@ -622,4 +624,28 @@ html.snap-portfolio {
   .site-nav {
     transition: none;
   }
+}
+
+/* =========================================================================
+   Mobile scroll smoothness
+   ========================================================================= */
+@media (max-width: 767px) {
+  /* Cheaper glass on phones: the header blurs full-screen photos while scrolling. */
+  .site-nav-glass {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+  /* Small viewport units: heights stay fixed while the browser address bar
+     collapses, so sections and the carousel no longer resize mid-scroll. */
+  [data-page='portfolio'] section.snap-target,
+  [data-page='portfolio'] footer.snap-target {
+    min-height: 100svh;
+  }
+  [data-page='portfolio'] .project-carousel {
+    height: min(78svh, calc(100svh - 240px));
+  }
+}
+/* The carousel scrolls sideways only; never chain its overscroll into the page. */
+[data-page='portfolio'] .project-carousel {
+  overscroll-behavior-x: contain;
 }
