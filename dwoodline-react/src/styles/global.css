@@ -502,6 +502,28 @@ html.snap-portfolio {
     transition: none;
   }
 }
+/* Exploded hinge diagram: parts rest assembled, then pull apart once revealed. */
+[data-page='expertise'] .xv-part {
+  transform: translateX(var(--asm, 0px));
+  transition:
+    transform 1.6s cubic-bezier(0.645, 0.045, 0.355, 1),
+    opacity 0.3s ease;
+}
+[data-page='expertise'] .visible .xv:not(.is-assembled) .xv-part {
+  transform: none;
+}
+/* Labels only make sense when the parts are apart; they would collide when assembled. */
+[data-page='expertise'] .xv .xv-label {
+  transition: opacity 0.4s ease;
+}
+[data-page='expertise'] .xv.is-assembled .xv-label {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-page='expertise'] .xv-part {
+    transition: none;
+  }
+}
 [data-page='expertise'] .hardware-component {
   transition:
     transform 1.8s cubic-bezier(0.645, 0.045, 0.355, 1),

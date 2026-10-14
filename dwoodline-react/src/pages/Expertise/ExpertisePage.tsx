@@ -1,21 +1,66 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/config/routes';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
 import { useHtmlScrollSnap } from '@/hooks/useHtmlScrollSnap';
 import { useExpertiseScroll } from '@/hooks/useExpertiseScroll';
+import {
+  BookMatchViewer,
+  DetailDrawing,
+  ExplodedHinge,
+  type DetailKind,
+  type HingePart,
+} from './ServiceVisuals';
 
 const CIRCLE_BORDER = { border: '3px solid #6B4E31' } as const;
 
-const GRAIN_NOISE = {
-  backgroundImage:
-    "url('data:image/svg+xml,%3Csvg viewBox%3D%220 0 200 200%22 xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cfilter id%3D%22noise%22%3E%3CfeTurbulence type%3D%22fractalNoise%22 baseFrequency%3D%220.65%22 numOctaves%3D%223%22 stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect width%3D%22100%25%22 height%3D%22100%25%22 filter%3D%22url(%23noise)%22 opacity%3D%221%22/%3E%3C/svg%3E')",
-  opacity: 0.04,
-  mixBlendMode: 'multiply',
-} as const;
+const DETAILS: { kind: DetailKind; label: string; side: 'left' | 'right' }[] = [
+  { kind: 'endgrain', label: 'End grain growth rings', side: 'left' },
+  { kind: 'dovetail', label: 'Dovetail joint', side: 'right' },
+  { kind: 'profile', label: 'Moulding profile section', side: 'left' },
+  { kind: 'tenon', label: 'Mortise and tenon joint', side: 'right' },
+];
+
+const TECH_POINTS: {
+  icon: string;
+  title: string;
+  text: string;
+  parts: HingePart[];
+}[] = [
+  {
+    icon: 'precision_manufacturing',
+    title: 'CNC Accuracy',
+    text: 'Sub-millimeter routing for concealed hardware.',
+    parts: ['door'],
+  },
+  {
+    icon: 'bolt',
+    title: 'LEED Standards',
+    text: 'Integrated low-voltage lighting profiles.',
+    parts: ['carcass'],
+  },
+  {
+    icon: 'handyman',
+    title: 'Installation Rigor',
+    text: 'Engineered joinery designed for efficient field assembly.',
+    parts: ['plate', 'fixings'],
+  },
+  {
+    icon: 'verified_user',
+    title: 'Longevity',
+    text: 'Joinery designed to outlast the structure it inhabits.',
+    parts: ['cup'],
+  },
+];
+
+const H2_FIT =
+  'font-headline-lg text-[clamp(26px,3.3vw,44px)] serif-text leading-[1.12] mb-[clamp(10px,2vh,20px)]';
 
 export function ExpertisePage() {
   useHtmlScrollSnap('proximity');
   useExpertiseScroll();
+  const [activeParts, setActiveParts] = useState<HingePart[]>([]);
+  const [assembled, setAssembled] = useState(false);
 
   return (
     <>
@@ -28,7 +73,7 @@ export function ExpertisePage() {
       </div>
 
       <main className="w-full">
-        {/* Chapter 1: Architectural Millwork (Live Drafting) */}
+        {/* Drafting */}
         <section
           className="snap-section flex items-center justify-center bg-surface-container-lowest"
           id="ch-1"
@@ -38,7 +83,7 @@ export function ExpertisePage() {
           <div className="max-w-6xl mx-auto px-6 md:px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center z-10">
             <div className="reveal">
               <span className="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block reveal-stagger-1">
-                Chapter 01 — Division 06
+                Drafting
               </span>
               <h2 className="font-headline-lg text-headline-lg serif-text leading-tight mb-8 reveal-stagger-2">
                 Architectural Millwork Shop Drawings
@@ -63,88 +108,41 @@ export function ExpertisePage() {
               </div>
             </div>
             <div className="flex flex-col gap-[clamp(14px,3.2vh,36px)] w-full justify-center py-2">
-              {/* Circle 1 — left */}
-              <div className="detail-circle self-start ml-8">
+              {DETAILS.map((d) => (
                 <div
-                  className="w-[clamp(104px,15vh,190px)] h-[clamp(104px,15vh,190px)] rounded-full overflow-hidden"
-                  style={CIRCLE_BORDER}
+                  key={d.kind}
+                  className={`detail-circle ${d.side === 'left' ? 'self-start ml-8' : 'self-end mr-8'}`}
                 >
-                  <img
-                    src="https://picsum.photos/seed/dwl01/160/160"
-                    className="w-full h-full object-cover"
-                    alt="Detail 01"
-                  />
+                  <div
+                    className="w-[clamp(104px,15vh,190px)] h-[clamp(104px,15vh,190px)] rounded-full overflow-hidden"
+                    style={CIRCLE_BORDER}
+                  >
+                    <DetailDrawing kind={d.kind} label={d.label} />
+                  </div>
                 </div>
-              </div>
-              {/* Circle 2 — right */}
-              <div className="detail-circle self-end mr-8">
-                <div
-                  className="w-[clamp(104px,15vh,190px)] h-[clamp(104px,15vh,190px)] rounded-full overflow-hidden"
-                  style={CIRCLE_BORDER}
-                >
-                  <img
-                    src="https://picsum.photos/seed/dwl02/160/160"
-                    className="w-full h-full object-cover"
-                    alt="Detail 02"
-                  />
-                </div>
-              </div>
-              {/* Circle 3 — left */}
-              <div className="detail-circle self-start ml-8">
-                <div
-                  className="w-[clamp(104px,15vh,190px)] h-[clamp(104px,15vh,190px)] rounded-full overflow-hidden"
-                  style={CIRCLE_BORDER}
-                >
-                  <img
-                    src="https://picsum.photos/seed/dwl03/160/160"
-                    className="w-full h-full object-cover"
-                    alt="Detail 03"
-                  />
-                </div>
-              </div>
-              {/* Circle 4 — right */}
-              <div className="detail-circle self-end mr-8">
-                <div
-                  className="w-[clamp(104px,15vh,190px)] h-[clamp(104px,15vh,190px)] rounded-full overflow-hidden"
-                  style={CIRCLE_BORDER}
-                >
-                  <img
-                    src="https://picsum.photos/seed/dwl04/160/160"
-                    className="w-full h-full object-cover"
-                    alt="Detail 04"
-                  />
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Chapter 2: Custom Veneer Mapping (Material Reveal) */}
+        {/* Materiality: book-match viewer on real veneer photography */}
         <section
           className="snap-section flex items-center justify-center bg-surface relative overflow-hidden"
           id="ch-2"
         >
-          <div className="absolute inset-0 z-0 bg-surface">
-            <img
-              alt="Veneer texture"
-              className="w-full h-full object-cover opacity-30 mix-blend-multiply transition-transform duration-[4s] ease-out parallax-bg"
-              src="https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=1400&q=70"
-            />
-          </div>
-          <div className="absolute inset-0 z-1 pointer-events-none" style={GRAIN_NOISE}></div>
-          <div className="max-w-6xl mx-auto px-6 md:px-[80px] w-full z-10 grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] gap-[clamp(24px,4vw,56px)] items-center">
-            <div className="max-w-2xl reveal bg-surface/80 backdrop-blur-md border border-white/40 p-6 lg:p-[clamp(20px,3.2vh,40px)] shadow-2xl rounded-sm">
+          <div className="max-w-6xl mx-auto px-6 md:px-[80px] w-full z-10 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-[clamp(24px,4vw,64px)] items-center">
+            <div className="reveal">
               <span className="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-3 block reveal-stagger-1">
-                Chapter 02 — Materiality
+                Materiality
               </span>
-              <h2 className="font-headline-lg text-[clamp(26px,3.3vw,44px)] serif-text leading-[1.12] mb-[clamp(10px,2vh,20px)] reveal-stagger-2">
+              <h2 className={`${H2_FIT} reveal-stagger-2`}>
                 Custom Veneer Mapping &amp; Sequence Control
               </h2>
-              <p className="font-body-lg text-on-surface-variant mb-[clamp(12px,2.4vh,24px)] reveal-stagger-3">
+              <p className="font-body-lg text-on-surface-variant mb-[clamp(14px,3vh,28px)] max-w-md reveal-stagger-3">
                 Grain matching is not an afterthought. Our digital mapping process ensures seamless
                 heritage-quality interiors through rigorous sequence control.
               </p>
-              <div className="grid grid-cols-2 gap-6 pt-[clamp(14px,2.4vh,24px)] border-t border-on-surface-variant/10 reveal-stagger-3">
+              <div className="grid grid-cols-2 gap-6 pt-[clamp(14px,2.6vh,26px)] border-t border-on-surface-variant/15 reveal-stagger-3">
                 <div className="space-y-2">
                   <MaterialIcon name="layers" className="text-secondary" />
                   <h4 className="font-headline-md text-xl serif-text">Book-match Precision</h4>
@@ -161,32 +159,24 @@ export function ExpertisePage() {
                 </div>
               </div>
             </div>
-            <div className="reveal reveal-stagger-2 relative h-[clamp(300px,58vh,540px)] overflow-hidden rounded-sm border border-outline-variant/20 shadow-xl">
-              <img
-                alt="Walnut veneer detail"
-                className="veneer-mask w-full h-full object-cover"
-                src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?auto=format&fit=crop&w=800&q=80"
-              />
-              <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur px-4 py-2 text-[10px] uppercase tracking-widest font-technical-label">
-                Texture Mapping V1.4
-              </div>
+            <div className="reveal reveal-stagger-2">
+              <BookMatchViewer />
             </div>
           </div>
         </section>
 
-        {/* Chapter 3: Hardware Integration (Exploded View) */}
+        {/* Technicality: exploded concealed-hinge diagram */}
         <section
           className="snap-section flex items-center justify-center bg-[#1C1B1B] text-surface-bright"
           id="ch-3"
         >
           <div className="absolute inset-0 architectural-grid opacity-20 pointer-events-none invert"></div>
-          <div className="light-beam opacity-20"></div>
-          <div className="max-w-6xl mx-auto px-6 md:px-[80px] grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] gap-[clamp(24px,4vw,56px)] items-center z-10">
+          <div className="max-w-6xl mx-auto px-6 md:px-[80px] w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-[clamp(24px,4vw,56px)] items-center z-10">
             <div className="reveal">
               <span className="font-technical-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed mb-3 block reveal-stagger-1">
-                Chapter 03 — Technicality
+                Technicality
               </span>
-              <h2 className="font-headline-lg text-[clamp(26px,3.3vw,44px)] serif-text leading-[1.12] mb-[clamp(10px,2vh,20px)] reveal-stagger-2">
+              <h2 className={`${H2_FIT} reveal-stagger-2`}>
                 Concealed Hardware &amp;
                 <br />
                 Precision Installation
@@ -196,72 +186,41 @@ export function ExpertisePage() {
                 woodwork so every mechanism works quietly and each piece sits flawlessly for
                 decades.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 reveal-stagger-3">
-                <div className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
-                  <MaterialIcon
-                    name="precision_manufacturing"
-                    className="text-tertiary-fixed text-2xl mb-1"
-                  />
-                  <h5 className="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-1">
-                    CNC Accuracy
-                  </h5>
-                  <p className="text-caption opacity-60">
-                    Sub-millimeter routing for concealed hardware.
-                  </p>
-                </div>
-                <div className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
-                  <MaterialIcon name="bolt" className="text-tertiary-fixed text-2xl mb-1" />
-                  <h5 className="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-1">
-                    LEED Standards
-                  </h5>
-                  <p className="text-caption opacity-60">
-                    Integrated low-voltage lighting profiles.
-                  </p>
-                </div>
-                <div className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
-                  <MaterialIcon name="handyman" className="text-tertiary-fixed text-2xl mb-1" />
-                  <h5 className="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-1">
-                    Installation Rigor
-                  </h5>
-                  <p className="text-caption opacity-60">
-                    Engineered joinery designed for efficient field assembly.
-                  </p>
-                </div>
-                <div className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
-                  <MaterialIcon
-                    name="verified_user"
-                    className="text-tertiary-fixed text-2xl mb-1"
-                  />
-                  <h5 className="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-1">
-                    Longevity
-                  </h5>
-                  <p className="text-caption opacity-60">
-                    Joinery designed to outlast the structure it inhabits.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 reveal-stagger-3">
+                {TECH_POINTS.map((t) => (
+                  <div
+                    key={t.title}
+                    tabIndex={0}
+                    onMouseEnter={() => setActiveParts(t.parts)}
+                    onMouseLeave={() => setActiveParts([])}
+                    onFocus={() => setActiveParts(t.parts)}
+                    onBlur={() => setActiveParts([])}
+                    className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 focus-visible:bg-surface-bright/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand transition-colors duration-500"
+                  >
+                    <MaterialIcon name={t.icon} className="text-tertiary-fixed text-2xl mb-1" />
+                    <h5 className="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-1">
+                      {t.title}
+                    </h5>
+                    <p className="text-caption opacity-60">{t.text}</p>
+                  </div>
+                ))}
               </div>
             </div>
-            {/* Exploded View Animation */}
-            <div className="relative reveal flex items-center justify-center h-[clamp(300px,54vh,500px)]">
-              <div className="absolute w-64 h-80 bg-[#313030] border border-white/5 shadow-2xl rounded-sm z-10"></div>
-              <div className="absolute hardware-component hardware-left z-20 left-0 lg:left-[-10%]">
-                <div className="w-40 sm:w-48 h-1 bg-black/80 shadow-lg mb-2"></div>
-                <div className="w-28 sm:w-32 h-1 bg-black/80 shadow-lg"></div>
-                <span className="text-[8px] uppercase tracking-tighter opacity-40 absolute -top-4">
-                  Oak Panel 04
-                </span>
+            <div className="reveal reveal-stagger-2">
+              <div className="h-[clamp(240px,46vh,420px)] w-full">
+                <ExplodedHinge active={activeParts} assembled={assembled} />
               </div>
-              <div className="absolute hardware-component hardware-right z-20 right-0 lg:right-[-10%]">
-                <div className="w-12 h-12 border-2 border-tertiary-fixed rounded-full opacity-40"></div>
-                <span className="text-[8px] uppercase tracking-tighter opacity-40 absolute -bottom-4">
-                  Pivot-Hinge X-1
-                </span>
+              <div className="mt-3 flex items-center justify-between gap-4">
+                <p className="text-caption opacity-50">Hover a point to find its part.</p>
+                <button
+                  type="button"
+                  aria-pressed={assembled}
+                  onClick={() => setAssembled((v) => !v)}
+                  className="border border-surface-bright/30 px-4 py-2 font-technical-label text-[10px] uppercase tracking-[0.2em] text-surface-bright transition-colors duration-300 hover:bg-brand hover:text-on-background"
+                >
+                  {assembled ? 'Explode' : 'Assemble'}
+                </button>
               </div>
-              <img
-                alt="Architectural hardware detail"
-                className="w-full h-full object-cover grayscale opacity-20 absolute inset-0"
-                src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80"
-              />
             </div>
           </div>
         </section>
