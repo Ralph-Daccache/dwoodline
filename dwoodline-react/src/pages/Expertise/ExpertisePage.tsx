@@ -212,7 +212,7 @@ export function ExpertisePage() {
               </div>
             </div>
             <div className="reveal reveal-stagger-2">
-              <div className="h-[clamp(240px,46vh,420px)] w-full">
+              <div className="h-[clamp(260px,50vh,440px)] w-full">
                 <ExplodedHinge active={activeParts} assembled={assembled} />
               </div>
               <div className="mt-3 flex items-center gap-4">
@@ -223,8 +223,8 @@ export function ExpertisePage() {
                   </span>
                 </div>
                 <p className="text-caption opacity-50 flex-1">
-                  Hover or tap a point to find its part. Concealed hinge shown as a plan section;
-                  typical 3D adjustment: side ±3 mm, height ±3 mm, compression ±1 mm.
+                  Hover or tap a point to find its part. Concealed hinge shown as an axonometric
+                  half-section; typical 3D adjustment: side ±3 mm, height ±3 mm, compression ±1 mm.
                 </p>
                 <button
                   type="button"

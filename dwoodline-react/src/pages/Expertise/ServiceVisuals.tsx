@@ -216,203 +216,429 @@ interface ExplodedHingeProps {
   assembled: boolean;
 }
 
+/* ---- axonometric helpers -------------------------------------------------
+   Viewer sits at +x, +y, +z. Screen x = (x - y) cos30, screen y = (x + y) sin30 - z.
+   The door and frame are cut at the hinge mid-plane (y = 30) so both milled
+   recesses show, and the parts separate along x. */
+const K = 0.866 * 0.9;
+const M = 0.5 * 0.9;
+const ZS = 0.9;
+const OX = 210;
+const OY = 250;
+
+type V3 = [number, number, number];
+
+const pt = ([x, y, z]: V3): string =>
+  `${((x - y) * K + OX).toFixed(1)},${((x + y) * M - z * ZS + OY).toFixed(1)}`;
+const poly = (pts: V3[]): string => pts.map(pt).join(' ');
+const sx = (x: number, y: number, _z: number): number => (x - y) * K + OX;
+const sy = (x: number, y: number, z: number): number => (x + y) * M - z * ZS + OY;
+
 const LINE = '#c4a98a';
+const EDGE = 'rgba(196,169,138,0.85)';
+const WOOD_TOP = '#403f3d';
+const WOOD_END = '#2f2e2d';
+const WOOD_CUT = '#262524';
+const VOID_FLOOR = '#1a1918';
+const VOID_WALL = '#121110';
+const VOID_BACK = '#0e0d0c';
+const METAL_TOP = '#6a6762';
+const METAL_END = '#4a4743';
+const METAL_FRONT = '#383633';
 const FILL = '#2a2928';
 const FILL_HI = '#3b3a39';
 const VOID = '#141312';
 
+interface BoxProps {
+  x: [number, number];
+  y: [number, number];
+  z: [number, number];
+  top: string;
+  end: string;
+  front: string;
+}
+
+/** Axis-aligned box drawn with its three visible faces (top, +x end, +y front). */
+function Box({ x, y, z, top, end, front }: BoxProps) {
+  const [x0, x1] = x;
+  const [y0, y1] = y;
+  const [z0, z1] = z;
+  return (
+    <g stroke={EDGE} strokeWidth="0.9" strokeLinejoin="round">
+      <polygon
+        points={poly([
+          [x1, y0, z0],
+          [x1, y1, z0],
+          [x1, y1, z1],
+          [x1, y0, z1],
+        ])}
+        fill={end}
+      />
+      <polygon
+        points={poly([
+          [x0, y1, z0],
+          [x1, y1, z0],
+          [x1, y1, z1],
+          [x0, y1, z1],
+        ])}
+        fill={front}
+      />
+      <polygon
+        points={poly([
+          [x0, y0, z1],
+          [x1, y0, z1],
+          [x1, y1, z1],
+          [x0, y1, z1],
+        ])}
+        fill={top}
+      />
+    </g>
+  );
+}
+
+/** Ellipse for a circle of radius r lying on a horizontal plane. */
+function TopCircle({
+  x,
+  y,
+  z,
+  r,
+  fill,
+}: {
+  x: number;
+  y: number;
+  z: number;
+  r: number;
+  fill: string;
+}) {
+  return (
+    <ellipse
+      cx={sx(x, y, z)}
+      cy={sy(x, y, z)}
+      rx={r * 1.1}
+      ry={r * 0.64}
+      fill={fill}
+      stroke={EDGE}
+      strokeWidth="0.8"
+    />
+  );
+}
+
+const KNUCKLES: [number, number][] = [
+  [18, 44],
+  [56, 84],
+  [96, 122],
+];
+
 /**
- * Plan section through a fully concealed hinge (TECTUS-style: door part, frame
- * part and a closed hinge body, each part recessed into the door edge and the
- * frame), drawn as an exploded assembly. Proportions follow a slim 160 mm hinge
- * set into 24 to 28 mm wide milled recesses.
+ * Axonometric half-section of a concealed hinge (TECTUS-style: a door part, a
+ * frame part and a closed hinge body on slide bearings, each recessed into the
+ * door edge and the frame), drawn as an exploded assembly that slides together.
+ * Proportions follow a slim hinge set into 24 to 28 mm wide milled recesses.
  */
 export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
   const dim = (p: HingePart): number => (active.length === 0 || active.includes(p) ? 1 : 0.22);
-  const label = (x: number, y: number, text: string, size = 11.5) => (
-    <text
-      x={x}
-      y={y}
-      textAnchor="middle"
-      fontSize={size}
-      letterSpacing="0.8"
-      fill="#fcf9f8"
-      opacity={0.85}
+  const asm = (n: number): CSSProperties => ({ '--asm': n }) as CSSProperties;
+  const label = (
+    x: number,
+    y: number,
+    text: string,
+    opts: { sub?: string; anchor?: 'start' | 'middle' | 'end' } = {},
+  ) => (
+    <g
       className="xv-label"
       fontFamily="Inter, sans-serif"
+      fill="#fcf9f8"
+      textAnchor={opts.anchor ?? 'middle'}
     >
-      {text}
-    </text>
+      {opts.sub && (
+        <text x={x} y={y - 14} fontSize="10.5" letterSpacing="0.8" opacity="0.55">
+          {opts.sub}
+        </text>
+      )}
+      <text x={x} y={y} fontSize="11.5" letterSpacing="0.8" opacity="0.85">
+        {text}
+      </text>
+    </g>
   );
-  const asm = (px: number): CSSProperties => ({ '--asm': `${px}px` }) as CSSProperties;
+
+  const frontHatchId = 'xv-hatch';
 
   return (
     <svg
-      viewBox="0 62 520 232"
+      viewBox="0 0 390 392"
       className={`xv h-full w-full ${assembled ? 'is-assembled' : ''}`}
       role="img"
-      aria-label="Exploded plan section of a concealed hinge: frame, frame part, hinge body with slide bearings, door part and door, with a low-voltage feed running through the hinge"
+      aria-label="Exploded axonometric half-section of a concealed hinge: frame, frame part, hinge body with slide bearings, door part and door, with a low-voltage feed running through the hinge"
       fill="none"
       strokeLinejoin="round"
     >
       <defs>
         <pattern
-          id="xv-hatch"
-          width="8"
-          height="8"
+          id={frontHatchId}
+          width="7"
+          height="7"
           patternUnits="userSpaceOnUse"
-          patternTransform="rotate(45)"
+          patternTransform="rotate(-30)"
         >
-          <line x1="0" y1="0" x2="0" y2="8" stroke={LINE} strokeOpacity="0.42" />
+          <line x1="0" y1="3.5" x2="7" y2="3.5" stroke={LINE} strokeOpacity="0.4" />
         </pattern>
       </defs>
 
-      <line
-        x1="10"
-        y1="150"
-        x2="510"
-        y2="150"
-        stroke={LINE}
-        strokeOpacity="0.3"
-        strokeDasharray="6 5"
-      />
-
-      <g className="xv-part" style={{ ...asm(118), opacity: dim('members') }}>
-        <rect x="20" y="80" width="110" height="140" fill={FILL} stroke={LINE} strokeWidth="1.5" />
-        <rect x="20" y="80" width="110" height="140" fill="url(#xv-hatch)" />
-        <rect x="96" y="124" width="35" height="52" fill={VOID} />
-        <path d="M130 124 H96 V176 H130" stroke={LINE} strokeWidth="1.5" />
-        {label(75, 246, 'FRAME')}
+      {/* Frame (jamb) half-section with milled recess */}
+      <g className="xv-part" style={{ ...asm(124), opacity: dim('members') }}>
+        <polygon
+          points={poly([
+            [-158, 16, 14],
+            [-130, 16, 14],
+            [-130, 30, 14],
+            [-158, 30, 14],
+          ])}
+          fill={VOID_FLOOR}
+        />
+        <polygon
+          points={poly([
+            [-158, 16, 14],
+            [-130, 16, 14],
+            [-130, 16, 126],
+            [-158, 16, 126],
+          ])}
+          fill={VOID_BACK}
+        />
+        <polygon
+          points={poly([
+            [-158, 16, 14],
+            [-158, 30, 14],
+            [-158, 30, 126],
+            [-158, 16, 126],
+          ])}
+          fill={VOID_WALL}
+        />
+        <g stroke={EDGE} strokeWidth="0.9">
+          <polygon
+            points={poly([
+              [-130, 0, 0],
+              [-130, 30, 0],
+              [-130, 30, 14],
+              [-130, 16, 14],
+              [-130, 16, 126],
+              [-130, 30, 126],
+              [-130, 30, 140],
+              [-130, 0, 140],
+            ])}
+            fill={WOOD_END}
+          />
+          <polygon
+            points={poly([
+              [-210, 30, 0],
+              [-130, 30, 0],
+              [-130, 30, 14],
+              [-158, 30, 14],
+              [-158, 30, 126],
+              [-130, 30, 126],
+              [-130, 30, 140],
+              [-210, 30, 140],
+            ])}
+            fill={WOOD_CUT}
+          />
+          <polygon
+            points={poly([
+              [-210, 30, 0],
+              [-130, 30, 0],
+              [-130, 30, 14],
+              [-158, 30, 14],
+              [-158, 30, 126],
+              [-130, 30, 126],
+              [-130, 30, 140],
+              [-210, 30, 140],
+            ])}
+            fill={`url(#${frontHatchId})`}
+            stroke="none"
+          />
+          <polygon
+            points={poly([
+              [-210, 0, 140],
+              [-130, 0, 140],
+              [-130, 30, 140],
+              [-210, 30, 140],
+            ])}
+            fill={WOOD_TOP}
+          />
+        </g>
+        {label(60, 30, 'FRAME')}
       </g>
 
-      <g className="xv-part" style={{ ...asm(-118), opacity: dim('members') }}>
-        <rect x="390" y="90" width="110" height="120" fill={FILL} stroke={LINE} strokeWidth="1.5" />
-        <rect x="390" y="90" width="110" height="120" fill="url(#xv-hatch)" />
-        <rect x="389" y="124" width="35" height="52" fill={VOID} />
-        <path d="M390 124 H424 V176 H390" stroke={LINE} strokeWidth="1.5" />
-        {label(445, 246, 'DOOR')}
+      {/* Door edge half-section with milled recess */}
+      <g className="xv-part" style={{ ...asm(-124), opacity: dim('members') }}>
+        <polygon
+          points={poly([
+            [130, 18, 14],
+            [158, 18, 14],
+            [158, 30, 14],
+            [130, 30, 14],
+          ])}
+          fill={VOID_FLOOR}
+        />
+        <polygon
+          points={poly([
+            [130, 18, 14],
+            [158, 18, 14],
+            [158, 18, 126],
+            [130, 18, 126],
+          ])}
+          fill={VOID_BACK}
+        />
+        <g stroke={EDGE} strokeWidth="0.9">
+          <polygon
+            points={poly([
+              [210, 10, 0],
+              [210, 30, 0],
+              [210, 30, 140],
+              [210, 10, 140],
+            ])}
+            fill={WOOD_END}
+          />
+          <polygon
+            points={poly([
+              [130, 30, 0],
+              [210, 30, 0],
+              [210, 30, 140],
+              [130, 30, 140],
+              [130, 30, 126],
+              [158, 30, 126],
+              [158, 30, 14],
+              [130, 30, 14],
+            ])}
+            fill={WOOD_CUT}
+          />
+          <polygon
+            points={poly([
+              [130, 30, 0],
+              [210, 30, 0],
+              [210, 30, 140],
+              [130, 30, 140],
+              [130, 30, 126],
+              [158, 30, 126],
+              [158, 30, 14],
+              [130, 30, 14],
+            ])}
+            fill={`url(#${frontHatchId})`}
+            stroke="none"
+          />
+          <polygon
+            points={poly([
+              [130, 10, 140],
+              [210, 10, 140],
+              [210, 30, 140],
+              [130, 30, 140],
+            ])}
+            fill={WOOD_TOP}
+          />
+        </g>
+        {label(352, 376, 'DOOR')}
       </g>
 
-      <g className="xv-part" style={{ ...asm(64), opacity: dim('plates') }}>
-        {[138, 162].map((y) => (
-          <g key={y}>
-            <rect x="136" y={y - 1.5} width="48" height="3" fill={LINE} />
-            <rect x="184" y={y - 4.5} width="5" height="9" fill={LINE} />
+      {/* Frame part with fixing screws */}
+      <g className="xv-part" style={{ ...asm(78), opacity: dim('plates') }}>
+        {[34, 106].map((z) => (
+          <g key={z}>
+            <Box
+              x={[-136, -108]}
+              y={[28.5, 31.5]}
+              z={[z - 1.5, z + 1.5]}
+              top={METAL_TOP}
+              end={METAL_END}
+              front={METAL_FRONT}
+            />
           </g>
         ))}
-        <rect
-          x="150"
-          y="126"
-          width="34"
-          height="48"
-          rx="5"
-          fill={FILL_HI}
-          stroke={LINE}
-          strokeWidth="1.5"
+        <Box
+          x={[-108, -88]}
+          y={[18, 42]}
+          z={[18, 122]}
+          top={METAL_TOP}
+          end={METAL_END}
+          front={METAL_FRONT}
         />
-        <circle cx="167" cy="150" r="7" stroke={LINE} strokeOpacity="0.6" />
-        {label(167, 246, 'FRAME PART')}
+        {[34, 106].map((z) => (
+          <Box
+            key={z}
+            x={[-88, -84]}
+            y={[26, 34]}
+            z={[z - 4, z + 4]}
+            top="#c4a98a"
+            end="#a98f6f"
+            front="#8d7759"
+          />
+        ))}
+        {label(122, 104, 'FRAME PART', { anchor: 'start' })}
       </g>
 
-      <g className="xv-part" style={{ ...asm(-64), opacity: dim('plates') }}>
-        {[138, 162].map((y) => (
-          <g key={y}>
-            <rect x="336" y={y - 1.5} width="48" height="3" fill={LINE} />
-            <rect x="331" y={y - 4.5} width="5" height="9" fill={LINE} />
+      {/* Closed hinge body: three knuckles on slide bearings */}
+      <g style={{ opacity: dim('body') }}>
+        {KNUCKLES.map(([z0, z1]) => (
+          <g key={z0}>
+            <Box
+              x={[-10, 10]}
+              y={[20, 40]}
+              z={[z0, z1]}
+              top={METAL_TOP}
+              end={METAL_END}
+              front={METAL_FRONT}
+            />
+            <TopCircle x={0} y={30} z={z1} r={5.5} fill="#1c1b1b" />
+            <TopCircle x={0} y={30} z={z1} r={2} fill={LINE} />
           </g>
         ))}
-        <rect
-          x="336"
-          y="126"
-          width="34"
-          height="48"
-          rx="5"
-          fill={FILL_HI}
-          stroke={LINE}
-          strokeWidth="1.5"
-        />
-        <circle cx="353" cy="150" r="7" stroke={LINE} strokeOpacity="0.6" />
-        {label(353, 246, 'DOOR PART')}
+        {label(187, 146, 'HINGE BODY', { sub: 'slide bearings' })}
       </g>
 
-      <g style={{ opacity: dim('body') }} className="xv-body">
-        <rect
-          x="208"
-          y="130"
-          width="104"
-          height="40"
-          rx="8"
-          fill={FILL}
-          stroke={LINE}
-          strokeOpacity="0.6"
-          strokeDasharray="3 3"
-        />
-        <line
-          x1="222"
-          y1="138"
-          x2="298"
-          y2="162"
-          stroke={LINE}
-          strokeWidth="6"
-          strokeLinecap="round"
-        />
-        <line
-          x1="222"
-          y1="162"
-          x2="298"
-          y2="138"
-          stroke={FILL_HI}
-          strokeWidth="9"
-          strokeLinecap="round"
-        />
-        <line
-          x1="222"
-          y1="162"
-          x2="298"
-          y2="138"
-          stroke={LINE}
-          strokeWidth="6"
-          strokeLinecap="round"
-        />
-        {[
-          [222, 138],
-          [222, 162],
-          [298, 138],
-          [298, 162],
-          [260, 150],
-        ].map(([cx, cy]) => (
-          <g key={`${cx}-${cy}`}>
-            <circle cx={cx} cy={cy} r="6" fill={VOID} stroke={LINE} strokeWidth="1.5" />
-            <circle cx={cx} cy={cy} r="2.4" fill={LINE} />
-          </g>
+      {/* Door part with fixing screws */}
+      <g className="xv-part" style={{ ...asm(-78), opacity: dim('plates') }}>
+        {[34, 106].map((z) => (
+          <Box
+            key={z}
+            x={[108, 136]}
+            y={[28.5, 31.5]}
+            z={[z - 1.5, z + 1.5]}
+            top={METAL_TOP}
+            end={METAL_END}
+            front={METAL_FRONT}
+          />
         ))}
-        {label(260, 268, 'HINGE BODY')}
-        <text
-          x="260"
-          y="283"
-          textAnchor="middle"
-          fontSize="11"
-          letterSpacing="1"
-          fill="#fcf9f8"
-          opacity="0.55"
-          className="xv-label"
-          fontFamily="Inter, sans-serif"
-        >
-          slide bearings
-        </text>
+        <Box
+          x={[88, 108]}
+          y={[20, 40]}
+          z={[18, 122]}
+          top={METAL_TOP}
+          end={METAL_END}
+          front={METAL_FRONT}
+        />
+        {label(274, 190, 'DOOR PART', { anchor: 'end' })}
       </g>
 
+      {/* Low-voltage feed running through the hinge to the door */}
       <g style={{ opacity: dim('feed') }} className="xv-feed">
         <path
-          d="M167 174 C167 206 222 208 260 196 S353 206 353 174"
+          d={`M${pt([-98, 30, 18])} C${pt([-70, 44, -14])} ${pt([70, 44, -14])} ${pt([98, 30, 18])}`}
           stroke={LINE}
           strokeWidth="2"
           strokeLinecap="round"
           strokeDasharray="1 5"
         />
-        <circle cx="167" cy="174" r="3" fill={LINE} />
-        <circle cx="353" cy="174" r="3" fill={LINE} />
-        {label(260, 224, 'LOW-VOLTAGE FEED', 10.5)}
+        <circle cx={sx(-98, 30, 18)} cy={sy(-98, 30, 18)} r="3" fill={LINE} />
+        <circle cx={sx(98, 30, 18)} cy={sy(98, 30, 18)} r="3" fill={LINE} />
+        <text
+          x={sx(0, 44, -14)}
+          y={sy(0, 44, -14) + 22}
+          textAnchor="middle"
+          fontSize="10.5"
+          letterSpacing="0.8"
+          fill="#fcf9f8"
+          opacity="0.7"
+          fontFamily="Inter, sans-serif"
+        >
+          LOW-VOLTAGE FEED
+        </text>
       </g>
     </svg>
   );

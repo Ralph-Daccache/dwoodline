@@ -496,14 +496,14 @@ html.snap-portfolio {
     opacity 0.3s ease;
 }
 [data-page='expertise'] .xv.is-assembled .xv-part {
-  transform: translateX(var(--asm, 0px));
+  transform: translate(calc(var(--asm, 0) * 0.7794px), calc(var(--asm, 0) * 0.45px));
 }
 [data-page='expertise'] .visible .xv:not(.is-assembled) .xv-part {
   animation: xvOpen 1.8s cubic-bezier(0.645, 0.045, 0.355, 1) backwards;
 }
 @keyframes xvOpen {
   from {
-    transform: translateX(var(--asm, 0px));
+    transform: translate(calc(var(--asm, 0) * 0.7794px), calc(var(--asm, 0) * 0.45px));
   }
 }
 /* Labels only make sense when the parts are apart; they would collide when assembled. */
