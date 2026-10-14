@@ -213,7 +213,8 @@ export type HingePart = 'members' | 'plates' | 'body' | 'feed';
 interface ExplodedHingeProps {
   /** Parts to emphasise; everything else dims. Empty means no emphasis. */
   active: HingePart[];
-  assembled: boolean;
+  /** 0 = hinge alone, 1 = frame attached, 2 = frame and door attached. */
+  step: 0 | 1 | 2;
 }
 
 /* ---- axonometric helpers -------------------------------------------------
@@ -224,7 +225,7 @@ const K = 0.866 * 0.9;
 const M = 0.5 * 0.9;
 const ZS = 0.9;
 const OX = 210;
-const OY = 250;
+const OY = 275;
 
 type V3 = [number, number, number];
 
@@ -242,12 +243,12 @@ const WOOD_CUT = '#262524';
 const VOID_FLOOR = '#1a1918';
 const VOID_WALL = '#121110';
 const VOID_BACK = '#0e0d0c';
-const METAL_TOP = '#6a6762';
-const METAL_END = '#4a4743';
-const METAL_FRONT = '#383633';
-const FILL = '#2a2928';
-const FILL_HI = '#3b3a39';
-const VOID = '#141312';
+const SILVER_TOP = '#d6d7d8';
+const SILVER_FRONT = '#b3b5b7';
+const SILVER_END = '#8e9093';
+const BLACK_TOP = '#2b2b2b';
+const BLACK_END = '#1a1a1a';
+const BLACK_FRONT = '#232323';
 
 interface BoxProps {
   x: [number, number];
@@ -323,21 +324,99 @@ function TopCircle({
   );
 }
 
-const KNUCKLES: [number, number][] = [
-  [18, 44],
-  [56, 84],
-  [96, 122],
-];
+/** Outline in the (y, z) plane at a given x: a slim plate with one rounded end. */
+function plateOutline(
+  x: number,
+  y0: number,
+  y1: number,
+  z0: number,
+  z1: number,
+  r: number,
+  roundTop: boolean,
+): V3[] {
+  const pts: V3[] = [];
+  const arc = (cy: number, cz: number, a0: number, a1: number): void => {
+    for (let i = 0; i <= 6; i += 1) {
+      const a = ((a0 + ((a1 - a0) * i) / 6) * Math.PI) / 180;
+      pts.push([x, cy + r * Math.cos(a), cz + r * Math.sin(a)]);
+    }
+  };
+  if (roundTop) {
+    pts.push([x, y0, z0], [x, y1, z0]);
+    arc(y1 - r, z1 - r, 0, 90);
+    arc(y0 + r, z1 - r, 90, 180);
+  } else {
+    pts.push([x, y0, z1], [x, y1, z1]);
+    arc(y1 - r, z0 + r, 0, -90);
+    arc(y0 + r, z0 + r, -90, -180);
+  }
+  return pts;
+}
+
+/** Countersunk cross-head screw seen on a plate face at x. */
+function Screw({ x, y, z }: { x: number; y: number; z: number }) {
+  const ring: V3[] = Array.from({ length: 16 }, (_, i) => {
+    const a = (i / 16) * Math.PI * 2;
+    return [x + 0.2, y + 3.4 * Math.cos(a), z + 3.4 * Math.sin(a)];
+  });
+  return (
+    <g stroke="rgba(60,62,66,0.9)" strokeWidth="0.7">
+      <polygon points={poly(ring)} fill="#c4c6c8" />
+      <polyline
+        points={poly([
+          [x + 0.3, y - 2, z],
+          [x + 0.3, y + 2, z],
+        ])}
+        fill="none"
+      />
+      <polyline
+        points={poly([
+          [x + 0.3, y, z - 2],
+          [x + 0.3, y, z + 2],
+        ])}
+        fill="none"
+      />
+    </g>
+  );
+}
+
+/** One silver cover plate: rounded outer end, square inner end, one screw. */
+function CoverPlate({
+  x,
+  z0,
+  z1,
+  roundTop,
+}: {
+  x: number;
+  z0: number;
+  z1: number;
+  roundTop: boolean;
+}) {
+  const back = plateOutline(x - 3, 18, 42, z0, z1, 9, roundTop);
+  const front = plateOutline(x, 18, 42, z0, z1, 9, roundTop);
+  const zc = roundTop ? z1 - 13 : z0 + 13;
+  return (
+    <g stroke={EDGE} strokeWidth="0.8" strokeLinejoin="round">
+      <polygon points={poly(back)} fill={SILVER_END} />
+      <polygon points={poly(front)} fill={SILVER_TOP} />
+      <Screw x={x} y={30} z={zc} />
+    </g>
+  );
+}
 
 /**
- * Axonometric half-section of a concealed hinge (TECTUS-style: a door part, a
- * frame part and a closed hinge body on slide bearings, each recessed into the
- * door edge and the frame), drawn as an exploded assembly that slides together.
- * Proportions follow a slim hinge set into 24 to 28 mm wide milled recesses.
+ * Axonometric half-section of a concealed hinge shaped like Simonswerk's
+ * TECTUS (about 160 mm long and 28 mm wide per side): each side is a black
+ * housing under two silver cover plates (rounded outer end, one countersunk
+ * screw each), with a stepped silver knuckle in the middle. Drawn as an
+ * exploded assembly that slides together into the recesses.
  */
-export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
+export function ExplodedHinge({ active, step }: ExplodedHingeProps) {
   const dim = (p: HingePart): number => (active.length === 0 || active.includes(p) ? 1 : 0.22);
-  const asm = (n: number): CSSProperties => ({ '--asm': n }) as CSSProperties;
+  /** Slide along the axonometric x axis (screen direction cos30, sin30). */
+  const move = (shift: number): CSSProperties => ({
+    transform: `translate(${(shift * 0.7794).toFixed(1)}px, ${(shift * 0.45).toFixed(1)}px)`,
+  });
   const label = (
     x: number,
     y: number,
@@ -361,20 +440,21 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
     </g>
   );
 
-  const frontHatchId = 'xv-hatch';
+  const hatch = 'xv-hatch';
+  const Z1 = 170;
 
   return (
     <svg
-      viewBox="0 0 390 392"
-      className={`xv h-full w-full ${assembled ? 'is-assembled' : ''}`}
+      viewBox="0 0 390 412"
+      className="xv h-full w-full"
       role="img"
-      aria-label="Exploded axonometric half-section of a concealed hinge: frame, frame part, hinge body with slide bearings, door part and door, with a low-voltage feed running through the hinge"
+      aria-label="Exploded axonometric half-section of a concealed hinge: frame, frame part with silver cover plates and black housing, hinge knuckle, door part and door, with a low-voltage feed running through the hinge"
       fill="none"
       strokeLinejoin="round"
     >
       <defs>
         <pattern
-          id={frontHatchId}
+          id={hatch}
           width="7"
           height="7"
           patternUnits="userSpaceOnUse"
@@ -385,252 +465,239 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
       </defs>
 
       {/* Frame (jamb) half-section with milled recess */}
-      <g className="xv-part" style={{ ...asm(124), opacity: dim('members') }}>
+      <g className="xv-part" style={{ ...move(step >= 1 ? 144 : 0), opacity: dim('members') }}>
         <polygon
           points={poly([
-            [-158, 16, 14],
-            [-130, 16, 14],
-            [-130, 30, 14],
-            [-158, 30, 14],
+            [-172, 16, 16],
+            [-150, 16, 16],
+            [-150, 30, 16],
+            [-172, 30, 16],
           ])}
           fill={VOID_FLOOR}
         />
         <polygon
           points={poly([
-            [-158, 16, 14],
-            [-130, 16, 14],
-            [-130, 16, 126],
-            [-158, 16, 126],
+            [-172, 16, 16],
+            [-150, 16, 16],
+            [-150, 16, 154],
+            [-172, 16, 154],
           ])}
           fill={VOID_BACK}
         />
         <polygon
           points={poly([
-            [-158, 16, 14],
-            [-158, 30, 14],
-            [-158, 30, 126],
-            [-158, 16, 126],
+            [-172, 16, 16],
+            [-172, 30, 16],
+            [-172, 30, 154],
+            [-172, 16, 154],
           ])}
           fill={VOID_WALL}
         />
         <g stroke={EDGE} strokeWidth="0.9">
           <polygon
             points={poly([
-              [-130, 0, 0],
-              [-130, 30, 0],
-              [-130, 30, 14],
-              [-130, 16, 14],
-              [-130, 16, 126],
-              [-130, 30, 126],
-              [-130, 30, 140],
-              [-130, 0, 140],
+              [-150, 0, 0],
+              [-150, 30, 0],
+              [-150, 30, 16],
+              [-150, 16, 16],
+              [-150, 16, 154],
+              [-150, 30, 154],
+              [-150, 30, Z1],
+              [-150, 0, Z1],
             ])}
             fill={WOOD_END}
           />
           <polygon
             points={poly([
-              [-210, 30, 0],
-              [-130, 30, 0],
-              [-130, 30, 14],
-              [-158, 30, 14],
-              [-158, 30, 126],
-              [-130, 30, 126],
-              [-130, 30, 140],
-              [-210, 30, 140],
+              [-215, 30, 0],
+              [-150, 30, 0],
+              [-150, 30, 16],
+              [-172, 30, 16],
+              [-172, 30, 154],
+              [-150, 30, 154],
+              [-150, 30, Z1],
+              [-215, 30, Z1],
             ])}
             fill={WOOD_CUT}
           />
           <polygon
             points={poly([
-              [-210, 30, 0],
-              [-130, 30, 0],
-              [-130, 30, 14],
-              [-158, 30, 14],
-              [-158, 30, 126],
-              [-130, 30, 126],
-              [-130, 30, 140],
-              [-210, 30, 140],
+              [-215, 30, 0],
+              [-150, 30, 0],
+              [-150, 30, 16],
+              [-172, 30, 16],
+              [-172, 30, 154],
+              [-150, 30, 154],
+              [-150, 30, Z1],
+              [-215, 30, Z1],
             ])}
-            fill={`url(#${frontHatchId})`}
+            fill={`url(#${hatch})`}
             stroke="none"
           />
           <polygon
             points={poly([
-              [-210, 0, 140],
-              [-130, 0, 140],
-              [-130, 30, 140],
-              [-210, 30, 140],
+              [-215, 0, Z1],
+              [-150, 0, Z1],
+              [-150, 30, Z1],
+              [-215, 30, Z1],
             ])}
             fill={WOOD_TOP}
           />
         </g>
-        {label(60, 30, 'FRAME')}
+        {label(60, 16, 'FRAME')}
       </g>
 
       {/* Door edge half-section with milled recess */}
-      <g className="xv-part" style={{ ...asm(-124), opacity: dim('members') }}>
+      <g className="xv-part" style={{ ...move(step >= 2 ? -144 : 0), opacity: dim('members') }}>
         <polygon
           points={poly([
-            [130, 18, 14],
-            [158, 18, 14],
-            [158, 30, 14],
-            [130, 30, 14],
+            [150, 16, 16],
+            [172, 16, 16],
+            [172, 30, 16],
+            [150, 30, 16],
           ])}
           fill={VOID_FLOOR}
         />
         <polygon
           points={poly([
-            [130, 18, 14],
-            [158, 18, 14],
-            [158, 18, 126],
-            [130, 18, 126],
+            [150, 16, 16],
+            [172, 16, 16],
+            [172, 16, 154],
+            [150, 16, 154],
           ])}
           fill={VOID_BACK}
         />
         <g stroke={EDGE} strokeWidth="0.9">
           <polygon
             points={poly([
-              [210, 10, 0],
-              [210, 30, 0],
-              [210, 30, 140],
-              [210, 10, 140],
+              [215, 10, 0],
+              [215, 30, 0],
+              [215, 30, Z1],
+              [215, 10, Z1],
             ])}
             fill={WOOD_END}
           />
           <polygon
             points={poly([
-              [130, 30, 0],
-              [210, 30, 0],
-              [210, 30, 140],
-              [130, 30, 140],
-              [130, 30, 126],
-              [158, 30, 126],
-              [158, 30, 14],
-              [130, 30, 14],
+              [150, 30, 0],
+              [215, 30, 0],
+              [215, 30, Z1],
+              [150, 30, Z1],
+              [150, 30, 154],
+              [172, 30, 154],
+              [172, 30, 16],
+              [150, 30, 16],
             ])}
             fill={WOOD_CUT}
           />
           <polygon
             points={poly([
-              [130, 30, 0],
-              [210, 30, 0],
-              [210, 30, 140],
-              [130, 30, 140],
-              [130, 30, 126],
-              [158, 30, 126],
-              [158, 30, 14],
-              [130, 30, 14],
+              [150, 30, 0],
+              [215, 30, 0],
+              [215, 30, Z1],
+              [150, 30, Z1],
+              [150, 30, 154],
+              [172, 30, 154],
+              [172, 30, 16],
+              [150, 30, 16],
             ])}
-            fill={`url(#${frontHatchId})`}
+            fill={`url(#${hatch})`}
             stroke="none"
           />
           <polygon
             points={poly([
-              [130, 10, 140],
-              [210, 10, 140],
-              [210, 30, 140],
-              [130, 30, 140],
+              [150, 10, Z1],
+              [215, 10, Z1],
+              [215, 30, Z1],
+              [150, 30, Z1],
             ])}
             fill={WOOD_TOP}
           />
         </g>
-        {label(352, 376, 'DOOR')}
+        {label(372, 404, 'DOOR', { anchor: 'end' })}
       </g>
 
-      {/* Frame part with fixing screws */}
-      <g className="xv-part" style={{ ...asm(78), opacity: dim('plates') }}>
-        {[34, 106].map((z) => (
-          <g key={z}>
-            <Box
-              x={[-136, -108]}
-              y={[28.5, 31.5]}
-              z={[z - 1.5, z + 1.5]}
-              top={METAL_TOP}
-              end={METAL_END}
-              front={METAL_FRONT}
-            />
-          </g>
-        ))}
+      {/* Frame part: black housing with two silver cover plates and screws */}
+      <g style={{ ...move(84), opacity: dim('plates') }}>
         <Box
-          x={[-108, -88]}
+          x={[-110, -93]}
           y={[18, 42]}
-          z={[18, 122]}
-          top={METAL_TOP}
-          end={METAL_END}
-          front={METAL_FRONT}
+          z={[20, 150]}
+          top={BLACK_TOP}
+          end={BLACK_END}
+          front={BLACK_FRONT}
         />
-        {[34, 106].map((z) => (
-          <Box
-            key={z}
-            x={[-88, -84]}
-            y={[26, 34]}
-            z={[z - 4, z + 4]}
-            top="#c4a98a"
-            end="#a98f6f"
-            front="#8d7759"
-          />
-        ))}
-        {label(122, 104, 'FRAME PART', { anchor: 'start' })}
+        <polygon
+          points={poly([
+            [-93, 21, 67],
+            [-93, 39, 67],
+            [-93, 39, 103],
+            [-93, 21, 103],
+          ])}
+          fill="#0b0b0b"
+        />
+        <CoverPlate x={-90} z0={20} z1={62} roundTop={false} />
+        <CoverPlate x={-90} z0={108} z1={150} roundTop />
       </g>
 
-      {/* Closed hinge body: three knuckles on slide bearings */}
+      {/* Stepped silver knuckle between the two housings */}
       <g style={{ opacity: dim('body') }}>
-        {KNUCKLES.map(([z0, z1]) => (
-          <g key={z0}>
+        {[
+          { z: [64, 78] as [number, number], y: [22, 38] as [number, number] },
+          { z: [80, 90] as [number, number], y: [25, 35] as [number, number] },
+          { z: [92, 106] as [number, number], y: [22, 38] as [number, number] },
+        ].map((seg) => (
+          <g key={seg.z[0]}>
             <Box
-              x={[-10, 10]}
-              y={[20, 40]}
-              z={[z0, z1]}
-              top={METAL_TOP}
-              end={METAL_END}
-              front={METAL_FRONT}
+              x={[-9, 9]}
+              y={seg.y}
+              z={seg.z}
+              top={SILVER_TOP}
+              end={SILVER_END}
+              front={SILVER_FRONT}
             />
-            <TopCircle x={0} y={30} z={z1} r={5.5} fill="#1c1b1b" />
-            <TopCircle x={0} y={30} z={z1} r={2} fill={LINE} />
+            <TopCircle x={0} y={30} z={seg.z[1]} r={3.6} fill="#2a2b2c" />
           </g>
         ))}
-        {label(187, 146, 'HINGE BODY', { sub: 'slide bearings' })}
+        {label(187, 372, 'HINGE', { sub: 'one body, slide bearings' })}
       </g>
 
-      {/* Door part with fixing screws */}
-      <g className="xv-part" style={{ ...asm(-78), opacity: dim('plates') }}>
-        {[34, 106].map((z) => (
-          <Box
-            key={z}
-            x={[108, 136]}
-            y={[28.5, 31.5]}
-            z={[z - 1.5, z + 1.5]}
-            top={METAL_TOP}
-            end={METAL_END}
-            front={METAL_FRONT}
-          />
-        ))}
+      {/* Door part: black housing (its cover plates face the frame, away from the viewer) */}
+      <g style={{ ...move(-84), opacity: dim('plates') }}>
         <Box
-          x={[88, 108]}
-          y={[20, 40]}
-          z={[18, 122]}
-          top={METAL_TOP}
-          end={METAL_END}
-          front={METAL_FRONT}
+          x={[93, 110]}
+          y={[18, 42]}
+          z={[20, 150]}
+          top={BLACK_TOP}
+          end={BLACK_END}
+          front={BLACK_FRONT}
         />
-        {label(274, 190, 'DOOR PART', { anchor: 'end' })}
+        <Box x={[110, 112]} y={[26, 34]} z={[30, 38]} top="#8a8c8f" end="#6d6f72" front="#7b7d80" />
+        <Box
+          x={[110, 112]}
+          y={[26, 34]}
+          z={[132, 140]}
+          top="#8a8c8f"
+          end="#6d6f72"
+          front="#7b7d80"
+        />
       </g>
 
       {/* Low-voltage feed running through the hinge to the door */}
       <g style={{ opacity: dim('feed') }} className="xv-feed">
         <path
-          d={`M${pt([-98, 30, 18])} C${pt([-70, 44, -14])} ${pt([70, 44, -14])} ${pt([98, 30, 18])}`}
+          d={`M${pt([-17, 30, 20])} C${pt([-10, 44, -14])} ${pt([10, 44, -14])} ${pt([17, 30, 20])}`}
           stroke={LINE}
           strokeWidth="2"
           strokeLinecap="round"
           strokeDasharray="1 5"
         />
-        <circle cx={sx(-98, 30, 18)} cy={sy(-98, 30, 18)} r="3" fill={LINE} />
-        <circle cx={sx(98, 30, 18)} cy={sy(98, 30, 18)} r="3" fill={LINE} />
+        <circle cx={sx(-17, 30, 20)} cy={sy(-17, 30, 20)} r="3" fill={LINE} />
+        <circle cx={sx(17, 30, 20)} cy={sy(17, 30, 20)} r="3" fill={LINE} />
         <text
-          x={sx(0, 44, -14)}
+          x={sx(0, 44, -14) + 8}
           y={sy(0, 44, -14) + 22}
-          textAnchor="middle"
+          textAnchor="end"
           fontSize="10.5"
           letterSpacing="0.8"
           fill="#fcf9f8"
@@ -645,76 +712,105 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
 }
 
 /**
- * Front view of a concealed hinge: two slim plates with rounded ends, each with
- * countersunk fixing screws, either side of the central knuckle.
+ * Front view of the concealed hinge, drawn to the proportions of Simonswerk's
+ * TECTUS TE 340 3D (160 mm long, 28 mm wide per side, 17.5 mm between the
+ * sides): four silver cover plates with rounded outer ends and one countersunk
+ * screw each, a black recess, and the stepped silver knuckle.
  */
 export function HingeFrontView({ className }: { className?: string }) {
+  const plateTop = (x: number): string =>
+    `M${x} 51.5 V11.5 A11.5 11.5 0 0 1 ${x + 11.5} 0 H${x + 16.5} A11.5 11.5 0 0 1 ${x + 28} 11.5 V51.5 Z`;
+  const plateBottom = (x: number): string =>
+    `M${x} 108.5 V148.5 A11.5 11.5 0 0 0 ${x + 11.5} 160 H${x + 16.5} A11.5 11.5 0 0 0 ${x + 28} 148.5 V108.5 Z`;
+  const screws: [number, number][] = [
+    [14, 14],
+    [14, 146],
+    [59.5, 14],
+    [59.5, 146],
+  ];
   return (
     <svg
-      viewBox="0 0 60 100"
+      viewBox="-2 -2 77.5 164"
       className={className}
       role="img"
-      aria-label="Front view of a concealed hinge: two slim plates with fixing screws and a central knuckle"
+      aria-label="Front view of a concealed hinge: four silver cover plates with one screw each, a black recess and a stepped silver knuckle"
       fill="none"
       strokeLinejoin="round"
     >
-      <rect
-        x="5"
-        y="3"
-        width="19"
-        height="94"
-        rx="9"
-        fill={FILL_HI}
-        stroke={LINE}
-        strokeWidth="1.2"
-      />
-      <rect
-        x="36"
-        y="3"
-        width="19"
-        height="94"
-        rx="9"
-        fill={FILL_HI}
-        stroke={LINE}
-        strokeWidth="1.2"
-      />
-      <rect x="24" y="29" width="12" height="42" fill={VOID} />
-      <rect
-        x="21"
-        y="34"
-        width="18"
-        height="11"
-        rx="2"
-        fill={FILL}
-        stroke={LINE}
-        strokeWidth="1.2"
-      />
-      <rect
-        x="21"
-        y="55"
-        width="18"
-        height="11"
-        rx="2"
-        fill={FILL}
-        stroke={LINE}
-        strokeWidth="1.2"
-      />
-      <line x1="30" y1="29" x2="30" y2="71" stroke={LINE} strokeWidth="1.6" />
-      {[
-        [14.5, 14],
-        [14.5, 86],
-        [45.5, 14],
-        [45.5, 86],
-      ].map(([cx, cy]) => (
+      <defs>
+        <linearGradient id="hfv-silver" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor="#f0f1f2" />
+          <stop offset="0.5" stopColor="#c3c5c7" />
+          <stop offset="1" stopColor="#e4e5e6" />
+        </linearGradient>
+      </defs>
+      <rect x="0.5" y="54" width="72.5" height="52" fill="#121212" />
+      {[0, 45.5].map((x) => (
+        <g key={x}>
+          <path d={plateTop(x)} fill="url(#hfv-silver)" stroke="#8d8f92" strokeWidth="0.6" />
+          <path d={plateBottom(x)} fill="url(#hfv-silver)" stroke="#8d8f92" strokeWidth="0.6" />
+          <rect x={x} y="51.5" width="28" height="4.6" fill="#a4a6a9" />
+          <rect x={x} y="103.9" width="28" height="4.6" fill="#a4a6a9" />
+        </g>
+      ))}
+      {screws.map(([cx, cy]) => (
         <g key={`${cx}-${cy}`}>
-          <circle cx={cx} cy={cy} r="3.4" stroke={LINE} strokeWidth="1" />
+          <circle cx={cx} cy={cy} r="4" fill="#d4d6d8" stroke="#7d7f82" strokeWidth="0.6" />
           <path
-            d={`M${cx - 1.8} ${cy} H${cx + 1.8} M${cx} ${cy - 1.8} V${cy + 1.8}`}
-            stroke={LINE}
-            strokeWidth="0.8"
+            d={`M${cx - 2.3} ${cy} H${cx + 2.3} M${cx} ${cy - 2.3} V${cy + 2.3}`}
+            stroke="#6a6c70"
+            strokeWidth="0.9"
           />
         </g>
       ))}
+      <rect
+        x="10.6"
+        y="58"
+        width="11"
+        height="45"
+        rx="1.5"
+        fill="url(#hfv-silver)"
+        stroke="#8d8f92"
+        strokeWidth="0.5"
+      />
+      <rect
+        x="48.5"
+        y="58"
+        width="10.5"
+        height="45"
+        rx="1.5"
+        fill="url(#hfv-silver)"
+        stroke="#8d8f92"
+        strokeWidth="0.5"
+      />
+      <rect
+        x="33"
+        y="59"
+        width="16"
+        height="12"
+        fill="url(#hfv-silver)"
+        stroke="#8d8f92"
+        strokeWidth="0.5"
+      />
+      <rect
+        x="21.6"
+        y="71"
+        width="27"
+        height="6"
+        fill="#e9eaeb"
+        stroke="#8d8f92"
+        strokeWidth="0.5"
+      />
+      <rect
+        x="21.6"
+        y="92"
+        width="27"
+        height="11"
+        fill="url(#hfv-silver)"
+        stroke="#8d8f92"
+        strokeWidth="0.5"
+      />
+      <line x1="34.5" y1="58" x2="34.5" y2="103" stroke="#6a6c70" strokeWidth="0.7" />
     </svg>
   );
 }

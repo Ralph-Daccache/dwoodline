@@ -488,41 +488,15 @@ html.snap-portfolio {
   opacity: 1;
   transform: translateY(0);
 }
-/* Exploded hinge diagram: parts are apart by default (so it is never stuck
-   assembled), and pull apart once with an animation when the section reveals. */
+/* Concealed hinge diagram: the wood members slide onto the single hinge body. */
 [data-page='expertise'] .xv-part {
   transition:
     transform 1.6s cubic-bezier(0.645, 0.045, 0.355, 1),
     opacity 0.3s ease;
 }
-[data-page='expertise'] .xv.is-assembled .xv-part {
-  transform: translate(calc(var(--asm, 0) * 0.7794px), calc(var(--asm, 0) * 0.45px));
-}
-[data-page='expertise'] .visible .xv:not(.is-assembled) .xv-part {
-  animation: xvOpen 1.8s cubic-bezier(0.645, 0.045, 0.355, 1) backwards;
-}
-@keyframes xvOpen {
-  from {
-    transform: translate(calc(var(--asm, 0) * 0.7794px), calc(var(--asm, 0) * 0.45px));
-  }
-}
-/* Labels only make sense when the parts are apart; they would collide when assembled. */
-[data-page='expertise'] .xv .xv-label {
-  transition: opacity 0.4s ease;
-}
-[data-page='expertise'] .xv.is-assembled .xv-label {
-  opacity: 0;
-}
-[data-page='expertise'] .xv .xv-feed {
-  transition: opacity 0.4s ease;
-}
-[data-page='expertise'] .xv.is-assembled .xv-feed {
-  opacity: 0 !important;
-}
 @media (prefers-reduced-motion: reduce) {
   [data-page='expertise'] .xv-part {
     transition: none;
-    animation: none !important;
   }
 }
 [data-page='expertise'] .light-beam {

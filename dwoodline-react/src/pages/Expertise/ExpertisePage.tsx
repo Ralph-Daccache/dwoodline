@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/config/routes';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
@@ -61,7 +61,37 @@ export function ExpertisePage() {
   useHtmlScrollSnap('proximity');
   useExpertiseScroll();
   const [activeParts, setActiveParts] = useState<HingePart[]>([]);
-  const [assembled, setAssembled] = useState(false);
+  const [step, setStep] = useState<0 | 1 | 2>(0);
+  const diagramRef = useRef<HTMLDivElement>(null);
+  const interacted = useRef(false);
+
+  // The hinge stays one body; the frame attaches first, then the door. Plays once
+  // when the diagram scrolls into view (or shows the finished state for reduced motion).
+  useEffect(() => {
+    const el = diagramRef.current;
+    if (!el) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setStep(2);
+      return undefined;
+    }
+    const timers: number[] = [];
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || interacted.current) return;
+        io.disconnect();
+        timers.push(window.setTimeout(() => !interacted.current && setStep(1), 900));
+        timers.push(window.setTimeout(() => !interacted.current && setStep(2), 2800));
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      timers.forEach((t) => window.clearTimeout(t));
+    };
+  }, []);
+
+  const STEP_LABEL = ['Attach frame', 'Attach door', 'Reset'] as const;
 
   return (
     <>
@@ -212,27 +242,30 @@ export function ExpertisePage() {
               </div>
             </div>
             <div className="reveal reveal-stagger-2">
-              <div className="h-[clamp(260px,50vh,440px)] w-full">
-                <ExplodedHinge active={activeParts} assembled={assembled} />
+              <div ref={diagramRef} className="h-[clamp(260px,50vh,440px)] w-full">
+                <ExplodedHinge active={activeParts} step={step} />
               </div>
               <div className="mt-3 flex items-center gap-4">
                 <div className="flex shrink-0 flex-col items-center gap-1">
-                  <HingeFrontView className="h-[clamp(64px,11vh,96px)] w-auto" />
+                  <HingeFrontView className="h-[clamp(96px,17vh,150px)] w-auto" />
                   <span className="font-technical-label text-[9px] uppercase tracking-[0.2em] opacity-50">
                     Front view
                   </span>
                 </div>
                 <p className="text-caption opacity-50 flex-1">
-                  Hover or tap a point to find its part. Concealed hinge shown as an axonometric
-                  half-section; typical 3D adjustment: side ±3 mm, height ±3 mm, compression ±1 mm.
+                  Hover or tap a point to find its part. The hinge stays one body: the frame
+                  attaches first, then the door. Typical 3D adjustment: side ±3 mm, height ±3 mm,
+                  compression ±1 mm.
                 </p>
                 <button
                   type="button"
-                  aria-pressed={assembled}
-                  onClick={() => setAssembled((v) => !v)}
+                  onClick={() => {
+                    interacted.current = true;
+                    setStep((cur) => (cur === 2 ? 0 : ((cur + 1) as 0 | 1 | 2)));
+                  }}
                   className="shrink-0 border border-surface-bright/30 px-4 py-2 font-technical-label text-[10px] uppercase tracking-[0.2em] text-surface-bright transition-colors duration-300 hover:bg-brand hover:text-on-background"
                 >
-                  {assembled ? 'Explode' : 'Assemble'}
+                  {STEP_LABEL[step]}
                 </button>
               </div>
             </div>
