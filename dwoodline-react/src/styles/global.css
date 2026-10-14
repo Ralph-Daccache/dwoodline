@@ -488,29 +488,23 @@ html.snap-portfolio {
   opacity: 1;
   transform: translateY(0);
 }
-/* Photo wipes in left to right (clip-path interpolates; gradient masks do not). */
-[data-page='expertise'] .veneer-mask {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 2.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-[data-page='expertise'] .visible .veneer-mask {
-  clip-path: inset(0 0 0 0);
-}
-@media (prefers-reduced-motion: reduce) {
-  [data-page='expertise'] .veneer-mask {
-    clip-path: none;
-    transition: none;
-  }
-}
-/* Exploded hinge diagram: parts rest assembled, then pull apart once revealed. */
+/* Exploded hinge diagram: parts are apart by default (so it is never stuck
+   assembled), and pull apart once with an animation when the section reveals. */
 [data-page='expertise'] .xv-part {
-  transform: translateX(var(--asm, 0px));
   transition:
     transform 1.6s cubic-bezier(0.645, 0.045, 0.355, 1),
     opacity 0.3s ease;
 }
+[data-page='expertise'] .xv.is-assembled .xv-part {
+  transform: translateX(var(--asm, 0px));
+}
 [data-page='expertise'] .visible .xv:not(.is-assembled) .xv-part {
-  transform: none;
+  animation: xvOpen 1.8s cubic-bezier(0.645, 0.045, 0.355, 1) backwards;
+}
+@keyframes xvOpen {
+  from {
+    transform: translateX(var(--asm, 0px));
+  }
 }
 /* Labels only make sense when the parts are apart; they would collide when assembled. */
 [data-page='expertise'] .xv .xv-label {
@@ -522,23 +516,8 @@ html.snap-portfolio {
 @media (prefers-reduced-motion: reduce) {
   [data-page='expertise'] .xv-part {
     transition: none;
+    animation: none !important;
   }
-}
-[data-page='expertise'] .hardware-component {
-  transition:
-    transform 1.8s cubic-bezier(0.645, 0.045, 0.355, 1),
-    opacity 1.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-  opacity: 0;
-}
-[data-page='expertise'] .hardware-left {
-  transform: translateX(-100px);
-}
-[data-page='expertise'] .hardware-right {
-  transform: translateX(100px);
-}
-[data-page='expertise'] .visible .hardware-component {
-  transform: translateX(0);
-  opacity: 1;
 }
 [data-page='expertise'] .light-beam {
   position: absolute;

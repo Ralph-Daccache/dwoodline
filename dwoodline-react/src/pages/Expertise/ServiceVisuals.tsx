@@ -138,7 +138,8 @@ export function BookMatchViewer() {
               <img
                 key={s.id}
                 src={s.src}
-                alt={side === 'left' ? `${s.label} veneer leaf` : ''}
+                alt={side === 'left' && s.id === species ? `${s.label} veneer leaf` : ''}
+                aria-hidden={side === 'right' || s.id !== species ? true : undefined}
                 draggable={false}
                 className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
                   side === 'right' ? '-scale-x-100' : ''
@@ -215,7 +216,7 @@ const FILL_HI = '#3b3a39';
 /** Technical drawing of a concealed hinge, drawn as an exploded assembly. */
 export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
   const dim = (p: HingePart): number => (active.length === 0 || active.includes(p) ? 1 : 0.22);
-  const label = (x: number, y: number, text: string, p: HingePart) => (
+  const label = (x: number, y: number, text: string) => (
     <text
       x={x}
       y={y}
@@ -223,7 +224,7 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
       fontSize="13"
       letterSpacing="1.2"
       fill="#fcf9f8"
-      opacity={dim(p) * 0.85}
+      opacity={0.85}
       className="xv-label"
       fontFamily="Inter, sans-serif"
     >
@@ -263,7 +264,7 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
         {[92, 112, 132, 152, 172, 192, 212, 232, 252].map((y) => (
           <line key={y} x1="38" y1={y} x2="88" y2={y} stroke={LINE} strokeOpacity="0.14" />
         ))}
-        {label(80, 296, 'DOOR PANEL', 'door')}
+        {label(80, 296, 'DOOR PANEL')}
       </g>
 
       <g className="xv-part" style={{ '--asm': '-10px', opacity: dim('cup') } as CSSProperties}>
@@ -288,7 +289,7 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
         />
         <circle cx="274" cy="170" r="10" fill={FILL} stroke={LINE} strokeWidth="1.5" />
         <circle cx="274" cy="170" r="3.5" fill={LINE} />
-        {label(220, 232, 'HINGE CUP', 'cup')}
+        {label(220, 232, 'HINGE CUP')}
       </g>
 
       <g className="xv-part" style={{ '--asm': '-38px', opacity: dim('plate') } as CSSProperties}>
@@ -303,7 +304,7 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
         />
         <circle cx="311" cy="138" r="3" stroke={LINE} />
         <circle cx="311" cy="202" r="3" stroke={LINE} />
-        {label(311, 252, 'MOUNT PLATE', 'plate')}
+        {label(311, 252, 'MOUNT PLATE')}
       </g>
 
       <g className="xv-part" style={{ '--asm': '-56px', opacity: dim('fixings') } as CSSProperties}>
@@ -313,7 +314,7 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
             <rect x="350" y={y - 2} width="38" height="4" fill={LINE} />
           </g>
         ))}
-        {label(372, 296, 'FIXINGS', 'fixings')}
+        {label(372, 296, 'FIXINGS')}
       </g>
 
       <g
@@ -323,7 +324,7 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
         <rect x="430" y="70" width="44" height="200" fill={FILL} stroke={LINE} strokeWidth="1.5" />
         <rect x="434" y="100" width="6" height="140" fill="#fcf9f8" fillOpacity="0.55" />
         <rect x="434" y="100" width="6" height="140" stroke={LINE} strokeOpacity="0.8" />
-        {label(452, 52, 'CARCASS + LED', 'carcass')}
+        {label(452, 52, 'CARCASS + LED')}
       </g>
     </svg>
   );

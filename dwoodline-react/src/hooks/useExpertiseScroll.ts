@@ -7,7 +7,6 @@ import { useIsDesktop } from './useIsDesktop';
  *  - IntersectionObserver reveals sections + their `.reveal` children and drives
  *    the side progress dots.
  *  - Progress-dot clicks smooth-scroll to their target section.
- *  - A lightweight parallax translates the chapter-2 background on scroll.
  *  - Desktop-only wheel/touch/keyboard navigation snaps between the four
  *    sections, reveals the four chapter-1 detail circles one scroll at a time,
  *    and treats the footer as a virtual final section.
@@ -47,21 +46,6 @@ export function useExpertiseScroll(): void {
       dot.addEventListener('click', handler);
       return () => dot.removeEventListener('click', handler);
     });
-
-    // ---- Parallax on chapter-2 background ----
-    const onParallax = (): void => {
-      document.querySelectorAll<HTMLElement>('.parallax-bg').forEach((img) => {
-        const parent = img.parentElement;
-        if (!parent) return;
-        const rect = parent.getBoundingClientRect();
-        const vh = window.innerHeight;
-        if (rect.top < vh && rect.bottom > 0) {
-          const offset = (rect.top / vh) * 50;
-          img.style.transform = `translateY(${offset}px) scale(1.1)`;
-        }
-      });
-    };
-    window.addEventListener('scroll', onParallax, { passive: true });
 
     // ---- Chapter-1 circle reveal state ----
     let ch1Step = 0;
@@ -210,6 +194,9 @@ export function useExpertiseScroll(): void {
       };
 
       const handleKey = (e: KeyboardEvent): void => {
+        // Let sliders, buttons and other focusable controls use their own keys.
+        const t = e.target as HTMLElement | null;
+        if (t?.closest('input, button, select, textarea, [tabindex]')) return;
         if (isAnimating) return;
         const cur = getCurrentSectionIndex();
         const isDown = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ';
@@ -262,7 +249,6 @@ export function useExpertiseScroll(): void {
     return () => {
       observer.disconnect();
       dotCleanups.forEach((fn) => fn());
-      window.removeEventListener('scroll', onParallax);
       cleanupNav();
     };
   }, [isDesktop]);

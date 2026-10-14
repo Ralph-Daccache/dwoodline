@@ -191,8 +191,12 @@ export function ExpertisePage() {
                   <div
                     key={t.title}
                     tabIndex={0}
-                    onMouseEnter={() => setActiveParts(t.parts)}
-                    onMouseLeave={() => setActiveParts([])}
+                    onPointerEnter={(e) => e.pointerType === 'mouse' && setActiveParts(t.parts)}
+                    onPointerLeave={(e) => e.pointerType === 'mouse' && setActiveParts([])}
+                    onPointerUp={(e) => {
+                      if (e.pointerType === 'mouse') return;
+                      setActiveParts((cur) => (cur === t.parts ? [] : t.parts));
+                    }}
                     onFocus={() => setActiveParts(t.parts)}
                     onBlur={() => setActiveParts([])}
                     className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 focus-visible:bg-surface-bright/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand transition-colors duration-500"
@@ -211,7 +215,7 @@ export function ExpertisePage() {
                 <ExplodedHinge active={activeParts} assembled={assembled} />
               </div>
               <div className="mt-3 flex items-center justify-between gap-4">
-                <p className="text-caption opacity-50">Hover a point to find its part.</p>
+                <p className="text-caption opacity-50">Hover or tap a point to find its part.</p>
                 <button
                   type="button"
                   aria-pressed={assembled}
