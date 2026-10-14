@@ -34,7 +34,7 @@ export const SITE = {
     address: 'Halat Industrial Area, Qartaba Main Road, Lebanon',
     mapHref:
       'https://www.google.com/maps/search/?api=1&query=Halat+Industrial+Area+Qartaba+Main+Road+Lebanon',
-    hours: '09:00 - 18:00',
+    hours: 'Monday to Friday, 08:00 - 17:30',
   },
   social: {
     instagram: 'https://instagram.com/dwoodline_sal/',
