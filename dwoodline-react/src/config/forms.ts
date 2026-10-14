@@ -7,4 +7,6 @@ const configured = (import.meta.env.VITE_INQUIRY_ENDPOINT as string | undefined)
 
 export const FORMS_CONFIG = {
   inquiryEndpoint: configured || '/api/inquiry.php',
+  /** `vite dev` has no PHP: let local development of the form succeed without sending anything. */
+  simulate: import.meta.env.DEV && !configured,
 } as const;

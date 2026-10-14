@@ -11,7 +11,7 @@ declare(strict_types=1);
 const INQUIRY_TO = 'info@dwoodline.com';
 // Sending from an address on the same domain keeps the message out of spam.
 const INQUIRY_FROM = 'info@dwoodline.com';
-const RATE_LIMIT_PER_HOUR = 6;
+const RATE_LIMIT_PER_HOUR = 8;
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -47,7 +47,7 @@ if (!is_array($data)) {
 }
 
 // Honeypot: real visitors never see or fill this field. Pretend success for bots.
-if (!empty($data['website'])) {
+if (!empty($data['company_url'])) {
     respond(200, ['ok' => true]);
 }
 
@@ -63,7 +63,11 @@ $errors = [];
 if ($name === '' || mb_strlen($name) > 100) {
     $errors['name'] = 'invalid';
 }
-if ($email === '' || mb_strlen($email) > 254 || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+if (
+    $email === ''
+    || mb_strlen($email) > 254
+    || !preg_match('/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/', $email)
+) {
     $errors['email'] = 'invalid';
 }
 if ($message === '' || mb_strlen($message) > 5000) {
@@ -87,11 +91,8 @@ if (is_file($bucket)) {
 if (count($hits) >= RATE_LIMIT_PER_HOUR) {
     respond(429, ['ok' => false, 'error' => 'rate_limited']);
 }
-$hits[] = $now;
-@file_put_contents($bucket, json_encode($hits), LOCK_EX);
 
-$safeName = trim(str_replace(['"', '<', '>'], '', $name));
-$subject = '=?UTF-8?B?' . base64_encode('New website inquiry from ' . $name) . '?=';
+$subject = mb_encode_mimeheader('New website inquiry from ' . mb_substr($name, 0, 40), 'UTF-8', 'B', "\r\n");
 $body = "New inquiry from the dwoodline.com contact form\n\n"
     . "Name:    {$name}\n"
     . "Email:   {$email}\n"
@@ -100,7 +101,7 @@ $body = "New inquiry from the dwoodline.com contact form\n\n"
 
 $headers = [
     'From: D Woodline Website <' . INQUIRY_FROM . '>',
-    'Reply-To: ' . ($safeName !== '' ? $safeName . ' <' . $email . '>' : $email),
+    'Reply-To: ' . $email,
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',
     'Content-Transfer-Encoding: 8bit',
@@ -112,5 +113,9 @@ $sent = @mail(INQUIRY_TO, $subject, $body, implode("\r\n", $headers), '-f' . INQ
 if (!$sent) {
     respond(500, ['ok' => false, 'error' => 'send_failed']);
 }
+
+// Count only deliveries, so a failed send never uses up a visitor's quota.
+$hits[] = $now;
+@file_put_contents($bucket, json_encode($hits), LOCK_EX);
 
 respond(200, ['ok' => true]);

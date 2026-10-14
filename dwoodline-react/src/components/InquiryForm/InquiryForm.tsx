@@ -2,8 +2,10 @@ import { useId, useRef, useState } from 'react';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import { SITE } from '@/config/site';
 import {
+  LIMITS,
   submitInquiry,
   validateInquiry,
+  type InquiryFailure,
   type FieldErrors,
   type InquiryField,
 } from '@/services/inquiryService';
@@ -50,6 +52,7 @@ export function InquiryForm() {
   const [honeypot, setHoneypot] = useState('');
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>('idle');
+  const [failure, setFailure] = useState<InquiryFailure>('failed');
   const [sent, setSent] = useState({ name: '', email: '' });
 
   const nameRef = useRef<HTMLInputElement>(null);
@@ -80,13 +83,14 @@ export function InquiryForm() {
     }
 
     setStatus('sending');
-    const result = await submitInquiry({ ...values, website: honeypot });
+    const result = await submitInquiry({ ...values, company_url: honeypot });
     if (result.ok) {
       setSent({ name: values.name.trim(), email: values.email.trim() });
       setValues({ name: '', email: '', message: '' });
       setStatus('success');
       window.requestAnimationFrame(() => confirmationRef.current?.focus());
     } else {
+      setFailure(result.reason);
       setStatus('error');
     }
   }
@@ -106,7 +110,12 @@ export function InquiryForm() {
         </p>
         <button
           type="button"
-          onClick={() => setStatus('idle')}
+          onClick={() => {
+            setHoneypot('');
+            setErrors({});
+            setStatus('idle');
+            window.requestAnimationFrame(() => nameRef.current?.focus());
+          }}
           className="mt-8 border border-[#F5F5F7]/45 px-6 py-3 font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#F5F5F7] transition-colors duration-300 hover:bg-brand hover:text-[#1A1A1A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
         >
           Send another message
@@ -131,6 +140,7 @@ export function InquiryForm() {
           name="name"
           type="text"
           autoComplete="name"
+          maxLength={LIMITS.name + 50}
           required
           aria-required="true"
           aria-invalid={errors.name ? true : undefined}
@@ -178,15 +188,16 @@ export function InquiryForm() {
         />
       </Field>
 
-      {/* Honeypot: hidden from people and assistive tech, tempting to bots. */}
-      <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+      {/* Honeypot: invisible to people and assistive tech, tempting to bots. The unusual name
+          and autocomplete token stop browsers and password managers from filling it. */}
+      <div aria-hidden="true" className="sr-only" style={{ position: 'absolute', left: 0 }}>
         <label>
           Leave this field empty
           <input
             type="text"
-            name="website"
+            name="company_url"
             tabIndex={-1}
-            autoComplete="off"
+            autoComplete="new-password"
             value={honeypot}
             onChange={(e) => setHoneypot(e.target.value)}
           />
@@ -198,8 +209,11 @@ export function InquiryForm() {
           role="alert"
           className="border border-[#f2a7a0]/60 px-4 py-3 text-[14px] leading-relaxed text-[#F5F5F7]"
         >
-          We could not send your message. Your details are still here, so please try again, or reach
-          us on{' '}
+          {failure === 'rate_limited'
+            ? 'You have sent several messages in a short time. Please wait a little, or reach us on'
+            : failure === 'invalid'
+              ? 'Some details were not accepted. Please check the form, or reach us on'
+              : 'We could not send your message. Your details are still here, so please try again, or reach us on'}{' '}
           <a
             className="underline underline-offset-4 hover:text-brand"
             href={SITE.social.whatsapp}
