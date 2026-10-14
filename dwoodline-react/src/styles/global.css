@@ -488,13 +488,19 @@ html.snap-portfolio {
   opacity: 1;
   transform: translateY(0);
 }
+/* Photo wipes in left to right (clip-path interpolates; gradient masks do not). */
 [data-page='expertise'] .veneer-mask {
-  mask-image: linear-gradient(to right, black 0%, black 0%, transparent 0%);
-  mask-size: 100% 100%;
-  transition: mask-image 2.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 2.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 [data-page='expertise'] .visible .veneer-mask {
-  mask-image: linear-gradient(to right, black 0%, black 100%, transparent 100%);
+  clip-path: inset(0 0 0 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-page='expertise'] .veneer-mask {
+    clip-path: none;
+    transition: none;
+  }
 }
 [data-page='expertise'] .hardware-component {
   transition:

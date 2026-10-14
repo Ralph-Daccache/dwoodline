@@ -62,11 +62,11 @@ export function ExpertisePage() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-3 w-full justify-center py-2">
+            <div className="flex flex-col gap-[clamp(14px,3.2vh,36px)] w-full justify-center py-2">
               {/* Circle 1 — left */}
               <div className="detail-circle self-start ml-8">
                 <div
-                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  className="w-[clamp(104px,15vh,190px)] h-[clamp(104px,15vh,190px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -79,7 +79,7 @@ export function ExpertisePage() {
               {/* Circle 2 — right */}
               <div className="detail-circle self-end mr-8">
                 <div
-                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  className="w-[clamp(104px,15vh,190px)] h-[clamp(104px,15vh,190px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -92,7 +92,7 @@ export function ExpertisePage() {
               {/* Circle 3 — left */}
               <div className="detail-circle self-start ml-8">
                 <div
-                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  className="w-[clamp(104px,15vh,190px)] h-[clamp(104px,15vh,190px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -105,7 +105,7 @@ export function ExpertisePage() {
               {/* Circle 4 — right */}
               <div className="detail-circle self-end mr-8">
                 <div
-                  className="w-[clamp(84px,12vh,160px)] h-[clamp(84px,12vh,160px)] rounded-full overflow-hidden"
+                  className="w-[clamp(104px,15vh,190px)] h-[clamp(104px,15vh,190px)] rounded-full overflow-hidden"
                   style={CIRCLE_BORDER}
                 >
                   <img
@@ -132,27 +132,27 @@ export function ExpertisePage() {
             />
           </div>
           <div className="absolute inset-0 z-1 pointer-events-none" style={GRAIN_NOISE}></div>
-          <div className="max-w-6xl mx-auto px-6 md:px-[80px] w-full z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="max-w-2xl reveal bg-surface/80 backdrop-blur-md border border-white/40 p-8 lg:p-10 shadow-2xl rounded-sm">
+          <div className="max-w-6xl mx-auto px-6 md:px-[80px] w-full z-10 grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] gap-[clamp(24px,4vw,56px)] items-center">
+            <div className="max-w-2xl reveal bg-surface/80 backdrop-blur-md border border-white/40 p-6 lg:p-[clamp(20px,3.2vh,40px)] shadow-2xl rounded-sm">
               <span className="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-3 block reveal-stagger-1">
                 Chapter 02 — Materiality
               </span>
-              <h2 className="font-headline-lg text-headline-lg serif-text leading-tight mb-5 reveal-stagger-2">
+              <h2 className="font-headline-lg text-[clamp(26px,3.3vw,44px)] serif-text leading-[1.12] mb-[clamp(10px,2vh,20px)] reveal-stagger-2">
                 Custom Veneer Mapping &amp; Sequence Control
               </h2>
-              <p className="font-body-lg text-on-surface-variant mb-6 reveal-stagger-3">
+              <p className="font-body-lg text-on-surface-variant mb-[clamp(12px,2.4vh,24px)] reveal-stagger-3">
                 Grain matching is not an afterthought. Our digital mapping process ensures seamless
                 heritage-quality interiors through rigorous sequence control.
               </p>
-              <div className="grid grid-cols-2 gap-6 py-6 border-t border-on-surface-variant/10 reveal-stagger-3">
-                <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-6 pt-[clamp(14px,2.4vh,24px)] border-t border-on-surface-variant/10 reveal-stagger-3">
+                <div className="space-y-2">
                   <MaterialIcon name="layers" className="text-secondary" />
                   <h4 className="font-headline-md text-xl serif-text">Book-match Precision</h4>
                   <p className="text-caption text-on-surface-variant">
                     Symmetrical grain alignment across full-height panels.
                   </p>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-2">
                   <MaterialIcon name="texture" className="text-secondary" />
                   <h4 className="font-headline-md text-xl serif-text">Species Curation</h4>
                   <p className="text-caption text-on-surface-variant">
@@ -161,11 +161,10 @@ export function ExpertisePage() {
                 </div>
               </div>
             </div>
-            <div className="reveal reveal-stagger-2 relative h-[clamp(260px,42vh,400px)] overflow-hidden rounded-sm border border-outline-variant/20 shadow-xl">
-              <div className="absolute inset-0 bg-[#e5e2e1] z-2 veneer-mask transition-all duration-[2s]"></div>
+            <div className="reveal reveal-stagger-2 relative h-[clamp(300px,58vh,540px)] overflow-hidden rounded-sm border border-outline-variant/20 shadow-xl">
               <img
                 alt="Walnut veneer detail"
-                className="w-full h-full object-cover"
+                className="veneer-mask w-full h-full object-cover"
                 src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?auto=format&fit=crop&w=800&q=80"
               />
               <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur px-4 py-2 text-[10px] uppercase tracking-widest font-technical-label">
@@ -182,26 +181,26 @@ export function ExpertisePage() {
         >
           <div className="absolute inset-0 architectural-grid opacity-20 pointer-events-none invert"></div>
           <div className="light-beam opacity-20"></div>
-          <div className="max-w-6xl mx-auto px-6 md:px-[80px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
+          <div className="max-w-6xl mx-auto px-6 md:px-[80px] grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] gap-[clamp(24px,4vw,56px)] items-center z-10">
             <div className="reveal">
               <span className="font-technical-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed mb-3 block reveal-stagger-1">
                 Chapter 03 — Technicality
               </span>
-              <h2 className="font-headline-lg text-headline-lg serif-text leading-tight mb-6 reveal-stagger-2">
+              <h2 className="font-headline-lg text-[clamp(26px,3.3vw,44px)] serif-text leading-[1.12] mb-[clamp(10px,2vh,20px)] reveal-stagger-2">
                 Concealed Hardware &amp;
                 <br />
                 Precision Installation
               </h2>
-              <p className="font-body-lg text-surface-container-highest max-w-3xl mb-6 reveal-stagger-3 opacity-80">
+              <p className="font-body-lg text-surface-container-highest max-w-3xl mb-[clamp(12px,2.4vh,24px)] reveal-stagger-3 opacity-80">
                 The details that disappear. We integrate concealed hardware and lighting into the
                 woodwork so every mechanism works quietly and each piece sits flawlessly for
                 decades.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 reveal-stagger-3">
-                <div className="p-5 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+                <div className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
                   <MaterialIcon
                     name="precision_manufacturing"
-                    className="text-tertiary-fixed text-2xl mb-2"
+                    className="text-tertiary-fixed text-2xl mb-1"
                   />
                   <h5 className="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-1">
                     CNC Accuracy
@@ -210,8 +209,8 @@ export function ExpertisePage() {
                     Sub-millimeter routing for concealed hardware.
                   </p>
                 </div>
-                <div className="p-5 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
-                  <MaterialIcon name="bolt" className="text-tertiary-fixed text-2xl mb-2" />
+                <div className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+                  <MaterialIcon name="bolt" className="text-tertiary-fixed text-2xl mb-1" />
                   <h5 className="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-1">
                     LEED Standards
                   </h5>
@@ -219,8 +218,8 @@ export function ExpertisePage() {
                     Integrated low-voltage lighting profiles.
                   </p>
                 </div>
-                <div className="p-5 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
-                  <MaterialIcon name="handyman" className="text-tertiary-fixed text-2xl mb-2" />
+                <div className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+                  <MaterialIcon name="handyman" className="text-tertiary-fixed text-2xl mb-1" />
                   <h5 className="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-1">
                     Installation Rigor
                   </h5>
@@ -228,10 +227,10 @@ export function ExpertisePage() {
                     Engineered joinery designed for efficient field assembly.
                   </p>
                 </div>
-                <div className="p-5 border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
+                <div className="p-[clamp(12px,2vh,20px)] border border-surface-bright/10 bg-surface-bright/5 hover:bg-surface-bright/10 transition-colors duration-700">
                   <MaterialIcon
                     name="verified_user"
-                    className="text-tertiary-fixed text-2xl mb-2"
+                    className="text-tertiary-fixed text-2xl mb-1"
                   />
                   <h5 className="font-technical-label text-[11px] uppercase tracking-[0.2em] mb-1">
                     Longevity
@@ -243,7 +242,7 @@ export function ExpertisePage() {
               </div>
             </div>
             {/* Exploded View Animation */}
-            <div className="relative reveal flex items-center justify-center h-[clamp(260px,42vh,400px)]">
+            <div className="relative reveal flex items-center justify-center h-[clamp(300px,54vh,500px)]">
               <div className="absolute w-64 h-80 bg-[#313030] border border-white/5 shadow-2xl rounded-sm z-10"></div>
               <div className="absolute hardware-component hardware-left z-20 left-0 lg:left-[-10%]">
                 <div className="w-40 sm:w-48 h-1 bg-black/80 shadow-lg mb-2"></div>
