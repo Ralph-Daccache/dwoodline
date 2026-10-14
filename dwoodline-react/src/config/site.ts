@@ -26,6 +26,16 @@ export const SITE = {
   taglineLines: ['Architectural Woodwork', 'Since 1955'],
   copyright: '© 1955 D Woodline. Architectural Precision. All rights reserved.',
   location: 'Lebanon',
+  contact: {
+    email: 'info@dwoodline.com',
+    // Matches the number behind the WhatsApp link below.
+    phone: '+961 79 034 563',
+    phoneHref: 'tel:+96179034563',
+    address: 'Halat Industrial Area, Qartaba Main Road, Lebanon',
+    mapHref:
+      'https://www.google.com/maps/search/?api=1&query=Halat+Industrial+Area+Qartaba+Main+Road+Lebanon',
+    hours: '09:00 - 18:00',
+  },
   social: {
     instagram: 'https://instagram.com/dwoodline_sal/',
     whatsapp: 'https://wa.me/96179034563',
@@ -38,10 +48,10 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
     heading: 'Studio',
     links: [
       { label: 'Home', to: ROUTES.home },
-      { label: 'Heritage', to: ROUTES.heritage },
+      { label: 'About', to: ROUTES.heritage },
       { label: 'Services', to: ROUTES.expertise },
-      { label: 'Portfolio', to: ROUTES.portfolio },
-      { label: 'Inquiry', to: ROUTES.inquiry },
+      { label: 'Projects', to: ROUTES.portfolio },
+      { label: 'Contact', to: ROUTES.inquiry },
     ],
   },
   {

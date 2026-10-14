@@ -590,8 +590,8 @@ html.snap-portfolio {
 }
 [data-page='inquiry'] .form-input-focus:focus {
   outline: none;
-  border-bottom-color: var(--color-secondary-fixed-dim);
-  box-shadow: 0 1px 0 0 var(--color-secondary-fixed-dim);
+  border-bottom-color: var(--color-brand, #c4a98a);
+  box-shadow: 0 2px 0 0 var(--color-brand, #c4a98a);
 }
 
 /* =========================================================================

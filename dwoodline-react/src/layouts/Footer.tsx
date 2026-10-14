@@ -4,9 +4,9 @@ import { ROUTES } from '@/config/routes';
 import { SocialLinks } from '@/components/SocialLinks/SocialLinks';
 
 const HEADING_CLASS =
-  "font-['Inter'] text-[9px] tracking-[0.2em] uppercase text-[#F5F5F7]/60 pb-3 border-b border-[#F5F5F7]/10";
+  "font-['Inter'] text-[11px] tracking-[0.2em] uppercase text-[#F5F5F7]/75 pb-3 border-b border-[#F5F5F7]/10";
 const LINK_CLASS =
-  "font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300";
+  "font-['Inter'] text-[11px] tracking-widest uppercase text-[#F5F5F7]/65 hover:text-[#F5F5F7] transition-colors duration-300";
 
 /** Unified footer, identical on every page. */
 export function Footer() {
@@ -19,7 +19,7 @@ export function Footer() {
             {SITE.taglineLines.map((line) => (
               <p
                 key={line}
-                className="font-['Inter'] text-[10px] tracking-widest uppercase text-[#F5F5F7]/30"
+                className="font-['Inter'] text-[11px] tracking-widest uppercase text-[#F5F5F7]/60"
               >
                 {line}
               </p>
@@ -47,10 +47,10 @@ export function Footer() {
         </div>
       </div>
       <div className="px-6 md:px-[80px] py-5 border-t border-[#F5F5F7]/5 flex flex-col md:flex-row justify-between items-center gap-2">
-        <p className="font-['Inter'] text-[9px] tracking-[0.2em] uppercase text-[#F5F5F7]/25">
+        <p className="font-['Inter'] text-[11px] tracking-[0.2em] uppercase text-[#F5F5F7]/60">
           {SITE.copyright}
         </p>
-        <p className="font-['Inter'] text-[9px] tracking-[0.2em] uppercase text-[#F5F5F7]/20">
+        <p className="font-['Inter'] text-[11px] tracking-[0.2em] uppercase text-[#F5F5F7]/60">
           {SITE.location}
         </p>
       </div>

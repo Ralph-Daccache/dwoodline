@@ -1,8 +1,8 @@
 import { SITE } from '@/config/site';
 
 const LINK_CLASS =
-  'flex items-center gap-2 text-[#F5F5F7]/40 hover:text-[#F5F5F7] transition-colors duration-300';
-const LABEL_CLASS = "font-['Inter'] text-[10px] tracking-widest uppercase";
+  'flex items-center gap-2 text-[#F5F5F7]/65 hover:text-[#F5F5F7] transition-colors duration-300';
+const LABEL_CLASS = "font-['Inter'] text-[11px] tracking-widest uppercase";
 
 /** Instagram + WhatsApp links as they appear in the footer "Connect" column. */
 export function SocialLinks() {
