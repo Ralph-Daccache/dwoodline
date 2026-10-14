@@ -8,6 +8,7 @@ import {
   BookMatchViewer,
   DetailDrawing,
   ExplodedHinge,
+  HingeFrontView,
   type DetailKind,
   type HingePart,
 } from './ServiceVisuals';
@@ -31,25 +32,25 @@ const TECH_POINTS: {
     icon: 'precision_manufacturing',
     title: 'CNC Accuracy',
     text: 'Sub-millimeter routing for concealed hardware.',
-    parts: ['door'],
+    parts: ['members'],
   },
   {
     icon: 'bolt',
     title: 'LEED Standards',
     text: 'Integrated low-voltage lighting profiles.',
-    parts: ['carcass'],
+    parts: ['feed'],
   },
   {
     icon: 'handyman',
     title: 'Installation Rigor',
     text: 'Engineered joinery designed for efficient field assembly.',
-    parts: ['plate', 'fixings'],
+    parts: ['plates'],
   },
   {
     icon: 'verified_user',
     title: 'Longevity',
     text: 'Joinery designed to outlast the structure it inhabits.',
-    parts: ['cup'],
+    parts: ['body'],
   },
 ];
 
@@ -171,7 +172,7 @@ export function ExpertisePage() {
           id="ch-3"
         >
           <div className="absolute inset-0 architectural-grid opacity-20 pointer-events-none invert"></div>
-          <div className="max-w-6xl mx-auto px-6 md:px-[80px] w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-[clamp(24px,4vw,56px)] items-center z-10">
+          <div className="max-w-6xl mx-auto px-6 md:px-[80px] w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.05fr)] gap-[clamp(20px,3vw,44px)] items-center z-10">
             <div className="reveal">
               <span className="font-technical-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed mb-3 block reveal-stagger-1">
                 Technicality
@@ -214,13 +215,22 @@ export function ExpertisePage() {
               <div className="h-[clamp(240px,46vh,420px)] w-full">
                 <ExplodedHinge active={activeParts} assembled={assembled} />
               </div>
-              <div className="mt-3 flex items-center justify-between gap-4">
-                <p className="text-caption opacity-50">Hover or tap a point to find its part.</p>
+              <div className="mt-3 flex items-center gap-4">
+                <div className="flex shrink-0 flex-col items-center gap-1">
+                  <HingeFrontView className="h-[clamp(64px,11vh,96px)] w-auto" />
+                  <span className="font-technical-label text-[9px] uppercase tracking-[0.2em] opacity-50">
+                    Front view
+                  </span>
+                </div>
+                <p className="text-caption opacity-50 flex-1">
+                  Hover or tap a point to find its part. Concealed hinge shown as a plan section;
+                  typical 3D adjustment: side ±3 mm, height ±3 mm, compression ±1 mm.
+                </p>
                 <button
                   type="button"
                   aria-pressed={assembled}
                   onClick={() => setAssembled((v) => !v)}
-                  className="border border-surface-bright/30 px-4 py-2 font-technical-label text-[10px] uppercase tracking-[0.2em] text-surface-bright transition-colors duration-300 hover:bg-brand hover:text-on-background"
+                  className="shrink-0 border border-surface-bright/30 px-4 py-2 font-technical-label text-[10px] uppercase tracking-[0.2em] text-surface-bright transition-colors duration-300 hover:bg-brand hover:text-on-background"
                 >
                   {assembled ? 'Explode' : 'Assemble'}
                 </button>

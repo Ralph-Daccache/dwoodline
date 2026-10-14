@@ -513,6 +513,12 @@ html.snap-portfolio {
 [data-page='expertise'] .xv.is-assembled .xv-label {
   opacity: 0;
 }
+[data-page='expertise'] .xv .xv-feed {
+  transition: opacity 0.4s ease;
+}
+[data-page='expertise'] .xv.is-assembled .xv-feed {
+  opacity: 0 !important;
+}
 @media (prefers-reduced-motion: reduce) {
   [data-page='expertise'] .xv-part {
     transition: none;

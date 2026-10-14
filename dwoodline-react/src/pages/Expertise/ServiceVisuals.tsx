@@ -201,7 +201,14 @@ export function BookMatchViewer() {
 /* Chapter 3: exploded concealed-hinge diagram                                */
 /* ------------------------------------------------------------------------- */
 
-export type HingePart = 'door' | 'cup' | 'plate' | 'fixings' | 'carcass';
+/**
+ * Parts the feature cards can highlight:
+ *  members: the door edge and the frame, each with a milled recess (CNC accuracy)
+ *  feed:    low-voltage feed routed through the hinge (integrated lighting)
+ *  plates:  door part and frame part with their fixing screws (installation)
+ *  body:    the closed hinge body, a linkage on slide bearings (longevity)
+ */
+export type HingePart = 'members' | 'plates' | 'body' | 'feed';
 
 interface ExplodedHingeProps {
   /** Parts to emphasise; everything else dims. Empty means no emphasis. */
@@ -212,17 +219,23 @@ interface ExplodedHingeProps {
 const LINE = '#c4a98a';
 const FILL = '#2a2928';
 const FILL_HI = '#3b3a39';
+const VOID = '#141312';
 
-/** Technical drawing of a concealed hinge, drawn as an exploded assembly. */
+/**
+ * Plan section through a fully concealed hinge (TECTUS-style: door part, frame
+ * part and a closed hinge body, each part recessed into the door edge and the
+ * frame), drawn as an exploded assembly. Proportions follow a slim 160 mm hinge
+ * set into 24 to 28 mm wide milled recesses.
+ */
 export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
   const dim = (p: HingePart): number => (active.length === 0 || active.includes(p) ? 1 : 0.22);
-  const label = (x: number, y: number, text: string) => (
+  const label = (x: number, y: number, text: string, size = 11.5) => (
     <text
       x={x}
       y={y}
       textAnchor="middle"
-      fontSize="13"
-      letterSpacing="1.2"
+      fontSize={size}
+      letterSpacing="0.8"
       fill="#fcf9f8"
       opacity={0.85}
       className="xv-label"
@@ -231,101 +244,251 @@ export function ExplodedHinge({ active, assembled }: ExplodedHingeProps) {
       {text}
     </text>
   );
+  const asm = (px: number): CSSProperties => ({ '--asm': `${px}px` }) as CSSProperties;
+
   return (
     <svg
-      viewBox="0 0 520 320"
+      viewBox="0 62 520 232"
       className={`xv h-full w-full ${assembled ? 'is-assembled' : ''}`}
       role="img"
-      aria-label="Exploded view of a concealed hinge: door panel, hinge cup, mounting plate, fixings and carcass side"
+      aria-label="Exploded plan section of a concealed hinge: frame, frame part, hinge body with slide bearings, door part and door, with a low-voltage feed running through the hinge"
       fill="none"
       strokeLinejoin="round"
     >
+      <defs>
+        <pattern
+          id="xv-hatch"
+          width="8"
+          height="8"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(45)"
+        >
+          <line x1="0" y1="0" x2="0" y2="8" stroke={LINE} strokeOpacity="0.42" />
+        </pattern>
+      </defs>
+
       <line
         x1="10"
-        y1="170"
+        y1="150"
         x2="510"
-        y2="170"
+        y2="150"
         stroke={LINE}
-        strokeOpacity="0.35"
+        strokeOpacity="0.3"
         strokeDasharray="6 5"
       />
 
-      <g className="xv-part" style={{ '--asm': '70px', opacity: dim('door') } as CSSProperties}>
-        <rect x="30" y="70" width="100" height="200" fill={FILL} stroke={LINE} strokeWidth="1.5" />
-        <rect
-          x="96"
-          y="132"
-          width="34"
-          height="76"
-          fill="#1c1b1b"
-          stroke={LINE}
-          strokeDasharray="4 3"
-        />
-        {[92, 112, 132, 152, 172, 192, 212, 232, 252].map((y) => (
-          <line key={y} x1="38" y1={y} x2="88" y2={y} stroke={LINE} strokeOpacity="0.14" />
-        ))}
-        {label(80, 296, 'DOOR PANEL')}
+      <g className="xv-part" style={{ ...asm(118), opacity: dim('members') }}>
+        <rect x="20" y="80" width="110" height="140" fill={FILL} stroke={LINE} strokeWidth="1.5" />
+        <rect x="20" y="80" width="110" height="140" fill="url(#xv-hatch)" />
+        <rect x="96" y="124" width="35" height="52" fill={VOID} />
+        <path d="M130 124 H96 V176 H130" stroke={LINE} strokeWidth="1.5" />
+        {label(75, 246, 'FRAME')}
       </g>
 
-      <g className="xv-part" style={{ '--asm': '-10px', opacity: dim('cup') } as CSSProperties}>
-        <rect
-          x="170"
-          y="140"
-          width="46"
-          height="60"
-          rx="6"
-          fill={FILL_HI}
-          stroke={LINE}
-          strokeWidth="1.5"
-        />
-        <rect
-          x="216"
-          y="162"
-          width="58"
-          height="16"
-          fill={FILL_HI}
-          stroke={LINE}
-          strokeWidth="1.5"
-        />
-        <circle cx="274" cy="170" r="10" fill={FILL} stroke={LINE} strokeWidth="1.5" />
-        <circle cx="274" cy="170" r="3.5" fill={LINE} />
-        {label(220, 232, 'HINGE CUP')}
+      <g className="xv-part" style={{ ...asm(-118), opacity: dim('members') }}>
+        <rect x="390" y="90" width="110" height="120" fill={FILL} stroke={LINE} strokeWidth="1.5" />
+        <rect x="390" y="90" width="110" height="120" fill="url(#xv-hatch)" />
+        <rect x="389" y="124" width="35" height="52" fill={VOID} />
+        <path d="M390 124 H424 V176 H390" stroke={LINE} strokeWidth="1.5" />
+        {label(445, 246, 'DOOR')}
       </g>
 
-      <g className="xv-part" style={{ '--asm': '-38px', opacity: dim('plate') } as CSSProperties}>
-        <rect
-          x="300"
-          y="116"
-          width="22"
-          height="108"
-          fill={FILL_HI}
-          stroke={LINE}
-          strokeWidth="1.5"
-        />
-        <circle cx="311" cy="138" r="3" stroke={LINE} />
-        <circle cx="311" cy="202" r="3" stroke={LINE} />
-        {label(311, 252, 'MOUNT PLATE')}
-      </g>
-
-      <g className="xv-part" style={{ '--asm': '-56px', opacity: dim('fixings') } as CSSProperties}>
-        {[138, 202].map((y) => (
+      <g className="xv-part" style={{ ...asm(64), opacity: dim('plates') }}>
+        {[138, 162].map((y) => (
           <g key={y}>
-            <rect x="342" y={y - 8} width="8" height="16" fill={LINE} />
-            <rect x="350" y={y - 2} width="38" height="4" fill={LINE} />
+            <rect x="136" y={y - 1.5} width="48" height="3" fill={LINE} />
+            <rect x="184" y={y - 4.5} width="5" height="9" fill={LINE} />
           </g>
         ))}
-        {label(372, 296, 'FIXINGS')}
+        <rect
+          x="150"
+          y="126"
+          width="34"
+          height="48"
+          rx="5"
+          fill={FILL_HI}
+          stroke={LINE}
+          strokeWidth="1.5"
+        />
+        <circle cx="167" cy="150" r="7" stroke={LINE} strokeOpacity="0.6" />
+        {label(167, 246, 'FRAME PART')}
       </g>
 
-      <g
-        className="xv-part"
-        style={{ '--asm': '-138px', opacity: dim('carcass') } as CSSProperties}
-      >
-        <rect x="430" y="70" width="44" height="200" fill={FILL} stroke={LINE} strokeWidth="1.5" />
-        <rect x="434" y="100" width="6" height="140" fill="#fcf9f8" fillOpacity="0.55" />
-        <rect x="434" y="100" width="6" height="140" stroke={LINE} strokeOpacity="0.8" />
-        {label(452, 52, 'CARCASS + LED')}
+      <g className="xv-part" style={{ ...asm(-64), opacity: dim('plates') }}>
+        {[138, 162].map((y) => (
+          <g key={y}>
+            <rect x="336" y={y - 1.5} width="48" height="3" fill={LINE} />
+            <rect x="331" y={y - 4.5} width="5" height="9" fill={LINE} />
+          </g>
+        ))}
+        <rect
+          x="336"
+          y="126"
+          width="34"
+          height="48"
+          rx="5"
+          fill={FILL_HI}
+          stroke={LINE}
+          strokeWidth="1.5"
+        />
+        <circle cx="353" cy="150" r="7" stroke={LINE} strokeOpacity="0.6" />
+        {label(353, 246, 'DOOR PART')}
       </g>
+
+      <g style={{ opacity: dim('body') }} className="xv-body">
+        <rect
+          x="208"
+          y="130"
+          width="104"
+          height="40"
+          rx="8"
+          fill={FILL}
+          stroke={LINE}
+          strokeOpacity="0.6"
+          strokeDasharray="3 3"
+        />
+        <line
+          x1="222"
+          y1="138"
+          x2="298"
+          y2="162"
+          stroke={LINE}
+          strokeWidth="6"
+          strokeLinecap="round"
+        />
+        <line
+          x1="222"
+          y1="162"
+          x2="298"
+          y2="138"
+          stroke={FILL_HI}
+          strokeWidth="9"
+          strokeLinecap="round"
+        />
+        <line
+          x1="222"
+          y1="162"
+          x2="298"
+          y2="138"
+          stroke={LINE}
+          strokeWidth="6"
+          strokeLinecap="round"
+        />
+        {[
+          [222, 138],
+          [222, 162],
+          [298, 138],
+          [298, 162],
+          [260, 150],
+        ].map(([cx, cy]) => (
+          <g key={`${cx}-${cy}`}>
+            <circle cx={cx} cy={cy} r="6" fill={VOID} stroke={LINE} strokeWidth="1.5" />
+            <circle cx={cx} cy={cy} r="2.4" fill={LINE} />
+          </g>
+        ))}
+        {label(260, 268, 'HINGE BODY')}
+        <text
+          x="260"
+          y="283"
+          textAnchor="middle"
+          fontSize="11"
+          letterSpacing="1"
+          fill="#fcf9f8"
+          opacity="0.55"
+          className="xv-label"
+          fontFamily="Inter, sans-serif"
+        >
+          slide bearings
+        </text>
+      </g>
+
+      <g style={{ opacity: dim('feed') }} className="xv-feed">
+        <path
+          d="M167 174 C167 206 222 208 260 196 S353 206 353 174"
+          stroke={LINE}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray="1 5"
+        />
+        <circle cx="167" cy="174" r="3" fill={LINE} />
+        <circle cx="353" cy="174" r="3" fill={LINE} />
+        {label(260, 224, 'LOW-VOLTAGE FEED', 10.5)}
+      </g>
+    </svg>
+  );
+}
+
+/**
+ * Front view of a concealed hinge: two slim plates with rounded ends, each with
+ * countersunk fixing screws, either side of the central knuckle.
+ */
+export function HingeFrontView({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 60 100"
+      className={className}
+      role="img"
+      aria-label="Front view of a concealed hinge: two slim plates with fixing screws and a central knuckle"
+      fill="none"
+      strokeLinejoin="round"
+    >
+      <rect
+        x="5"
+        y="3"
+        width="19"
+        height="94"
+        rx="9"
+        fill={FILL_HI}
+        stroke={LINE}
+        strokeWidth="1.2"
+      />
+      <rect
+        x="36"
+        y="3"
+        width="19"
+        height="94"
+        rx="9"
+        fill={FILL_HI}
+        stroke={LINE}
+        strokeWidth="1.2"
+      />
+      <rect x="24" y="29" width="12" height="42" fill={VOID} />
+      <rect
+        x="21"
+        y="34"
+        width="18"
+        height="11"
+        rx="2"
+        fill={FILL}
+        stroke={LINE}
+        strokeWidth="1.2"
+      />
+      <rect
+        x="21"
+        y="55"
+        width="18"
+        height="11"
+        rx="2"
+        fill={FILL}
+        stroke={LINE}
+        strokeWidth="1.2"
+      />
+      <line x1="30" y1="29" x2="30" y2="71" stroke={LINE} strokeWidth="1.6" />
+      {[
+        [14.5, 14],
+        [14.5, 86],
+        [45.5, 14],
+        [45.5, 86],
+      ].map(([cx, cy]) => (
+        <g key={`${cx}-${cy}`}>
+          <circle cx={cx} cy={cy} r="3.4" stroke={LINE} strokeWidth="1" />
+          <path
+            d={`M${cx - 1.8} ${cy} H${cx + 1.8} M${cx} ${cy - 1.8} V${cy + 1.8}`}
+            stroke={LINE}
+            strokeWidth="0.8"
+          />
+        </g>
+      ))}
     </svg>
   );
 }
