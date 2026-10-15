@@ -5,6 +5,8 @@
  * write a ready-made HTML file per page, which crawlers that do not run
  * JavaScript can read directly.
  */
+import { normalizePath } from './routes';
+
 export const SITE_URL = 'https://dwoodline.com';
 export const SITE_NAME = 'D Woodline';
 export const OG_IMAGE = `${SITE_URL}/og-image.png`;
@@ -48,7 +50,7 @@ export const PAGES: readonly PageSeo[] = [
     title: 'Services | Shop Drawings, Veneer & Concealed Hardware',
     description:
       'From BIM shop drawings and custom veneer mapping to concealed hardware and precise installation, D Woodline delivers architectural millwork end to end.',
-    heading: 'Architectural millwork services',
+    heading: 'Architectural Millwork Shop Drawings',
     summary:
       'Our services cover architectural millwork shop drawings in CAD and BIM, custom veneer mapping and sequence control, concealed hardware and integrated lighting, and precision installation.',
     priority: 0.9,
@@ -82,7 +84,7 @@ export function pageUrl(path: string): string {
 
 /** Finds a page from a pathname, ignoring any trailing slash. */
 export function findPage(pathname: string): PageSeo | undefined {
-  const clean = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+  const clean = normalizePath(pathname);
   return PAGES.find((page) => page.path === clean);
 }
 
@@ -125,11 +127,11 @@ export function noscriptBlock(page: PageSeo): string {
   return `<noscript><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p></noscript>`;
 }
 
-/** The sitemap file, one entry per page. */
-export function sitemapXml(lastmod: string): string {
+/** The sitemap file, one entry per page (no lastmod: it is only useful when accurate per page). */
+export function sitemapXml(): string {
   const urls = PAGES.map(
     (page) =>
-      `  <url>\n    <loc>${pageUrl(page.path)}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>${page.priority.toFixed(1)}</priority>\n  </url>`,
+      `  <url>\n    <loc>${pageUrl(page.path)}</loc>\n    <priority>${page.priority.toFixed(1)}</priority>\n  </url>`,
   ).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }

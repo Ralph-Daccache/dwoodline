@@ -45,7 +45,7 @@ function seoPages(): Plugin {
         mkdirSync(dirname(file), { recursive: true });
         writeFileSync(file, html);
       }
-      writeFileSync(join(outDir, 'sitemap.xml'), sitemapXml(new Date().toISOString().slice(0, 10)));
+      writeFileSync(join(outDir, 'sitemap.xml'), sitemapXml());
     },
   };
 }

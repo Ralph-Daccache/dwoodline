@@ -1,4 +1,4 @@
-import { OG_IMAGE, findPage, pageUrl } from '@/config/seo';
+import { OG_IMAGE, PAGES, findPage, pageUrl } from '@/config/seo';
 
 function setMeta(selector: string, create: () => HTMLElement, attr: string, value: string): void {
   let el = document.head.querySelector<HTMLElement>(selector);
@@ -33,8 +33,8 @@ const metaByProperty = (property: string) => ({
  * (A fresh load gets the same values from the HTML file written at build time.)
  */
 export function applyPageMeta(pathname: string): void {
-  const page = findPage(pathname);
-  if (!page) return;
+  // Unknown routes are redirected to the home page, so fall back to its details.
+  const page = findPage(pathname) ?? PAGES[0];
   const url = pageUrl(page.path);
 
   document.title = page.title;
