@@ -63,9 +63,12 @@ export async function submitInquiry(data: InquiryData): Promise<InquiryResult> {
   try {
     const response = await fetch(FORMS_CONFIG.inquiryEndpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      // Accept: JSON makes form services such as Formspree answer with JSON instead of a web page.
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
         name: data.name.trim(),
+        // Used as the email subject by Formspree; ignored by the PHP handler.
+        _subject: `New website inquiry from ${data.name.trim()}`,
         email: data.email.trim(),
         phone: (data.phone ?? '').trim(),
         message: data.message.trim(),

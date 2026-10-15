@@ -39,7 +39,11 @@ jobs:
         run: npm run lint
 
       # `build` already runs `tsc --noEmit` first, so a type error fails the deploy.
+      # INQUIRY_ENDPOINT (repository variable) is the Formspree form link for the contact
+      # form. When it is not set the site uses its own /api/inquiry.php handler instead.
       - name: Build
+        env:
+          VITE_INQUIRY_ENDPOINT: ${{ vars.INQUIRY_ENDPOINT }}
         run: npm run build
 
       # The SPA fallback rules live in public/.htaccess and Vite copies them to
