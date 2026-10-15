@@ -47,6 +47,21 @@ jobs:
       - name: Verify .htaccess shipped
         run: test -f dist/.htaccess || { echo "::error::dist/.htaccess missing - SPA deep links would 404"; exit 1; }
 
+      # The contact form sends mail through the studio mailbox over SMTP. The password
+      # comes from the SMTP_PASSWORD repository secret (never committed); if the secret
+      # is not set, the form falls back to PHP mail().
+      - name: Write mail config
+        env:
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: |
+          if [ -n "$SMTP_PASSWORD" ]; then
+            ENC=$(printf '%s' "$SMTP_PASSWORD" | base64 -w0)
+            printf "<?php\nreturn ['smtp_pass_b64' => '%s'];\n" "$ENC" > dist/api/config.php
+            echo "Mail config written"
+          else
+            echo "SMTP_PASSWORD secret not set; contact form will use PHP mail()"
+          fi
+
       - name: Deploy to Hostinger over FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:

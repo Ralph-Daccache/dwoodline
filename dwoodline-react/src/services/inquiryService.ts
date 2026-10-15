@@ -13,29 +13,38 @@ export interface InquiryData {
   name: string;
   email: string;
   message: string;
+  /** Optional. */
+  phone?: string;
   /** Honeypot: real visitors never fill this in. */
   company_url?: string;
 }
 
-export type InquiryField = 'name' | 'email' | 'message';
+export type InquiryField = 'name' | 'email' | 'phone' | 'message';
 export type FieldErrors = Partial<Record<InquiryField, string>>;
 
 export type InquiryFailure = 'invalid' | 'rate_limited' | 'failed';
 export type InquiryResult = { ok: true } | { ok: false; reason: InquiryFailure };
 
-export const LIMITS = { name: 100, email: 254, message: 5000 } as const;
+export const LIMITS = { name: 100, email: 254, phone: 25, message: 5000 } as const;
+
+const PHONE_PATTERN = /^[0-9+()\-.\s]{6,25}$/;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const REQUEST_TIMEOUT_MS = 15000;
 
 /** Returns a message per invalid field; an empty object means the data is valid. */
-export function validateInquiry(data: Pick<InquiryData, InquiryField>): FieldErrors {
+export function validateInquiry(
+  data: Pick<InquiryData, 'name' | 'email' | 'message'> & { phone?: string },
+): FieldErrors {
   const errors: FieldErrors = {};
   if (!data.name.trim()) errors.name = 'Enter your name.';
   else if (data.name.trim().length > LIMITS.name) errors.name = 'Use 100 characters or fewer.';
   if (!data.email.trim()) errors.email = 'Enter your email address.';
   else if (!EMAIL_PATTERN.test(data.email.trim())) {
     errors.email = 'Enter a valid email address, like name@company.com.';
+  }
+  if (data.phone?.trim() && !PHONE_PATTERN.test(data.phone.trim())) {
+    errors.phone = 'Enter a phone number, like +961 79 123 456, or leave it empty.';
   }
   if (!data.message.trim()) errors.message = 'Tell us a little about your project.';
   else if (data.message.trim().length > LIMITS.message) {
@@ -58,6 +67,7 @@ export async function submitInquiry(data: InquiryData): Promise<InquiryResult> {
       body: JSON.stringify({
         name: data.name.trim(),
         email: data.email.trim(),
+        phone: (data.phone ?? '').trim(),
         message: data.message.trim(),
         company_url: data.company_url ?? '',
       }),

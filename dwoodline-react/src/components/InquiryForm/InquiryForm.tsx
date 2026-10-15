@@ -12,10 +12,10 @@ import {
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
-const FIELD_ORDER: InquiryField[] = ['name', 'email', 'message'];
+const FIELD_ORDER: InquiryField[] = ['name', 'email', 'phone', 'message'];
 
 const INPUT_CLASS =
-  'form-input-focus w-full border-0 border-b border-[#F5F5F7]/45 bg-transparent py-3 font-body-md text-base text-[#F5F5F7] placeholder:text-[#F5F5F7]/45 transition-colors duration-300 aria-[invalid=true]:border-[#f2a7a0]';
+  'form-input-focus w-full border-0 border-b border-[#F5F5F7]/45 bg-transparent py-2 font-body-md text-base text-[#F5F5F7] placeholder:text-[#F5F5F7]/45 transition-colors duration-300 aria-[invalid=true]:border-[#f2a7a0]';
 
 interface FieldProps {
   id: string;
@@ -46,9 +46,10 @@ export function InquiryForm() {
   const ids: Record<InquiryField, string> = {
     name: `${uid}-name`,
     email: `${uid}-email`,
+    phone: `${uid}-phone`,
     message: `${uid}-message`,
   };
-  const [values, setValues] = useState({ name: '', email: '', message: '' });
+  const [values, setValues] = useState({ name: '', email: '', phone: '', message: '' });
   const [honeypot, setHoneypot] = useState('');
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>('idle');
@@ -57,9 +58,10 @@ export function InquiryForm() {
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const confirmationRef = useRef<HTMLHeadingElement>(null);
-  const fieldRefs = { name: nameRef, email: emailRef, message: messageRef };
+  const fieldRefs = { name: nameRef, email: emailRef, phone: phoneRef, message: messageRef };
 
   const onChange =
     (field: InquiryField) =>
@@ -86,7 +88,7 @@ export function InquiryForm() {
     const result = await submitInquiry({ ...values, company_url: honeypot });
     if (result.ok) {
       setSent({ name: values.name.trim(), email: values.email.trim() });
-      setValues({ name: '', email: '', message: '' });
+      setValues({ name: '', email: '', phone: '', message: '' });
       setStatus('success');
       window.requestAnimationFrame(() => confirmationRef.current?.focus());
     } else {
@@ -130,7 +132,7 @@ export function InquiryForm() {
     <form
       noValidate
       aria-busy={sending}
-      className="space-y-[clamp(20px,3.4vh,40px)]"
+      className="space-y-[clamp(10px,2.1vh,28px)]"
       onSubmit={handleSubmit}
     >
       <Field id={ids.name} label="Your name" error={errors.name}>
@@ -170,12 +172,29 @@ export function InquiryForm() {
           onChange={onChange('email')}
         />
       </Field>
+      <Field id={ids.phone} label="Phone (optional)" error={errors.phone}>
+        <input
+          ref={phoneRef}
+          id={ids.phone}
+          name="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          maxLength={LIMITS.phone + 10}
+          aria-invalid={errors.phone ? true : undefined}
+          aria-describedby={errors.phone ? `${ids.phone}-error` : undefined}
+          className={INPUT_CLASS}
+          placeholder="+961 79 123 456"
+          value={values.phone}
+          onChange={onChange('phone')}
+        />
+      </Field>
       <Field id={ids.message} label="Tell us about your project" error={errors.message}>
         <textarea
           ref={messageRef}
           id={ids.message}
           name="message"
-          rows={4}
+          rows={3}
           autoComplete="off"
           required
           aria-required="true"
@@ -233,11 +252,11 @@ export function InquiryForm() {
         </p>
       )}
 
-      <div className="flex flex-col gap-3 pt-[clamp(4px,1.6vh,24px)] sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-3 pt-[clamp(2px,1vh,16px)] sm:flex-row sm:items-center">
         <button
           type="submit"
           disabled={sending}
-          className="w-full bg-brand px-10 py-5 font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#1A1A1A] transition-colors duration-300 hover:bg-[#d2b99c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F5F5F7] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+          className="w-full bg-brand px-10 py-4 font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#1A1A1A] transition-colors duration-300 hover:bg-[#d2b99c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F5F5F7] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
         >
           {sending ? 'Sending…' : 'Send message'}
         </button>
@@ -245,7 +264,7 @@ export function InquiryForm() {
           href={SITE.social.whatsapp}
           target="_blank"
           rel="noopener"
-          className="w-full border border-[#F5F5F7]/45 px-8 py-5 text-center font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#F5F5F7] transition-colors duration-300 hover:border-brand hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:w-auto"
+          className="w-full border border-[#F5F5F7]/45 px-8 py-4 text-center font-technical-label text-technical-label uppercase tracking-[0.2em] text-[#F5F5F7] transition-colors duration-300 hover:border-brand hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:w-auto"
         >
           Message on WhatsApp
         </a>

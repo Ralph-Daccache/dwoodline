@@ -92,7 +92,7 @@ export function InquiryPage() {
               })}
             </ul>
           </div>
-          <div className="border border-[#F5F5F7]/15 bg-[#1A1A1A] p-stack-lg md:col-span-6 md:col-start-7">
+          <div className="border border-[#F5F5F7]/15 bg-[#1A1A1A] p-[clamp(20px,2.6vw,36px)] md:col-span-6 md:col-start-7">
             <InquiryForm />
           </div>
         </div>

@@ -1,0 +1,4 @@
+# config.php holds mail credentials written at deploy time; never serve it.
+<Files "config.php">
+  Require all denied
+</Files>
