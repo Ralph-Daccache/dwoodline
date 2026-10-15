@@ -11,6 +11,11 @@ export const ROUTES = {
   inquiry: '/inquiry',
 } as const;
 
+/** Removes a trailing slash so `/heritage/` and `/heritage` count as the same page. */
+export function normalizePath(pathname: string): string {
+  return pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+}
+
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];
 
 export interface NavItem {

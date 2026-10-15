@@ -34,11 +34,12 @@ export function GalleryModal({ projectName, onClose }: GalleryModalProps) {
           </div>
           <div className="p-8">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {images.map((image) => (
+              {images.map((image, index) => (
                 <img
                   key={image}
                   src={image}
-                  alt=""
+                  alt={`${projectName}, photo ${index + 1}`}
+                  loading="lazy"
                   className="w-full aspect-[4/3] object-cover cursor-pointer hover:opacity-80 transition-opacity"
                   onClick={() => setFullSrc(image)}
                 />
@@ -54,7 +55,7 @@ export function GalleryModal({ projectName, onClose }: GalleryModalProps) {
         >
           <img
             src={fullSrc}
-            alt=""
+            alt={`${projectName}, enlarged photo`}
             className="max-w-full max-h-full object-contain"
             onClick={(e) => e.stopPropagation()}
           />

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useMobileMenu } from '@/hooks/useMobileMenu';
-import { ROUTES } from '@/config/routes';
+import { ROUTES, normalizePath } from '@/config/routes';
+import { applyPageMeta } from '@/lib/pageMeta';
 import { Nav } from './Nav';
 import { MobileMenu } from './MobileMenu';
 import { Footer } from './Footer';
@@ -24,12 +25,18 @@ const PAGE_KEY: Record<string, string> = {
  */
 export function SiteLayout() {
   const { open, openMenu, closeMenu } = useMobileMenu();
-  const { pathname } = useLocation();
+  const { pathname: rawPath } = useLocation();
+  // The host serves sub-pages as folders (/heritage/), so ignore the trailing slash.
+  const pathname = normalizePath(rawPath);
 
   useEffect(() => {
     const key = PAGE_KEY[pathname] ?? 'home';
     document.body.setAttribute('data-page', key);
     return () => document.body.removeAttribute('data-page');
+  }, [pathname]);
+
+  useEffect(() => {
+    applyPageMeta(pathname);
   }, [pathname]);
 
   useEffect(() => {

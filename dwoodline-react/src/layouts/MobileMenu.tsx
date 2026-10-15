@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { PRIMARY_NAV } from '@/config/routes';
+import { PRIMARY_NAV, normalizePath } from '@/config/routes';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
 
 const LINK_BASE = "font-['Noto_Serif'] text-sm tracking-[0.2em] uppercase";
@@ -14,7 +14,7 @@ interface MobileMenuProps {
 
 /** Full-screen mobile overlay menu that slides down from the top. */
 export function MobileMenu({ open, onClose }: MobileMenuProps) {
-  const { pathname } = useLocation();
+  const pathname = normalizePath(useLocation().pathname);
   const ref = useRef<HTMLDivElement>(null);
 
   // When closed, the overlay is only slid off-screen; mark it inert so its

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { PRIMARY_NAV, ROUTES } from '@/config/routes';
+import { PRIMARY_NAV, ROUTES, normalizePath } from '@/config/routes';
 import { SITE } from '@/config/site';
 import { MaterialIcon } from '@/components/MaterialIcon/MaterialIcon';
 import { LogoMark } from '@/components/Logo/LogoMark';
@@ -16,7 +16,7 @@ interface NavProps {
 
 /** Fixed top navigation, identical on every page (active link tracks the route). */
 export function Nav({ onOpenMenu }: NavProps) {
-  const { pathname } = useLocation();
+  const pathname = normalizePath(useLocation().pathname);
   const [scrolled, setScrolled] = useState(false);
 
   // Solid tan at the top of the page; translucent and blurred once scrolling starts.

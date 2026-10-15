@@ -116,9 +116,9 @@ export function ExpertisePage() {
               <span className="font-technical-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block reveal-stagger-1">
                 Drafting
               </span>
-              <h2 className="font-headline-lg text-headline-lg serif-text leading-tight mb-8 reveal-stagger-2">
+              <h1 className="font-headline-lg text-headline-lg serif-text leading-tight mb-8 reveal-stagger-2">
                 Architectural Millwork Shop Drawings
-              </h2>
+              </h1>
               <p className="font-body-lg text-on-surface-variant max-w-md mb-12 reveal-stagger-3">
                 Precision drafting utilizing mid-century rigor and contemporary BIM software. We
                 translate architectural intent into production-ready technical data.
