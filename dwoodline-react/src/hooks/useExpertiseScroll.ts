@@ -196,7 +196,9 @@ export function useExpertiseScroll(): void {
       const handleKey = (e: KeyboardEvent): void => {
         // Let sliders, buttons and other focusable controls use their own keys.
         const t = e.target as HTMLElement | null;
-        if (t?.closest('input, button, select, textarea, [tabindex]')) return;
+        if (t?.closest('input, button, select, textarea, a[href], [contenteditable], [tabindex]'))
+          return;
+        if (e.ctrlKey || e.altKey || e.metaKey) return;
         if (isAnimating) return;
         const cur = getCurrentSectionIndex();
         const isDown = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ';

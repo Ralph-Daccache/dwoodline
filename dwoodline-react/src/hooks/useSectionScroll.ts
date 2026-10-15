@@ -135,6 +135,14 @@ export function useSectionScroll(): void {
     };
 
     const handleKey = (e: KeyboardEvent): void => {
+      // Typing and form controls keep their own keys (Space, arrows, Home/End).
+      const t = e.target as HTMLElement | null;
+      if (
+        t?.closest('input, textarea, select, button, a[href], [contenteditable], [role="slider"]')
+      ) {
+        return;
+      }
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
       if (isAnimating) return;
       const cur = getCurrentSectionIndex();
       const isDown = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ';
